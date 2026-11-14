@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="sl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Vina Skomina | Oševljek, Vipavska dolina</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #FFFFFF;
+      --surface: #F4F5F2;
+      --ink: #141813;
+      --muted: #4E554B;
+      --accent: #234B2E;
+      --accent-dark: #17331E;
+      --border: #E2E5DF;
+      --serif: 'Newsreader', Georgia, serif;
+      --sans: 'DM Sans', sans-serif;
+      --header-h: 72px;
+      --radius: 6px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: clip;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--ink);
+      font-family: var(--sans);
+      font-weight: 400;
+      line-height: 1.65;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: clip;
+    }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
+    section[id], footer[id] {
+      scroll-margin-top: calc(var(--header-h) + 8px);
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    button {
+      font-family: inherit;
+      cursor: pointer;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    h1, h2, h3, h4 {
+      font-family: var(--serif);
+      font-weight: 500;
+      letter-spacing: -0.015em;
+    }
+
+    .eyebrow {
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 0.65rem;
+      display: block;
+    }
+
+    .container {
+      width: min(1160px, 90%);
+      margin: 0 auto;
+    }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      min-height: 46px;
+      padding: 0.78rem 1.5rem;
+      font-size: 0.85rem;
+      font-weight: 600;
+      letter-spacing: 0.03em;
+      border-radius: var(--radius);
+      transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+      border: 1px solid transparent;
+      text-align: center;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #FFFFFF;
+    }
+
+    .btn-primary:hover {
+      background: var(--accent-dark);
+    }
+
+    .btn-outline {
+      background: transparent;
+      border-color: var(--ink);
+      color: var(--ink);
+    }
+
+    .btn-outline:hover {
+      background: var(--ink);
+      color: #FFFFFF;
+    }
+
+    .btn-light-outline {
+      background: rgba(14, 18, 13, 0.45);
+      border-color: rgba(255, 255, 255, 0.85);
+      color: #FFFFFF;
+    }
+
+    .btn-light-outline:hover {
+      background: #FFFFFF;
+      color: var(--ink);
+    }
+
+    /* Sticky Header */
+    header {
+      position: -webkit-sticky;
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      width: 100%;
+      background: #FFFFFF;
+      border-bottom: 1px solid var(--border);
+      transition: box-shadow 0.2s ease;
+    }
+
+    header.scrolled {
+      box-shadow: 0 6px 20px rgba(20, 24, 19, 0.06);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: var(--header-h);
+      gap: 1rem;
+    }
+
+    .logo {
+      font-family: var(--serif);
+      font-size: clamp(1.25rem, 3.8vw, 1.6rem);
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      white-space: nowrap;
+      line-height: 1.08;
+    }
+
+    .logo span {
+      display: block;
+      font-family: var(--sans);
+      font-size: clamp(0.55rem, 1.5vw, 0.62rem);
+      letter-spacing: 0.14em;
+      color: var(--muted);
+      font-weight: 500;
+      margin-top: 2px;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 1.8rem;
+      align-items: center;
+    }
+
+    nav a {
+      font-size: 0.88rem;
+      font-weight: 500;
+      color: var(--ink);
+      padding: 0.25rem 0;
+    }
+
+    nav a:hover {
+      color: var(--accent);
+    }
+
+    .mobile-menu-cta {
+      display: none;
+    }
+
+    .nav-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.65rem;
+      flex-shrink: 0;
+    }
+
+    .lang-switch {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .lang-switch button {
+      border: none;
+      background: transparent;
+      min-height: 36px;
+      padding: 0.35rem 0.65rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      color: var(--muted);
+    }
+
+    .lang-switch button.active {
+      background: var(--ink);
+      color: #FFFFFF;
+    }
+
+    .nav-cta {
+      min-height: 40px;
+      padding: 0.5rem 1.1rem;
+      font-size: 0.78rem;
+    }
+
+    .mobile-toggle {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      width: 40px;
+      height: 38px;
+      font-size: 1.15rem;
+      color: var(--ink);
+    }
+
+    /* Hero */
+    .hero {
+      position: relative;
+      min-height: 76svh;
+      display: flex;
+      align-items: center;
+      color: #FFFFFF;
+      overflow: hidden;
+      background: #141A15;
+    }
+
+    .hero-bg-img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center 30%;
+      transform: scale(1.22);
+      transform-origin: center 28%;
+      opacity: 0.86;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        90deg,
+        rgba(14, 18, 13, 0.86) 0%,
+        rgba(14, 18, 13, 0.62) 52%,
+        rgba(14, 18, 13, 0.24) 100%
+      );
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 620px;
+      padding: 4.5rem 0;
+    }
+
+    .hero .eyebrow {
+      color: #DCE8DC;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.4rem, 6vw, 4.4rem);
+      line-height: 1.06;
+      margin-bottom: 1.2rem;
+    }
+
+    .hero p {
+      font-size: clamp(1rem, 2.2vw, 1.1rem);
+      color: rgba(255, 255, 255, 0.94);
+      max-width: 520px;
+      margin-bottom: 2rem;
+    }
+
+    .hero-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.85rem;
+    }
+
+    /* Section 1: About (O nas) */
+    .about-section {
+      padding: 5rem 0;
+    }
+
+    .about-grid {
+      display: grid;
+      grid-template-columns: 0.9fr 1.1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    .about-grid h2 {
+      font-size: clamp(2rem, 4vw, 3rem);
+      line-height: 1.12;
+    }
+
+    .about-body p {
+      color: var(--muted);
+      margin-bottom: 1.15rem;
+    }
+
+    /* Section 2: Terroir (distinct section below O nas) */
+    .terroir-section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .terroir-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.05fr;
+      gap: 3.5rem;
+      align-items: center;
+    }
+
+    .terroir-text h2 {
+      font-size: clamp(1.9rem, 3.6vw, 2.65rem);
+      line-height: 1.14;
+      margin-bottom: 1rem;
+    }
+
+    .terroir-text p {
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+    }
+
+    .terroir-stats {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.25rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+    }
+
+    .stat strong {
+      display: block;
+      font-family: var(--serif);
+      font-size: 1.65rem;
+      color: var(--accent);
+      line-height: 1.1;
+    }
+
+    .stat span {
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .terroir-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    /* Section 3: Wines */
+    .wines-section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-header {
+      max-width: 620px;
+      margin-bottom: 2.8rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1.12;
+      margin-bottom: 0.65rem;
+    }
+
+    .section-header p {
+      color: var(--muted);
+    }
+
+    .wine-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.75rem;
+    }
+
+    .wine-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 1.85rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .bottle-wrap {
+      height: 190px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+
+    .wine-meta {
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      font-weight: 600;
+      margin-bottom: 0.35rem;
+    }
+
+    .wine-card h3 {
+      font-size: 1.85rem;
+      margin-bottom: 0.55rem;
+    }
+
+    .wine-card p {
+      font-size: 0.92rem;
+      color: var(--muted);
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    .wine-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .wine-price {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 500;
+    }
+
+    .wine-actions {
+      display: flex;
+      gap: 0.5rem;
+    }
+
+    .wine-btn {
+      min-height: 40px;
+      padding: 0.45rem 0.95rem;
+      font-size: 0.78rem;
+    }
+
+    /* Section 4: Tastings & Orders */
+    .tastings-section {
+      padding: 5rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .tastings-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3.5rem;
+      align-items: start;
+    }
+
+    .tasting-tier {
+      padding: 1.35rem 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .tasting-tier:first-of-type {
+      border-top: 1px solid var(--border);
+    }
+
+    .tier-head {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 1rem;
+      margin-bottom: 0.35rem;
+      flex-wrap: wrap;
+    }
+
+    .tier-head h4 {
+      font-size: 1.4rem;
+    }
+
+    .tier-price {
+      font-family: var(--serif);
+      font-size: 1.25rem;
+      color: var(--accent);
+      font-weight: 500;
+      white-space: nowrap;
+    }
+
+    .tasting-tier p {
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    .booking-box {
+      background: var(--surface);
+      border-radius: var(--radius);
+      padding: 2.2rem;
+    }
+
+    .booking-box h3 {
+      font-size: 1.85rem;
+      margin-bottom: 0.4rem;
+    }
+
+    .booking-box > p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 1.4rem;
+    }
+
+    .form-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0.9rem;
+    }
+
+    .form-group {
+      margin-bottom: 0.35rem;
+    }
+
+    .form-group.full {
+      grid-column: 1 / -1;
+    }
+
+    label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.35rem;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      min-height: 44px;
+      padding: 0.65rem 0.85rem;
+      border: 1px solid var(--border);
+      background: #FFFFFF;
+      font-family: inherit;
+      font-size: 16px;
+      color: var(--ink);
+      border-radius: var(--radius);
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    select {
+      background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+      background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%;
+      background-size: 5px 5px, 5px 5px;
+      background-repeat: no-repeat;
+      padding-right: 2.2rem;
+    }
+
+    textarea {
+      min-height: 84px;
+      resize: vertical;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      outline: 2px solid var(--accent);
+      border-color: var(--accent);
+    }
+
+    .form-success {
+      display: none;
+      margin-top: 1rem;
+      padding: 0.9rem 1rem;
+      background: #E8F0E9;
+      border: 1px solid #9FC0A4;
+      color: #17331E;
+      border-radius: var(--radius);
+      font-size: 0.9rem;
+    }
+
+    /* Footer */
+    footer {
+      background: var(--surface);
+      padding: 4rem 0 calc(2rem + env(safe-area-inset-bottom));
+    }
+
+    .footer-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr 1fr;
+      gap: 2.5rem;
+      padding-bottom: 2.5rem;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .footer-brand p {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-top: 0.85rem;
+      max-width: 340px;
+    }
+
+    footer h5 {
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 0.9rem;
+      color: var(--ink);
+    }
+
+    footer ul {
+      list-style: none;
+      font-size: 0.9rem;
+      color: var(--muted);
+    }
+
+    footer li {
+      margin-bottom: 0.45rem;
+    }
+
+    footer a {
+      display: inline-block;
+      padding: 2px 0;
+    }
+
+    footer a:hover {
+      color: var(--accent);
+    }
+
+    .footer-bottom {
+      padding-top: 1.4rem;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem 1.5rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    /* Wine Modal */
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 24, 19, 0.65);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 1rem;
+      z-index: 100;
+    }
+
+    .modal-backdrop.open {
+      display: flex;
+    }
+
+    .modal {
+      background: #FFFFFF;
+      max-width: 540px;
+      width: 100%;
+      padding: 2.2rem;
+      position: relative;
+      max-height: 88svh;
+      overflow-y: auto;
+      border-radius: var(--radius);
+    }
+
+    .modal-close {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: none;
+      border: none;
+      font-size: 1.6rem;
+      color: var(--muted);
+    }
+
+    .modal h3 {
+      font-size: clamp(1.8rem, 4vw, 2.2rem);
+      margin-bottom: 0.5rem;
+      padding-right: 2rem;
+    }
+
+    .modal-specs {
+      margin: 1.4rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .spec-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0.65rem 0;
+      border-bottom: 1px solid var(--border);
+      font-size: 0.88rem;
+    }
+
+    .spec-row span:first-child {
+      color: var(--muted);
+      font-weight: 500;
+      flex-shrink: 0;
+    }
+
+    .spec-row span:last-child {
+      text-align: right;
+    }
+
+    .modal-actions {
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    /* Tablet Breakpoint */
+    @media (max-width: 960px) {
+      .about-grid,
+      .terroir-grid,
+      .tastings-grid,
+      .footer-grid {
+        grid-template-columns: 1fr;
+        gap: 2.25rem;
+      }
+
+      .wine-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+
+      .wine-grid .wine-card:last-child {
+        grid-column: 1 / -1;
+        max-width: 460px;
+        width: 100%;
+        justify-self: center;
+      }
+
+      nav {
+        display: none;
+        position: absolute;
+        top: var(--header-h);
+        left: 0;
+        right: 0;
+        background: #FFFFFF;
+        border-bottom: 1px solid var(--border);
+        padding: 1.25rem 5% 1.75rem;
+        box-shadow: 0 18px 32px rgba(20, 24, 19, 0.08);
+      }
+
+      nav.open {
+        display: block;
+      }
+
+      nav ul {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 0.25rem;
+      }
+
+      nav a {
+        display: block;
+        padding: 0.75rem 0;
+        font-size: 1rem;
+        border-bottom: 1px solid var(--border);
+      }
+
+      .mobile-menu-cta {
+        display: block;
+        margin-top: 1rem;
+      }
+
+      .mobile-menu-cta .btn {
+        width: 100%;
+      }
+
+      .mobile-toggle {
+        display: inline-flex;
+      }
+
+      .nav-cta {
+        display: none;
+      }
+    }
+
+    /* Mobile Phone Breakpoint */
+    @media (max-width: 640px) {
+      :root {
+        --header-h: 64px;
+      }
+
+      .container {
+        width: 92%;
+      }
+
+      .hero {
+        min-height: 70svh;
+      }
+
+      .hero-overlay {
+        background: linear-gradient(
+          180deg,
+          rgba(14, 18, 13, 0.56) 0%,
+          rgba(14, 18, 13, 0.84) 100%
+        );
+      }
+
+      .hero-content {
+        padding: 3.5rem 0;
+      }
+
+      .hero-buttons {
+        flex-direction: column;
+      }
+
+      .hero-buttons .btn {
+        width: 100%;
+      }
+
+      .about-section,
+      .terroir-section,
+      .wines-section,
+      .tastings-section {
+        padding: 3.5rem 0;
+      }
+
+      .section-header {
+        margin-bottom: 2rem;
+      }
+
+      .terroir-card {
+        padding: 1.4rem;
+      }
+
+      .terroir-stats {
+        gap: 1rem;
+      }
+
+      .wine-grid {
+        grid-template-columns: 1fr;
+        gap: 1.25rem;
+      }
+
+      .wine-grid .wine-card:last-child {
+        max-width: none;
+      }
+
+      .wine-card {
+        padding: 1.4rem;
+      }
+
+      .bottle-wrap {
+        height: 165px;
+      }
+
+      .bottle-wrap svg {
+        height: 150px;
+      }
+
+      .booking-box {
+        padding: 1.4rem;
+      }
+
+      .form-grid {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+
+      footer {
+        padding: 3rem 0 calc(1.75rem + env(safe-area-inset-bottom));
+      }
+
+      .footer-grid {
+        gap: 1.85rem;
+        padding-bottom: 2rem;
+      }
+
+      .modal-backdrop {
+        align-items: flex-end;
+        padding: 0;
+      }
+
+      .modal {
+        padding: 1.75rem 1.35rem calc(1.75rem + env(safe-area-inset-bottom));
+        border-radius: 14px 14px 0 0;
+        max-height: 86svh;
+      }
+
+      .modal-actions .btn {
+        width: 100%;
+      }
+
+      .spec-row {
+        flex-direction: column;
+        gap: 0.15rem;
+      }
+
+      .spec-row span:last-child {
+        text-align: left;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Sticky Header -->
+  <header id="siteHeader">
+    <div class="container nav-inner">
+      <a href="#" class="logo">
+        Vina Skomina
+        <span data-sl="Oševljek, Vipavska dolina" data-en="Oševljek, Vipava Valley">Oševljek, Vipavska dolina</span>
+      </a>
+
+      <nav id="mainNav">
+        <ul>
+          <li><a href="#zgodba" onclick="closeMenu()" data-sl="O nas" data-en="Our Story">O nas</a></li>
+          <li><a href="#terroir" onclick="closeMenu()" data-sl="Terroir" data-en="Terroir">Terroir</a></li>
+          <li><a href="#vina" onclick="closeMenu()" data-sl="Vina" data-en="Wines">Vina</a></li>
+          <li><a href="#degustacije" onclick="closeMenu()" data-sl="Degustacije" data-en="Tastings">Degustacije</a></li>
+          <li><a href="#kontakt" onclick="closeMenu()" data-sl="Kontakt" data-en="Contact">Kontakt</a></li>
+        </ul>
+        <div class="mobile-menu-cta">
+          <a href="#degustacije" onclick="closeMenu()" class="btn btn-primary" data-sl="Rezerviraj degustacijo" data-en="Book a Tasting">Rezerviraj degustacijo</a>
+        </div>
+      </nav>
+
+      <div class="nav-actions">
+        <div class="lang-switch" aria-label="Language switcher">
+          <button type="button" id="btnSl" class="active" onclick="setLang('sl')">SL</button>
+          <button type="button" id="btnEn" onclick="setLang('en')">EN</button>
+        </div>
+        <a href="#degustacije" class="btn btn-primary nav-cta" data-sl="Rezerviraj" data-en="Book Tasting">Rezerviraj</a>
+        <button type="button" id="menuToggleBtn" class="mobile-toggle" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero -->
+  <section class="hero">
+    <img class="hero-bg-img" src="https://i.ibb.co/5h4zMxWS/vinograd.png" alt="Vinograd Vina Skomina v Oševljeku" referrerpolicy="no-referrer" onerror="this.style.display='none'" />
+    <div class="hero-overlay" aria-hidden="true"></div>
+
+    <div class="container hero-content">
+      <span class="eyebrow" data-sl="Primorska, Oševljek" data-en="Primorska, Oševljek">Primorska, Oševljek</span>
+      <h1 data-sl="Družinska vinska klet v Oševljeku." data-en="Family Wines from Oševljek, Vipava Valley.">Družinska vinska klet v Oševljeku.</h1>
+      <p data-sl="Iz dveh vinogradov v Spodnji Vipavski dolini pridelujemo Malvazijo, Rebulo in Vitovsko grganjo. Naročite steklenice ali pridite na degustacijo v klet."
+         data-en="We grow Malvazija, Rebula, and Vitovska Grganja across two parcels in the Lower Vipava Valley. Order bottles directly or book a cellar tasting.">
+        Iz dveh vinogradov v Spodnji Vipavski dolini pridelujemo Malvazijo, Rebulo in Vitovsko grganjo. Naročite steklenice ali pridite na degustacijo v klet.
+      </p>
+      <div class="hero-buttons">
+        <a href="#vina" class="btn btn-primary" data-sl="Nakup vina" data-en="Buy Wine">Nakup vina</a>
+        <a href="#degustacije" class="btn btn-light-outline" data-sl="Rezerviraj degustacijo" data-en="Book a Tasting">Rezerviraj degustacijo</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 1: O nas -->
+  <section class="about-section" id="zgodba">
+    <div class="container about-grid">
+      <div>
+        <span class="eyebrow" data-sl="O nas" data-en="Our Story">O nas</span>
+        <h2 data-sl="Tri bele sorte iz ene vasi." data-en="Three white varietals from one village.">Tri bele sorte iz ene vasi.</h2>
+      </div>
+      <div class="about-body">
+        <p data-sl="Naša družina obdeluje vinograde na obrobju Spodnje Vipavske doline v Oševljeku. Grozdje potrgamo ročno in vsako od treh sort pridelamo posebej."
+           data-en="Our family farms two vineyard parcels in Oševljek on the edge of the Lower Vipava Valley. We harvest by hand and vinify each varietal on its own.">
+          Naša družina obdeluje vinograde na obrobju Spodnje Vipavske doline v Oševljeku. Grozdje potrgamo ročno in vsako od treh sort pridelamo posebej.
+        </p>
+        <p data-sl="Pridelujemo le Malvazijo, Rebulo in Vitovsko grganjo. Vsa vina so suha in namenjena tako druženju ob mizi kot daljšemu zorenju v steklenici."
+           data-en="We produce three dry white wines: Malvazija, Rebula, and Vitovska Grganja. Each vintage reflects the weather and soil of that year.">
+          Pridelujemo le Malvazijo, Rebulo in Vitovsko grganjo. Vsa vina so suha in namenjena tako druženju ob mizi kot daljšemu zorenju v steklenici.
+        </p>
+        <a href="#degustacije" class="btn btn-outline" style="margin-top: 0.5rem;" data-sl="Obiščite našo klet" data-en="Visit our cellar">Obiščite našo klet</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 2: Terroir -->
+  <section class="terroir-section" id="terroir">
+    <div class="container terroir-grid">
+      <div class="terroir-text">
+        <span class="eyebrow" data-sl="Terroir" data-en="Terroir">Terroir</span>
+        <h2 data-sl="Dva vinograda med flišem in Krasom" data-en="Two vineyards between flysch and Karst">Dva vinograda med flišem in Krasom</h2>
+        <p data-sl="Spodnji vinograd leži na odprti sončni legi pod vasjo Oševljek, kjer piha vipavska burja. Zgornji vinograd je skrit na mirni gozdni jasi višje proti kraškemu robu, kjer se flišna tla prepletajo z apnencem."
+           data-en="Our lower vineyard sits on an open sunlit slope below Oševljek, cooled by the bora wind. Our upper vineyard lies in a sheltered forest clearing higher toward the Karst ridge, where flysch marl meets limestone.">
+          Spodnji vinograd leži na odprti sončni legi pod vasjo Oševljek, kjer piha vipavska burja. Zgornji vinograd je skrit na mirni gozdni jasi višje proti kraškemu robu, kjer se flišna tla prepletajo z apnencem.
+        </p>
+
+        <div class="terroir-stats">
+          <div class="stat">
+            <strong>2</strong>
+            <span data-sl="Družinska vinograda" data-en="Family vineyards">Družinska vinograda</span>
+          </div>
+          <div class="stat">
+            <strong>3</strong>
+            <span data-sl="Bele sorte" data-en="White varietals">Bele sorte</span>
+          </div>
+          <div class="stat">
+            <strong>100%</strong>
+            <span data-sl="Ročna trgatev" data-en="Hand-harvested">Ročna trgatev</span>
+          </div>
+          <div class="stat">
+            <strong>Oševljek</strong>
+            <span data-sl="Vipavska dolina, Primorska" data-en="Vipava Valley, Primorska">Vipavska dolina, Primorska</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="terroir-card">
+        <h3 style="font-size: 1.5rem;" data-sl="Lega obeh vinogradov" data-en="Parcel map in Oševljek">Lega obeh vinogradov</h3>
+
+        <svg viewBox="0 0 340 165" width="100%" aria-hidden="true">
+          <path d="M5,32 Q120,18 240,44 T335,38" fill="none" stroke="#C6CCC2" stroke-width="0.9"/>
+          <path d="M5,74 Q115,58 220,88 T335,82" fill="none" stroke="#C6CCC2" stroke-width="0.9"/>
+          <path d="M5,126 Q135,108 250,136 T335,132" fill="none" stroke="#C6CCC2" stroke-width="0.9"/>
+          <path d="M12,26 C88,24 140,36 168,62 C175,72 156,92 152,106" fill="none" stroke="#FFFFFF" stroke-width="2.6"/>
+          <path d="M12,26 C88,24 140,36 168,62 C175,72 156,92 152,106" fill="none" stroke="#4E554B" stroke-width="0.8" stroke-dasharray="3 3"/>
+          <circle cx="145" cy="37" r="3.5" fill="#141813"/>
+          <text x="154" y="34" font-size="9.5" fill="#141813" font-weight="600" font-family="DM Sans, sans-serif">Oševljek</text>
+
+          <!-- Spodnji vinograd -->
+          <g transform="translate(128, 60) rotate(-14)">
+            <rect x="0" y="0" width="18" height="30" rx="2" fill="#234B2E" fill-opacity="0.24" stroke="#234B2E" stroke-width="1.4"/>
+            <line x1="5" y1="3" x2="5" y2="27" stroke="#234B2E" stroke-width="0.8"/>
+            <line x1="9" y1="3" x2="9" y2="27" stroke="#234B2E" stroke-width="0.8"/>
+            <line x1="13" y1="3" x2="13" y2="27" stroke="#234B2E" stroke-width="0.8"/>
+          </g>
+          <circle cx="140" cy="73" r="18" fill="none" stroke="#234B2E" stroke-width="1.1" stroke-dasharray="2.5 2.5"/>
+          <text x="164" y="74" font-size="9" fill="#17331E" font-weight="600" font-family="DM Sans, sans-serif" data-sl="Spodnji vinograd" data-en="Lower vineyard">Spodnji vinograd</text>
+
+          <!-- Zgornji vinograd (jasa) -->
+          <g transform="translate(154, 118) rotate(-32)">
+            <rect x="0" y="0" width="22" height="17" rx="2" fill="#234B2E" fill-opacity="0.24" stroke="#234B2E" stroke-width="1.4"/>
+            <line x1="4" y1="3" x2="4" y2="14" stroke="#234B2E" stroke-width="0.8"/>
+            <line x1="9" y1="3" x2="9" y2="14" stroke="#234B2E" stroke-width="0.8"/>
+            <line x1="14" y1="3" x2="14" y2="14" stroke="#234B2E" stroke-width="0.8"/>
+            <line x1="18" y1="3" x2="18" y2="14" stroke="#234B2E" stroke-width="0.8"/>
+          </g>
+          <circle cx="168" cy="123" r="18" fill="none" stroke="#234B2E" stroke-width="1.1" stroke-dasharray="2.5 2.5"/>
+          <text x="191" y="126" font-size="9" fill="#17331E" font-weight="600" font-family="DM Sans, sans-serif" data-sl="Zgornji vinograd (jasa)" data-en="Upper clearing">Zgornji vinograd (jasa)</text>
+        </svg>
+
+        <p style="font-size: 0.88rem; color: var(--muted);"
+           data-sl="Spodnji vinograd leži ob vasi, zgornji pa na gozdni jasi pod kraškim robom."
+           data-en="The lower vineyard sits beside the village; the upper vineyard sits in a forest clearing below the Karst ridge.">
+          Spodnji vinograd leži ob vasi, zgornji pa na gozdni jasi pod kraškim robom.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 3: Wines -->
+  <section class="wines-section" id="vina">
+    <div class="container">
+      <div class="section-header">
+        <span class="eyebrow" data-sl="Iz kleti" data-en="From the cellar">Iz kleti</span>
+        <h2 data-sl="Naša vina" data-en="Our wines">Naša vina</h2>
+        <p data-sl="Vsa vina ustekleničimo v manjših serijah. Kliknite Nakup za povpraševanje za prevzem v kleti ali dostavo."
+           data-en="We bottle small batches each harvest. Click Order to request cellar pickup or delivery.">
+          Vsa vina ustekleničimo v manjših serijah. Kliknite Nakup za povpraševanje za prevzem v kleti ali dostavo.
+        </p>
+      </div>
+
+      <div class="wine-grid">
+        <!-- Malvazija -->
+        <article class="wine-card">
+          <div class="bottle-wrap">
+            <svg viewBox="0 0 100 220" height="180" aria-label="Malvazija bottle">
+              <rect x="42" y="10" width="16" height="36" rx="2" fill="#234B2E"/>
+              <rect x="41" y="10" width="18" height="14" rx="1" fill="#141813"/>
+              <path d="M42,46 C42,64 26,72 26,92 L26,204 C26,209 30,212 34,212 L66,212 C70,212 74,209 74,204 L74,92 C74,72 58,64 58,46 Z" fill="#2d4c34"/>
+              <rect x="30" y="108" width="40" height="62" fill="#FFFFFF"/>
+              <text x="50" y="133" text-anchor="middle" font-size="6.5" font-family="Georgia, serif" fill="#141813">SKOMINA</text>
+              <text x="50" y="146" text-anchor="middle" font-size="5.5" font-family="sans-serif" fill="#234B2E" font-weight="600">MALVAZIJA</text>
+              <text x="50" y="158" text-anchor="middle" font-size="4.2" font-family="sans-serif" fill="#4E554B">PRIMORSKA</text>
+            </svg>
+          </div>
+          <div class="wine-meta" data-sl="Suho belo vino, 2024" data-en="Dry white wine, 2024">Suho belo vino, 2024</div>
+          <h3>Malvazija</h3>
+          <p data-sl="Arome bele breskve, akacijevega cveta in suhih zelišč, z nežno slanim zaključkom."
+             data-en="Aromas of white peach, acacia blossom, and Mediterranean herbs with a dry, lightly saline finish.">
+            Arome bele breskve, akacijevega cveta in suhih zelišč, z nežno slanim zaključkom.
+          </p>
+          <div class="wine-footer">
+            <span class="wine-price">14,00 €</span>
+            <div class="wine-actions">
+              <button type="button" class="btn btn-outline wine-btn" onclick="openWineModal('malvazija')" data-sl="Info" data-en="Specs">Info</button>
+              <button type="button" class="btn btn-primary wine-btn" onclick="preselectOrder('Malvazija 2024 (14 €)')" data-sl="Nakup" data-en="Order">Nakup</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Rebula -->
+        <article class="wine-card">
+          <div class="bottle-wrap">
+            <svg viewBox="0 0 100 220" height="180" aria-label="Rebula bottle">
+              <rect x="42" y="10" width="16" height="36" rx="2" fill="#424B36"/>
+              <rect x="41" y="10" width="18" height="14" rx="1" fill="#141813"/>
+              <path d="M42,46 C42,64 26,72 26,92 L26,204 C26,209 30,212 34,212 L66,212 C70,212 74,209 74,204 L74,92 C74,72 58,64 58,46 Z" fill="#4f5940"/>
+              <rect x="30" y="108" width="40" height="62" fill="#FFFFFF"/>
+              <text x="50" y="133" text-anchor="middle" font-size="6.5" font-family="Georgia, serif" fill="#141813">SKOMINA</text>
+              <text x="50" y="146" text-anchor="middle" font-size="5.5" font-family="sans-serif" fill="#234B2E" font-weight="600">REBULA</text>
+              <text x="50" y="158" text-anchor="middle" font-size="4.2" font-family="sans-serif" fill="#4E554B">VIPAVSKA DOLINA</text>
+            </svg>
+          </div>
+          <div class="wine-meta" data-sl="Suho belo vino, 2023" data-en="Dry white wine, 2023">Suho belo vino, 2023</div>
+          <h3>Rebula</h3>
+          <p data-sl="Svetlo zlatorumena barva, vonj limetine lupine, zelenega jabolka in kamilice ter sveže kisline."
+             data-en="Light golden color, citrus zest, green apple, and chamomile notes with brisk acidity.">
+            Svetlo zlatorumena barva, vonj limetine lupine, zelenega jabolka in kamilice ter sveže kisline.
+          </p>
+          <div class="wine-footer">
+            <span class="wine-price">15,00 €</span>
+            <div class="wine-actions">
+              <button type="button" class="btn btn-outline wine-btn" onclick="openWineModal('rebula')" data-sl="Info" data-en="Specs">Info</button>
+              <button type="button" class="btn btn-primary wine-btn" onclick="preselectOrder('Rebula 2023 (15 €)')" data-sl="Nakup" data-en="Order">Nakup</button>
+            </div>
+          </div>
+        </article>
+
+        <!-- Vitovska Grganja -->
+        <article class="wine-card">
+          <div class="bottle-wrap">
+            <svg viewBox="0 0 100 220" height="180" aria-label="Vitovska Grganja bottle">
+              <rect x="42" y="10" width="16" height="36" rx="2" fill="#262C25"/>
+              <rect x="41" y="10" width="18" height="14" rx="1" fill="#234B2E"/>
+              <path d="M42,46 C42,64 26,72 26,92 L26,204 C26,209 30,212 34,212 L66,212 C70,212 74,209 74,204 L74,92 C74,72 58,64 58,46 Z" fill="#313830"/>
+              <rect x="30" y="108" width="40" height="62" fill="#FFFFFF"/>
+              <text x="50" y="132" text-anchor="middle" font-size="6.5" font-family="Georgia, serif" fill="#141813">SKOMINA</text>
+              <text x="50" y="144" text-anchor="middle" font-size="4.8" font-family="sans-serif" fill="#234B2E" font-weight="600">VITOVSKA</text>
+              <text x="50" y="151" text-anchor="middle" font-size="4.8" font-family="sans-serif" fill="#234B2E" font-weight="600">GRGANJA</text>
+              <text x="50" y="162" text-anchor="middle" font-size="4.2" font-family="sans-serif" fill="#4E554B">PRIMORSKA</text>
+            </svg>
+          </div>
+          <div class="wine-meta" data-sl="Suho belo vino, 2023" data-en="Dry white wine, 2023">Suho belo vino, 2023</div>
+          <h3>Vitovska Grganja</h3>
+          <p data-sl="Avtohtona sorta Vipavske doline in Krasa z okusom hruške, žajblja in suhim mineralnim zaključkom."
+             data-en="Local grape from the border of Vipava Valley and the Karst. Orchard pear, wild sage, and a dry mineral finish.">
+            Avtohtona sorta Vipavske doline in Krasa z okusom hruške, žajblja in suhim mineralnim zaključkom.
+          </p>
+          <div class="wine-footer">
+            <span class="wine-price">17,00 €</span>
+            <div class="wine-actions">
+              <button type="button" class="btn btn-outline wine-btn" onclick="openWineModal('vitovska')" data-sl="Info" data-en="Specs">Info</button>
+              <button type="button" class="btn btn-primary wine-btn" onclick="preselectOrder('Vitovska Grganja 2023 (17 €)')" data-sl="Nakup" data-en="Order">Nakup</button>
+            </div>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section 4: Tastings & Orders -->
+  <section class="tastings-section" id="degustacije">
+    <div class="container tastings-grid">
+      <div>
+        <span class="eyebrow" data-sl="Obisk in nakup" data-en="Visits and orders">Obisk in nakup</span>
+        <h2 style="font-size: clamp(2rem, 4vw, 3rem); line-height: 1.12; margin-bottom: 1rem;"
+            data-sl="Degustacije v Oševljeku ali nakup vina" data-en="Tastings in Oševljek or bottle orders">
+          Degustacije v Oševljeku ali nakup vina
+        </h2>
+        <p style="color: var(--muted); margin-bottom: 1.75rem;"
+           data-sl="Degustacije vodimo v slovenščini ali angleščini za skupine od 2 do 14 oseb po predhodnem dogovoru. Steklenice lahko prevzamete v kleti ali jih pošljemo po pošti."
+           data-en="We host tastings in Slovenian or English for groups of 2 to 14 guests by appointment. Bottles are available for cellar pickup or shipping.">
+          Degustacije vodimo v slovenščini ali angleščini za skupine od 2 do 14 oseb po predhodnem dogovoru. Steklenice lahko prevzamete v kleti ali jih pošljemo po pošti.
+        </p>
+
+        <div class="tasting-tier">
+          <div class="tier-head">
+            <h4 data-sl="Klasična degustacija" data-en="Classic tasting">Klasična degustacija</h4>
+            <span class="tier-price" data-sl="18 € na osebo" data-en="€18 per person">18 € na osebo</span>
+          </div>
+          <p data-sl="Pokušnja vseh treh vin (Malvazija, Rebula, Vitovska grganja) z domačim kruhom in lokalnim oljčnim oljem. Traja približno 60 minut."
+             data-en="Tasting of all three wines (Malvazija, Rebula, Vitovska Grganja) with homemade bread and local olive oil. Lasts about 60 minutes.">
+            Pokušnja vseh treh vin (Malvazija, Rebula, Vitovska grganja) z domačim kruhom in lokalnim oljčnim oljem. Traja približno 60 minut.
+          </p>
+        </div>
+
+        <div class="tasting-tier">
+          <div class="tier-head">
+            <h4 data-sl="Sprehod po vinogradih in kleti" data-en="Vineyard walk and cellar pairing">Sprehod po vinogradih in kleti</h4>
+            <span class="tier-price" data-sl="30 € na osebo" data-en="€30 per person">30 € na osebo</span>
+          </div>
+          <p data-sl="Ogled obeh vinogradov v Oševljeku, pokušnja aktualnih in starejših letnikov ter narezek z vipavskim pršutom in lokalnimi siri. Traja približno 120 minut."
+             data-en="Walk through both vineyards in Oševljek, tasting of current and older vintages, and a plate of Vipava prosciutto and local cheeses. Lasts about 120 minutes.">
+            Ogled obeh vinogradov v Oševljeku, pokušnja aktualnih in starejših letnikov ter narezek z vipavskim pršutom in lokalnimi siri. Traja približno 120 minut.
+          </p>
+        </div>
+      </div>
+
+      <div class="booking-box">
+        <h3 data-sl="Rezervacija ali nakup" data-en="Book a tasting or order wine">Rezervacija ali nakup</h3>
+        <p data-sl="Izberite termin obiska ali vpišite želene steklenice. Odgovorimo vam po e-pošti."
+           data-en="Choose a tasting date or list the bottles you want. We reply by email to confirm.">
+          Izberite termin obiska ali vpišite želene steklenice. Odgovorimo vam po e-pošti.
+        </p>
+
+        <form id="bookingForm" onsubmit="handleBooking(event)">
+          <div class="form-grid">
+            <div class="form-group">
+              <label for="bName" data-sl="Ime in priimek" data-en="Full Name">Ime in priimek</label>
+              <input id="bName" type="text" required placeholder="Ana Novak" data-ph-sl="Ana Novak" data-ph-en="Jane Doe" autocomplete="name" />
+            </div>
+            <div class="form-group">
+              <label for="bEmail" data-sl="E-pošta" data-en="Email">E-pošta</label>
+              <input id="bEmail" type="email" required placeholder="ana@primer.si" data-ph-sl="ana@primer.si" data-ph-en="jane@example.com" autocomplete="email" />
+            </div>
+            <div class="form-group full">
+              <label for="bPackage" data-sl="Vrsta povpraševanja" data-en="Request Type">Vrsta povpraševanja</label>
+              <select id="bPackage" onchange="syncFormRequirements()">
+                <option value="classic" data-sl="Klasična degustacija (18 € na osebo)" data-en="Classic tasting (€18 per person)">Klasična degustacija (18 € na osebo)</option>
+                <option value="vineyard" data-sl="Sprehod po vinogradih in kleti (30 € na osebo)" data-en="Vineyard walk and cellar pairing (€30 per person)">Sprehod po vinogradih in kleti (30 € na osebo)</option>
+                <option value="order" data-sl="Nakup ali prevzem vina" data-en="Wine order or cellar pickup">Nakup ali prevzem vina</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="bDate" data-sl="Datum obiska ali prevzema" data-en="Visit or pickup date">Datum obiska ali prevzema</label>
+              <input id="bDate" type="date" required />
+            </div>
+            <div class="form-group">
+              <label for="bGuests" data-sl="Število oseb" data-en="Guests">Število oseb</label>
+              <select id="bGuests">
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="4" selected>4</option>
+                <option value="6">6</option>
+                <option value="8">8</option>
+                <option value="10+">10+</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label for="bNotes" data-sl="Steklenice ali opombe" data-en="Bottles or notes">Steklenice ali opombe</label>
+              <textarea id="bNotes" rows="3"></textarea>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.5rem;" data-sl="Pošlji povpraševanje" data-en="Send Request">Pošlji povpraševanje</button>
+          <div class="form-success" id="bookingSuccess"
+               data-sl="Hvala. Vaše povpraševanje je zabeleženo v tem predogledu obrazca."
+               data-en="Thank you. Your request has been recorded in this form preview.">
+            Hvala. Vaše povpraševanje je zabeleženo v tem predogledu obrazca.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer / Contact -->
+  <footer id="kontakt">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">Vina Skomina</div>
+          <p data-sl="Družinska vinska klet v Oševljeku (Spodnja Vipavska dolina). Pridelujemo Malvazijo, Rebulo in Vitovsko grganjo."
+             data-en="Family winery in Oševljek, Lower Vipava Valley. We produce Malvazija, Rebula, and Vitovska Grganja.">
+            Družinska vinska klet v Oševljeku (Spodnja Vipavska dolina). Pridelujemo Malvazijo, Rebulo in Vitovsko grganjo.
+          </p>
+        </div>
+
+        <div>
+          <h5 data-sl="Kje nas najdete" data-en="Visit Us">Kje nas najdete</h5>
+          <ul>
+            <li>Oševljek [hišna št. / No.]</li>
+            <li>5292 Renče, Slovenija</li>
+            <li data-sl="Vinorodna dežela Primorska" data-en="Primorska wine region">Vinorodna dežela Primorska</li>
+            <li style="margin-top: 0.6rem;"><a href="tel:+38600000000">+386 [XX XXX XXX]</a></li>
+            <li><a href="mailto:info@vinaskomina.si">info@vinaskomina.si</a></li>
+          </ul>
+        </div>
+
+        <div>
+          <h5 data-sl="Odpiralni čas in povezave" data-en="Hours and links">Odpiralni čas in povezave</h5>
+          <ul>
+            <li data-sl="Od četrtka do nedelje po predhodnem dogovoru" data-en="Thursday to Sunday by appointment">Od četrtka do nedelje po predhodnem dogovoru</li>
+            <li style="margin-top: 0.6rem;"><a href="#zgodba" data-sl="O nas" data-en="Our Story">O nas</a></li>
+            <li><a href="#terroir" data-sl="Terroir" data-en="Terroir">Terroir</a></li>
+            <li><a href="#vina" data-sl="Vina" data-en="Wines">Vina</a></li>
+            <li><a href="#degustacije" data-sl="Degustacije" data-en="Tastings">Degustacije</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <span data-sl="© 2026 Vina Skomina. Vse pravice pridržane." data-en="© 2026 Vina Skomina. All rights reserved.">© 2026 Vina Skomina. Vse pravice pridržane.</span>
+        <span data-sl="Uživanje alkohola lahko škoduje zdravju. Pijte odgovorno." data-en="Please drink responsibly.">Uživanje alkohola lahko škoduje zdravju. Pijte odgovorno.</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Wine Detail Modal -->
+  <div class="modal-backdrop" id="wineModal" onclick="if(event.target===this) closeWineModal()">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
+      <button type="button" class="modal-close" onclick="closeWineModal()" aria-label="Close">&times;</button>
+      <span class="eyebrow" id="mCategory">Primorska</span>
+      <h3 id="mTitle">Wine Name</h3>
+      <p id="mDesc" style="color: var(--muted);"></p>
+      <div class="modal-specs" id="mSpecs"></div>
+      <div class="modal-actions">
+        <button type="button" class="btn btn-primary" id="mOrderBtn" data-sl="Nakup vina" data-en="Order this wine">Nakup vina</button>
+        <a href="#degustacije" class="btn btn-outline" onclick="closeWineModal()" data-sl="Rezerviraj degustacijo" data-en="Book a tasting">Rezerviraj degustacijo</a>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    let currentLang = 'sl';
+
+    const wineData = {
+      malvazija: {
+        orderLabel: 'Malvazija 2024 (14 €)',
+        sl: {
+          cat: 'Vipavska dolina, suho belo vino',
+          title: 'Malvazija 2024',
+          desc: 'Grozdje ročno poberemo na sončnih legah Oševljeka, ga za kratek čas hladno maceriramo in vino zorimo na drožeh v jekleni posodi.',
+          specs: [
+            ['Sorta', '100% Istrska malvazija'],
+            ['Lega in tla', 'Oševljek, fliš in lapor'],
+            ['Pridelava', 'Kratka hladna maceracija, zorenje na drožeh v inoxu'],
+            ['Alkohol', '13,0 % vol.'],
+            ['K hrani', 'Bela riba, testenine s tartufi, mladi siri']
+          ]
+        },
+        en: {
+          cat: 'Vipava Valley, dry white wine',
+          title: 'Malvazija 2024',
+          desc: 'We harvest by hand from sunlit slopes in Oševljek, macerate the skins briefly at low temperature, and age the wine on lees in stainless steel.',
+          specs: [
+            ['Varietal', '100% Malvazija'],
+            ['Origin and soil', 'Oševljek, flysch marl'],
+            ['Vinification', 'Brief cold maceration, stainless steel aging on lees'],
+            ['Alcohol', '13.0% vol.'],
+            ['Food pairing', 'Grilled sea bass, truffle pasta, young cheeses']
+          ]
+        }
+      },
+      rebula: {
+        orderLabel: 'Rebula 2023 (15 €)',
+        sl: {
+          cat: 'Vipavska dolina, suho belo vino',
+          title: 'Rebula 2023',
+          desc: 'Grozdje ročno poberemo na vetrovni legi pod vasjo. Vino fermentira z lastnimi kvasovkami in delno zori v velikih lesenih sodih.',
+          specs: [
+            ['Sorta', '100% Rebula'],
+            ['Lega in tla', 'Oševljek, fliš in lapor'],
+            ['Pridelava', 'Spontana fermentacija, delno zorenje v velikem lesu'],
+            ['Alkohol', '12,5 % vol.'],
+            ['K hrani', 'Vipavski pršut, zelenjavne rižote, perutnina']
+          ]
+        },
+        en: {
+          cat: 'Vipava Valley, dry white wine',
+          title: 'Rebula 2023',
+          desc: 'Picked by hand on our wind-swept slope below the village. The wine ferments with wild yeasts and ages partly in large oak casks.',
+          specs: [
+            ['Varietal', '100% Rebula'],
+            ['Origin and soil', 'Oševljek, flysch and marl'],
+            ['Vinification', 'Wild fermentation, partial aging in large oak casks'],
+            ['Alcohol', '12.5% vol.'],
+            ['Food pairing', 'Vipava prosciutto, herb risotto, roast poultry']
+          ]
+        }
+      },
+      vitovska: {
+        orderLabel: 'Vitovska Grganja 2023 (17 €)',
+        sl: {
+          cat: 'Primorska, suho belo vino',
+          title: 'Vitovska Grganja 2023',
+          desc: 'Avtohtona sorta obmejnega prostora med Vipavsko dolino in Krasom. Grozdje maceriramo nekaj dni in vino zorimo v lesenih sodih.',
+          specs: [
+            ['Sorta', '100% Vitovska grganja'],
+            ['Lega in tla', 'Oševljek, prehod fliša v apnenec'],
+            ['Pridelava', 'Nekajdnevna maceracija, zorenje v lesenem sodu'],
+            ['Alkohol', '13,0 % vol.'],
+            ['K hrani', 'Zorjeni siri, morski sadeži, šparglji']
+          ]
+        },
+        en: {
+          cat: 'Primorska, dry white wine',
+          title: 'Vitovska Grganja 2023',
+          desc: 'A local grape grown between the Vipava Valley and the Karst. We leave the juice on the skins for several days and mature the wine in neutral oak.',
+          specs: [
+            ['Varietal', '100% Vitovska Grganja'],
+            ['Origin and soil', 'Oševljek, flysch and limestone'],
+            ['Vinification', 'Several days of skin contact, neutral oak maturation'],
+            ['Alcohol', '13.0% vol.'],
+            ['Food pairing', 'Aged cheeses, shellfish, asparagus']
+          ]
+        }
+      }
+    };
+
+    function setLang(lang) {
+      currentLang = lang;
+      document.documentElement.lang = lang;
+      document.getElementById('btnSl').classList.toggle('active', lang === 'sl');
+      document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+
+      document.querySelectorAll('[data-sl]').forEach(el => {
+        el.textContent = el.getAttribute('data-' + lang);
+      });
+
+      document.querySelectorAll('[data-ph-sl]').forEach(el => {
+        el.placeholder = el.getAttribute('data-ph-' + lang);
+      });
+    }
+
+    function toggleMenu() {
+      const nav = document.getElementById('mainNav');
+      const btn = document.getElementById('menuToggleBtn');
+      const isOpen = nav.classList.toggle('open');
+      btn.setAttribute('aria-expanded', isOpen);
+      btn.textContent = isOpen ? '✕' : '☰';
+    }
+
+    function closeMenu() {
+      const nav = document.getElementById('mainNav');
+      const btn = document.getElementById('menuToggleBtn');
+      nav.classList.remove('open');
+      btn.setAttribute('aria-expanded', 'false');
+      btn.textContent = '☰';
+    }
+
+    function openWineModal(key) {
+      const wine = wineData[key];
+      const info = wine[currentLang];
+      document.getElementById('mCategory').textContent = info.cat;
+      document.getElementById('mTitle').textContent = info.title;
+      document.getElementById('mDesc').textContent = info.desc;
+
+      const specsEl = document.getElementById('mSpecs');
+      specsEl.innerHTML = info.specs.map(([label, val]) =>
+        `<div class="spec-row"><span>${label}</span><span>${val}</span></div>`
+      ).join('');
+
+      document.getElementById('mOrderBtn').onclick = () => {
+        closeWineModal();
+        preselectOrder(wine.orderLabel);
+      };
+
+      document.getElementById('wineModal').classList.add('open');
+      document.body.classList.add('modal-open');
+    }
+
+    function closeWineModal() {
+      document.getElementById('wineModal').classList.remove('open');
+      document.body.classList.remove('modal-open');
+    }
+
+    function syncFormRequirements() {
+      const pkg = document.getElementById('bPackage').value;
+      document.getElementById('bDate').required = (pkg !== 'order');
+    }
+
+    function preselectOrder(wineLabel) {
+      const pkgSelect = document.getElementById('bPackage');
+      pkgSelect.value = 'order';
+      syncFormRequirements();
+
+      const notes = document.getElementById('bNotes');
+      const prefix = currentLang === 'sl' ? 'Naročilo: ' : 'Wine order: ';
+      notes.value = notes.value ? `${notes.value}, 6x ${wineLabel}` : `${prefix}6x ${wineLabel}`;
+
+      document.getElementById('degustacije').scrollIntoView({ behavior: 'smooth' });
+      setTimeout(() => notes.focus({ preventScroll: true }), 400);
+    }
+
+    function handleBooking(e) {
+      e.preventDefault();
+      document.getElementById('bookingSuccess').style.display = 'block';
+      e.target.reset();
+      syncFormRequirements();
+    }
+
+    window.addEventListener('scroll', () => {
+      document.getElementById('siteHeader').classList.toggle('scrolled', window.scrollY > 12);
+    }, { passive: true });
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        closeWineModal();
+        closeMenu();
+      }
+    });
+  </script>
+</body>
+</html>
