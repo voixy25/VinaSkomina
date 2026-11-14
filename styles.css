@@ -1,0 +1,926 @@
+:root {
+  --bg: #FFFFFF;
+  --surface: #F4F5F2;
+  --ink: #141813;
+  --muted: #4E554B;
+  --accent: #234B2E;
+  --accent-dark: #17331E;
+  --border: #E2E5DF;
+  --serif: 'Newsreader', Georgia, serif;
+  --sans: 'DM Sans', sans-serif;
+  --header-h: 72px;
+  --radius: 6px;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  overflow-x: clip;
+}
+
+body {
+  background-color: var(--bg);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-weight: 400;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+body.modal-open {
+  overflow: hidden;
+}
+
+section[id], footer[id] {
+  scroll-margin-top: calc(var(--header-h) + 8px);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4 {
+  font-family: var(--serif);
+  font-weight: 500;
+  letter-spacing: -0.015em;
+}
+
+.eyebrow {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 0.65rem;
+  display: block;
+}
+
+.container {
+  width: min(1160px, 90%);
+  margin: 0 auto;
+}
+
+/* Buttons */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  min-height: 46px;
+  padding: 0.78rem 1.5rem;
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  border-radius: var(--radius);
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
+  border: 1px solid transparent;
+  text-align: center;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #FFFFFF;
+}
+
+.btn-primary:hover {
+  background: var(--accent-dark);
+}
+
+.btn-outline {
+  background: transparent;
+  border-color: var(--ink);
+  color: var(--ink);
+}
+
+.btn-outline:hover {
+  background: var(--ink);
+  color: #FFFFFF;
+}
+
+.btn-light-outline {
+  background: rgba(14, 18, 13, 0.45);
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #FFFFFF;
+}
+
+.btn-light-outline:hover {
+  background: #FFFFFF;
+  color: var(--ink);
+}
+
+/* Sticky Header */
+header {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  width: 100%;
+  background: #FFFFFF;
+  border-bottom: 1px solid var(--border);
+  transition: box-shadow 0.2s ease;
+}
+
+header.scrolled {
+  box-shadow: 0 6px 20px rgba(20, 24, 19, 0.06);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: var(--header-h);
+  gap: 1rem;
+}
+
+.logo {
+  font-family: var(--serif);
+  font-size: clamp(1.25rem, 3.8vw, 1.6rem);
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  white-space: nowrap;
+  line-height: 1.08;
+}
+
+.logo span {
+  display: block;
+  font-family: var(--sans);
+  font-size: clamp(0.55rem, 1.5vw, 0.62rem);
+  letter-spacing: 0.14em;
+  color: var(--muted);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+nav ul {
+  display: flex;
+  list-style: none;
+  gap: 1.8rem;
+  align-items: center;
+}
+
+nav a {
+  font-size: 0.88rem;
+  font-weight: 500;
+  color: var(--ink);
+  padding: 0.25rem 0;
+}
+
+nav a:hover {
+  color: var(--accent);
+}
+
+.mobile-menu-cta {
+  display: none;
+}
+
+.nav-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  flex-shrink: 0;
+}
+
+.lang-switch {
+  display: inline-flex;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.lang-switch button {
+  border: none;
+  background: transparent;
+  min-height: 36px;
+  padding: 0.35rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+}
+
+.lang-switch button.active {
+  background: var(--ink);
+  color: #FFFFFF;
+}
+
+.nav-cta {
+  min-height: 40px;
+  padding: 0.5rem 1.1rem;
+  font-size: 0.78rem;
+}
+
+.mobile-toggle {
+  display: none;
+  align-items: center;
+  justify-content: center;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  width: 40px;
+  height: 38px;
+  font-size: 1.15rem;
+  color: var(--ink);
+}
+
+/* Hero */
+.hero {
+  position: relative;
+  min-height: 76svh;
+  display: flex;
+  align-items: center;
+  color: #FFFFFF;
+  overflow: hidden;
+  background: #141A15;
+}
+
+.hero-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 30%;
+  transform: scale(1.22);
+  transform-origin: center 28%;
+  opacity: 0.86;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(14, 18, 13, 0.86) 0%,
+    rgba(14, 18, 13, 0.62) 52%,
+    rgba(14, 18, 13, 0.24) 100%
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 620px;
+  padding: 4.5rem 0;
+}
+
+.hero .eyebrow {
+  color: #DCE8DC;
+}
+
+.hero h1 {
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
+  line-height: 1.06;
+  margin-bottom: 1.2rem;
+}
+
+.hero p {
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
+  color: rgba(255, 255, 255, 0.94);
+  max-width: 520px;
+  margin-bottom: 2rem;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.85rem;
+}
+
+/* Section 1: About (O nas) */
+.about-section {
+  padding: 5rem 0;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 0.9fr 1.1fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+.about-grid h2 {
+  font-size: clamp(2rem, 4vw, 3rem);
+  line-height: 1.12;
+}
+
+.about-body p {
+  color: var(--muted);
+  margin-bottom: 1.15rem;
+}
+
+/* Section 2: Terroir (distinct section below O nas) */
+.terroir-section {
+  padding: 5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.terroir-grid {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 3.5rem;
+  align-items: center;
+}
+
+.terroir-text h2 {
+  font-size: clamp(1.9rem, 3.6vw, 2.65rem);
+  line-height: 1.14;
+  margin-bottom: 1rem;
+}
+
+.terroir-text p {
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+}
+
+.terroir-stats {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.25rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid var(--border);
+}
+
+.stat strong {
+  display: block;
+  font-family: var(--serif);
+  font-size: 1.65rem;
+  color: var(--accent);
+  line-height: 1.1;
+}
+
+.stat span {
+  font-size: 0.82rem;
+  color: var(--muted);
+}
+
+.terroir-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Section 3: Wines */
+.wines-section {
+  padding: 5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.section-header {
+  max-width: 620px;
+  margin-bottom: 2.8rem;
+}
+
+.section-header h2 {
+  font-size: clamp(2rem, 4vw, 3.1rem);
+  line-height: 1.12;
+  margin-bottom: 0.65rem;
+}
+
+.section-header p {
+  color: var(--muted);
+}
+
+.wine-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.75rem;
+}
+
+.wine-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 1.85rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.bottle-wrap {
+  height: 190px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1.2rem;
+}
+
+.wine-meta {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--accent);
+  font-weight: 600;
+  margin-bottom: 0.35rem;
+}
+
+.wine-card h3 {
+  font-size: 1.85rem;
+  margin-bottom: 0.55rem;
+}
+
+.wine-card p {
+  font-size: 0.92rem;
+  color: var(--muted);
+  margin-bottom: 1.5rem;
+  flex-grow: 1;
+}
+
+.wine-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.wine-price {
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 500;
+}
+
+.wine-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.wine-btn {
+  min-height: 40px;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.78rem;
+}
+
+/* Section 4: Tastings & Orders */
+.tastings-section {
+  padding: 5rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.tastings-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: start;
+}
+
+.tasting-tier {
+  padding: 1.35rem 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.tasting-tier:first-of-type {
+  border-top: 1px solid var(--border);
+}
+
+.tier-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
+  flex-wrap: wrap;
+}
+
+.tier-head h4 {
+  font-size: 1.4rem;
+}
+
+.tier-price {
+  font-family: var(--serif);
+  font-size: 1.25rem;
+  color: var(--accent);
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.tasting-tier p {
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+.booking-box {
+  background: var(--surface);
+  border-radius: var(--radius);
+  padding: 2.2rem;
+}
+
+.booking-box h3 {
+  font-size: 1.85rem;
+  margin-bottom: 0.4rem;
+}
+
+.booking-box > p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-bottom: 1.4rem;
+}
+
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.9rem;
+}
+
+.form-group {
+  margin-bottom: 0.35rem;
+}
+
+.form-group.full {
+  grid-column: 1 / -1;
+}
+
+label {
+  display: block;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.35rem;
+}
+
+input, select, textarea {
+  width: 100%;
+  min-height: 44px;
+  padding: 0.65rem 0.85rem;
+  border: 1px solid var(--border);
+  background: #FFFFFF;
+  font-family: inherit;
+  font-size: 16px;
+  color: var(--ink);
+  border-radius: var(--radius);
+  appearance: none;
+  -webkit-appearance: none;
+}
+
+select {
+  background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+  padding-right: 2.2rem;
+}
+
+textarea {
+  min-height: 84px;
+  resize: vertical;
+}
+
+input:focus, select:focus, textarea:focus {
+  outline: 2px solid var(--accent);
+  border-color: var(--accent);
+}
+
+.form-success {
+  display: none;
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
+  background: #E8F0E9;
+  border: 1px solid #9FC0A4;
+  color: #17331E;
+  border-radius: var(--radius);
+  font-size: 0.9rem;
+}
+
+/* Footer */
+footer {
+  background: var(--surface);
+  padding: 4rem 0 calc(2rem + env(safe-area-inset-bottom));
+}
+
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.footer-brand p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 0.85rem;
+  max-width: 340px;
+}
+
+footer h5 {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.9rem;
+  color: var(--ink);
+}
+
+footer ul {
+  list-style: none;
+  font-size: 0.9rem;
+  color: var(--muted);
+}
+
+footer li {
+  margin-bottom: 0.45rem;
+}
+
+footer a {
+  display: inline-block;
+  padding: 2px 0;
+}
+
+footer a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  padding-top: 1.4rem;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+/* Wine Modal */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 24, 19, 0.65);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 100;
+}
+
+.modal-backdrop.open {
+  display: flex;
+}
+
+.modal {
+  background: #FFFFFF;
+  max-width: 540px;
+  width: 100%;
+  padding: 2.2rem;
+  position: relative;
+  max-height: 88svh;
+  overflow-y: auto;
+  border-radius: var(--radius);
+}
+
+.modal-close {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.75rem;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  color: var(--muted);
+}
+
+.modal h3 {
+  font-size: clamp(1.8rem, 4vw, 2.2rem);
+  margin-bottom: 0.5rem;
+  padding-right: 2rem;
+}
+
+.modal-specs {
+  margin: 1.4rem 0;
+  border-top: 1px solid var(--border);
+}
+
+.spec-row {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.65rem 0;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.88rem;
+}
+
+.spec-row span:first-child {
+  color: var(--muted);
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+.spec-row span:last-child {
+  text-align: right;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Tablet Breakpoint */
+@media (max-width: 960px) {
+  .about-grid,
+  .terroir-grid,
+  .tastings-grid,
+  .footer-grid {
+    grid-template-columns: 1fr;
+    gap: 2.25rem;
+  }
+
+  .wine-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .wine-grid .wine-card:last-child {
+    grid-column: 1 / -1;
+    max-width: 460px;
+    width: 100%;
+    justify-self: center;
+  }
+
+  nav {
+    display: none;
+    position: absolute;
+    top: var(--header-h);
+    left: 0;
+    right: 0;
+    background: #FFFFFF;
+    border-bottom: 1px solid var(--border);
+    padding: 1.25rem 5% 1.75rem;
+    box-shadow: 0 18px 32px rgba(20, 24, 19, 0.08);
+  }
+
+  nav.open {
+    display: block;
+  }
+
+  nav ul {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 0.25rem;
+  }
+
+  nav a {
+    display: block;
+    padding: 0.75rem 0;
+    font-size: 1rem;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .mobile-menu-cta {
+    display: block;
+  }
+
+  .mobile-menu-cta .btn {
+    width: 100%;
+  }
+
+  .mobile-toggle {
+    display: inline-flex;
+  }
+
+  .nav-cta {
+    display: none;
+  }
+}
+
+/* Mobile Phone Breakpoint */
+@media (max-width: 640px) {
+  :root {
+    --header-h: 64px;
+  }
+
+  .container {
+    width: 92%;
+  }
+
+  .hero {
+    min-height: 70svh;
+  }
+
+  .hero-overlay {
+    background: linear-gradient(
+      180deg,
+      rgba(14, 18, 13, 0.56) 0%,
+      rgba(14, 18, 13, 0.84) 100%
+    );
+  }
+
+  .hero-content {
+    padding: 3.5rem 0;
+  }
+
+  .hero-buttons {
+    flex-direction: column;
+  }
+
+  .hero-buttons .btn {
+    width: 100%;
+  }
+
+  .about-section,
+  .terroir-section,
+  .wines-section,
+  .tastings-section {
+    padding: 3.5rem 0;
+  }
+
+  .section-header {
+    margin-bottom: 2rem;
+  }
+
+  .terroir-card {
+    padding: 1.4rem;
+  }
+
+  .terroir-stats {
+    gap: 1rem;
+  }
+
+  .wine-grid {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+
+  .wine-grid .wine-card:last-child {
+    max-width: none;
+  }
+
+  .wine-card {
+    padding: 1.4rem;
+  }
+
+  .bottle-wrap {
+    height: 165px;
+  }
+
+  .bottle-wrap svg {
+    height: 150px;
+  }
+
+  .booking-box {
+    padding: 1.4rem;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+
+  footer {
+    padding: 3rem 0 calc(1.75rem + env(safe-area-inset-bottom));
+  }
+
+  .footer-grid {
+    gap: 1.85rem;
+    padding-bottom: 2rem;
+  }
+
+  .modal-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+
+  .modal {
+    padding: 1.75rem 1.35rem calc(1.75rem + env(safe-area-inset-bottom));
+    border-radius: 14px 14px 0 0;
+    max-height: 86svh;
+  }
+
+  .modal-actions .btn {
+    width: 100%;
+  }
+
+  .spec-row {
+    flex-direction: column;
+    gap: 0.15rem;
+  }
+
+  .spec-row span:last-child {
+    text-align: left;
+  }
+}
