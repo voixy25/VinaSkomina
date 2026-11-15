@@ -1,84 +1,84 @@
 let currentLang = 'sl';
 
-const wineData = {
-  malvazija: {
-    orderLabel: 'Malvazija 2024 (14 €)',
+const itemData = {
+  zvrst: {
+    orderLabel: 'Hišna bela zvrst',
     sl: {
       cat: 'Vipavska dolina, suho belo vino',
-      title: 'Malvazija 2024',
-      desc: 'Grozdje ročno poberemo na sončnih legah Oševljeka, ga za kratek čas hladno maceriramo in vino zorimo na drožeh v jekleni posodi.',
+      title: 'Hišna bela zvrst',
+      desc: 'Naše vino je zvrst vseh treh sort iz obeh vinogradov v Oševljeku: Malvazije, Rebule in Vitovske grganje. Eno leto smo vsako sorto pridelali tudi ločeno.',
       specs: [
-        ['Sorta', '100% Istrska malvazija'],
-        ['Lega in tla', 'Oševljek, fliš in lapor'],
-        ['Pridelava', 'Kratka hladna maceracija, zorenje na drožeh v inoxu'],
-        ['Alkohol', '13,0 % vol.'],
-        ['K hrani', 'Bela riba, testenine s tartufi, mladi siri']
+        ['Sorte', 'Malvazija, Rebula, Vitovska grganja'],
+        ['Vinogradi', 'Spodnji in zgornji vinograd v Oševljeku'],
+        ['Tla', 'Vipavski fliš, lapor in bližina kraškega apnenca'],
+        ['Trgatev', 'Ročna trgatev'],
+        ['K hrani', 'Domače suhomesnine, napolitanske pice, bela riba']
       ]
     },
     en: {
       cat: 'Vipava Valley, dry white wine',
-      title: 'Malvazija 2024',
-      desc: 'We harvest by hand from sunlit slopes in Oševljek, macerate the skins briefly at low temperature, and age the wine on lees in stainless steel.',
+      title: 'House White Blend',
+      desc: 'Our wine blends all three varietals from both Oševljek vineyards: Malvazija, Rebula, and Vitovska Grganja. For one vintage, we also bottled each varietal separately.',
       specs: [
-        ['Varietal', '100% Malvazija'],
-        ['Origin and soil', 'Oševljek, flysch marl'],
-        ['Vinification', 'Brief cold maceration, stainless steel aging on lees'],
-        ['Alcohol', '13.0% vol.'],
-        ['Food pairing', 'Grilled sea bass, truffle pasta, young cheeses']
+        ['Varietals', 'Malvazija, Rebula, Vitovska Grganja'],
+        ['Vineyards', 'Lower and upper parcels in Oševljek'],
+        ['Soil', 'Vipava flysch marl near Karst limestone'],
+        ['Harvest', 'Hand-harvested'],
+        ['Food pairing', 'Homemade cured meats, Neapolitan pizza, white fish']
       ]
     }
   },
-  rebula: {
-    orderLabel: 'Rebula 2023 (15 €)',
+  suhomesnine: {
+    orderLabel: 'Domače suhomesnine',
     sl: {
-      cat: 'Vipavska dolina, suho belo vino',
-      title: 'Rebula 2023',
-      desc: 'Grozdje ročno poberemo na vetrovni legi pod vasjo. Vino fermentira z lastnimi kvasovkami in delno zori v velikih lesenih sodih.',
+      cat: 'Domača predelava',
+      title: 'Domače suhomesnine',
+      desc: 'Do pred nekaj leti smo prašiče redili doma, danes pa jih kupimo in zakoljemo na Dolenjskem, mesnine pa po družinskih receptih pripravimo v Oševljeku.',
       specs: [
-        ['Sorta', '100% Rebula'],
-        ['Lega in tla', 'Oševljek, fliš in lapor'],
-        ['Pridelava', 'Spontana fermentacija, delno zorenje v velikem lesu'],
-        ['Alkohol', '12,5 % vol.'],
-        ['K hrani', 'Vipavski pršut, zelenjavne rižote, perutnina']
+        ['Izdelki', 'Pršut, šalam, panceta, sladke klobase, krodegine'],
+        ['Poreklo mesa', 'Prašiči z Dolenjske'],
+        ['Priprava', 'Domača predelava in sušenje v Oševljeku'],
+        ['Krodegine', 'Tradicionalne kuhane klobase za zimske mesece'],
+        ['Nakup', 'Po predhodnem dogovoru ali ob degustaciji']
       ]
     },
     en: {
-      cat: 'Vipava Valley, dry white wine',
-      title: 'Rebula 2023',
-      desc: 'Picked by hand on our wind-swept slope below the village. The wine ferments with wild yeasts and ages partly in large oak casks.',
+      cat: 'Homemade cured pork',
+      title: 'Homemade Cured Meats',
+      desc: 'Until a few years ago we raised our own pigs; today we buy and slaughter them in Dolenjska, then cure and season all pork cuts at home in Oševljek.',
       specs: [
-        ['Varietal', '100% Rebula'],
-        ['Origin and soil', 'Oševljek, flysch and marl'],
-        ['Vinification', 'Wild fermentation, partial aging in large oak casks'],
-        ['Alcohol', '12.5% vol.'],
-        ['Food pairing', 'Vipava prosciutto, herb risotto, roast poultry']
+        ['Products', 'Prosciutto, šalam, pancetta, sladke klobase, krodegine'],
+        ['Pork sourcing', 'Pigs sourced and slaughtered in Dolenjska'],
+        ['Curing', 'Prepared and cured at home in Oševljek'],
+        ['Krodegine', 'Traditional boiled pork sausages served in winter'],
+        ['Availability', 'By prior inquiry or during tastings']
       ]
     }
   },
-  vitovska: {
-    orderLabel: 'Vitovska Grganja 2023 (17 €)',
+  pice: {
+    orderLabel: 'Degustacija z napolitanskimi picami',
     sl: {
-      cat: 'Primorska, suho belo vino',
-      title: 'Vitovska Grganja 2023',
-      desc: 'Avtohtona sorta obmejnega prostora med Vipavsko dolino in Krasom. Grozdje maceriramo nekaj dni in vino zorimo vlesenih sodih.',
+      cat: 'Ob najavljenih obiskih',
+      title: 'Napolitanske pice iz vrtljive peči',
+      desc: 'Za goste ob degustacijah v naši električni vrtljivi peči pečemo sveže napolitanske pice, obložene tudi z našo panceto, šalamom ali pršutom.',
       specs: [
-        ['Sorta', '100% Vitovska grganja'],
-        ['Lega in tla', 'Oševljek, prehod fliša v apnenec'],
-        ['Pridelava', 'Nekajdnevna maceracija, zorenje v lesenem sodu'],
-        ['Alkohol', '13,0 % vol.'],
-        ['K hrani', 'Zorjeni siri, morski sadeži, šparglji']
+        ['Peč', 'Električna vrtljiva peč za pico'],
+        ['Slog', 'Napolitanska pica'],
+        ['Obloge', 'Klasične sestavine in naše domače mesnine'],
+        ['Kdaj', 'Po predhodnem dogovoru za skupine'],
+        ['K vinu', 'Postrežemo z našo belo zvrstjo']
       ]
     },
     en: {
-      cat: 'Primorska, dry white wine',
-      title: 'Vitovska Grganja 2023',
-      desc: 'A local grape grown between the Vipava Valley and the Karst. We leave the juice on the skins for several days and mature the wine in neutral oak.',
+      cat: 'Scheduled cellar visits',
+      title: 'Neapolitan Pizza',
+      desc: 'During scheduled visits, we bake fresh Neapolitan pizzas in our rotating electric oven, often topped with our own pancetta, šalam, or prosciutto.',
       specs: [
-        ['Varietal', '100% Vitovska Grganja'],
-        ['Origin and soil', 'Oševljek, flysch and limestone'],
-        ['Vinification', 'Several days of skin contact, neutral oak maturation'],
-        ['Alcohol', '13.0% vol.'],
-        ['Food pairing', 'Aged cheeses, shellfish, asparagus']
+        ['Oven', 'Rotating electric pizza oven'],
+        ['Style', 'Neapolitan pizza'],
+        ['Toppings', 'Classic toppings and our homemade cured meats'],
+        ['Availability', 'By prior reservation for groups'],
+        ['Pairing', 'Served alongside our house white blend']
       ]
     }
   }
@@ -115,9 +115,9 @@ function closeMenu() {
   btn.textContent = '☰';
 }
 
-function openWineModal(key) {
-  const wine = wineData[key];
-  const info = wine[currentLang];
+function openItemModal(key) {
+  const item = itemData[key];
+  const info = item[currentLang];
   document.getElementById('mCategory').textContent = info.cat;
   document.getElementById('mTitle').textContent = info.title;
   document.getElementById('mDesc').textContent = info.desc;
@@ -127,10 +127,19 @@ function openWineModal(key) {
     `<div class="spec-row"><span>${label}</span><span>${val}</span></div>`
   ).join('');
 
-  document.getElementById('mOrderBtn').onclick = () => {
-    closeWineModal();
-    preselectOrder(wine.orderLabel);
-  };
+  const orderBtn = document.getElementById('mOrderBtn');
+  if (key === 'pice') {
+    orderBtn.onclick = () => {
+      closeWineModal();
+      selectPizzaVisit();
+      document.getElementById('degustacije').scrollIntoView({ behavior: 'smooth' });
+    };
+  } else {
+    orderBtn.onclick = () => {
+      closeWineModal();
+      preselectOrder(item.orderLabel);
+    };
+  }
 
   document.getElementById('wineModal').classList.add('open');
   document.body.classList.add('modal-open');
@@ -146,17 +155,23 @@ function syncFormRequirements() {
   document.getElementById('bDate').required = (pkg !== 'order');
 }
 
-function preselectOrder(wineLabel) {
+function preselectOrder(itemLabel) {
   const pkgSelect = document.getElementById('bPackage');
   pkgSelect.value = 'order';
   syncFormRequirements();
 
   const notes = document.getElementById('bNotes');
-  const prefix = currentLang === 'sl' ? 'Naročilo: ' : 'Wine order: ';
-  notes.value = notes.value ? `${notes.value}, 6x ${wineLabel}` : `${prefix}6x ${wineLabel}`;
+  const prefix = currentLang === 'sl' ? 'Povpraševanje za nakup: ' : 'Order inquiry: ';
+  notes.value = notes.value ? `${notes.value}, ${itemLabel}` : `${prefix}${itemLabel}`;
 
   document.getElementById('degustacije').scrollIntoView({ behavior: 'smooth' });
   setTimeout(() => notes.focus({ preventScroll: true }), 400);
+}
+
+function selectPizzaVisit() {
+  const pkgSelect = document.getElementById('bPackage');
+  pkgSelect.value = 'pizza';
+  syncFormRequirements();
 }
 
 function handleBooking(e) {

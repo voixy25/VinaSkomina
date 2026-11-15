@@ -328,7 +328,7 @@ nav a:hover {
   margin-bottom: 1.15rem;
 }
 
-/* Section 2: Terroir (distinct section below O nas) */
+/* Section 2: Terroir */
 .terroir-section {
   padding: 5rem 0;
   border-top: 1px solid var(--border);
@@ -382,7 +382,7 @@ nav a:hover {
   gap: 1rem;
 }
 
-/* Section 3: Wines */
+/* Section 3: Wine & Food */
 .wines-section {
   padding: 5rem 0;
   border-top: 1px solid var(--border);
@@ -458,7 +458,7 @@ nav a:hover {
 
 .wine-price {
   font-family: var(--serif);
-  font-size: 1.4rem;
+  font-size: 1.25rem;
   font-weight: 500;
 }
 
@@ -510,7 +510,7 @@ nav a:hover {
 
 .tier-price {
   font-family: var(--serif);
-  font-size: 1.25rem;
+  font-size: 1.15rem;
   color: var(--accent);
   font-weight: 500;
   white-space: nowrap;
@@ -663,7 +663,7 @@ footer a:hover {
   color: var(--muted);
 }
 
-/* Wine Modal */
+/* Modal */
 .modal-backdrop {
   position: fixed;
   inset: 0;
@@ -793,6 +793,7 @@ footer a:hover {
 
   .mobile-menu-cta {
     display: block;
+    margin-top: 1rem;
   }
 
   .mobile-menu-cta .btn {
