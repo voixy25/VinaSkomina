@@ -341,6 +341,7 @@ function openItemModal(key) {
 
   const modalBackdrop = document.getElementById('wineModal');
   modalBackdrop.classList.add('open');
+  document.documentElement.classList.add('modal-open');
   document.body.classList.add('modal-open');
   focusModalFirstElement(modalBackdrop);
 }
@@ -349,6 +350,7 @@ function closeWineModal() {
   const modalBackdrop = document.getElementById('wineModal');
   if (!modalBackdrop || !modalBackdrop.classList.contains('open')) return;
   modalBackdrop.classList.remove('open');
+  document.documentElement.classList.remove('modal-open');
   document.body.classList.remove('modal-open');
   if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
     lastFocusedElement.focus({ preventScroll: true });
@@ -465,6 +467,7 @@ function openFaqModal() {
   if (!modal) return;
   lastFocusedElement = document.activeElement;
   modal.classList.add('open');
+  document.documentElement.classList.add('modal-open');
   document.body.classList.add('modal-open');
   focusModalFirstElement(modal);
 }
@@ -473,6 +476,7 @@ function closeFaqModal() {
   const modal = document.getElementById('faqModal');
   if (!modal || !modal.classList.contains('open')) return;
   modal.classList.remove('open');
+  document.documentElement.classList.remove('modal-open');
   document.body.classList.remove('modal-open');
   if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
     lastFocusedElement.focus({ preventScroll: true });
@@ -1031,13 +1035,24 @@ function updateParallax() {
   const scrollY = window.scrollY;
   const header = document.getElementById('siteHeader');
 
-  // On desktop, all 5 sections have full-bleed dark-overlaid photography, so keep header transparent everywhere.
-  // On mobile/tablet (free scroll), keep it transparent at top and switch to white translucent on scroll.
-  const isTransparent = isDesktopScrollMode() ? true : (scrollY <= 24);
-
+  // Keep transparent header everywhere; when scrolled, apply dark blurred backdrop so underlying text is masked.
   if (header) {
-    header.classList.toggle('nav-transparent', isTransparent);
-    header.classList.toggle('scrolled', !isTransparent);
+    header.classList.add('nav-transparent');
+    header.classList.toggle('scrolled', scrollY > 24);
+  }
+
+  // Floating sticky CTA & Back-to-Top button visibility
+  const floatingCta = document.getElementById('floatingCta');
+  const backToTopBtn = document.getElementById('backToTopBtn');
+  const degustacijeEl = document.getElementById('degustacije');
+  if (backToTopBtn) {
+    backToTopBtn.classList.toggle('is-hidden', scrollY < window.innerHeight * 0.5);
+  }
+  if (floatingCta) {
+    const inDegustacije = degustacijeEl
+      ? degustacijeEl.getBoundingClientRect().top < window.innerHeight * 0.65
+      : false;
+    floatingCta.classList.toggle('is-hidden', inDegustacije);
   }
 
   // Disable parallax and section tracking on mobile/tablet
