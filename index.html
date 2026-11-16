@@ -62,7 +62,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <link rel="stylesheet" href="styles.css?v=20261116e" />
+  <link rel="stylesheet" href="styles.css?v=20261116f" />
 </head>
 <body>
 
@@ -82,7 +82,7 @@
           <li><a href="#degustacije" onclick="navJump(event, 'degustacije')" data-sl="Degustacije" data-en="Tastings" data-it="Degustazioni">Degustacije</a></li>
         </ul>
         <div class="mobile-menu-cta">
-          <a href="#degustacije" onclick="navJump(event, 'degustacije')" class="btn btn-primary" data-sl="Rezerviraj degustacijo" data-en="Book a Tasting" data-it="Prenota degustazione">Rezerviraj degustacijo</a>
+          <a href="#degustacije" onclick="navJump(event, 'degustacije')" class="btn btn-primary" data-sl="Kontakt" data-en="Contact" data-it="Contatto">Kontakt</a>
         </div>
       </nav>
 
@@ -92,7 +92,7 @@
           <button type="button" id="btnEn" onclick="setLang('en')">EN</button>
           <button type="button" id="btnIt" onclick="setLang('it')">IT</button>
         </div>
-        <a href="#degustacije" onclick="scrollToSection(event, 'degustacije')" class="btn btn-primary nav-cta" data-sl="Rezerviraj" data-en="Book Tasting" data-it="Prenota">Rezerviraj</a>
+        <a href="#degustacije" onclick="scrollToSection(event, 'degustacije')" class="btn btn-primary nav-cta" data-sl="Kontakt" data-en="Contact" data-it="Contatto">Kontakt</a>
         <button type="button" id="menuToggleBtn" class="mobile-toggle" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">☰</button>
       </div>
     </div>
@@ -132,7 +132,6 @@
       </p>
       <div class="hero-buttons">
         <a href="#vina" onclick="scrollToSection(event, 'vina')" class="btn btn-primary" data-sl="Naša ponudba" data-en="Wine & Food" data-it="Vino e cibo">Naša ponudba</a>
-        <a href="#degustacije" onclick="scrollToSection(event, 'degustacije')" class="btn btn-light-outline" data-sl="Rezerviraj obisk" data-en="Book a Visit" data-it="Prenota una visita">Rezerviraj obisk</a>
       </div>
     </div>
   </section>
@@ -261,16 +260,7 @@
         <!-- Bela zvrst -->
         <article class="wine-card" data-parallax="0.1">
           <div class="bottle-wrap">
-            <svg viewBox="0 0 100 220" height="180" aria-label="Bela zvrst Vina Skomina">
-              <rect x="42" y="10" width="16" height="36" rx="2" fill="#234B2E"/>
-              <rect x="41" y="10" width="18" height="14" rx="1" fill="#141813"/>
-              <path d="M42,46 C42,64 26,72 26,92 L26,204 C26,209 30,212 34,212 L66,212 C70,212 74,209 74,204 L74,92 C74,72 58,64 58,46 Z" fill="#2d4c34"/>
-              <rect x="30" y="108" width="40" height="62" fill="#FFFFFF"/>
-              <text x="50" y="130" text-anchor="middle" font-size="6.2" font-family="Georgia, serif" fill="#141813">SKOMINA</text>
-              <text x="50" y="143" text-anchor="middle" font-size="5.5" font-family="sans-serif" fill="#234B2E" font-weight="600">BELA ZVRST</text>
-              <text x="50" y="154" text-anchor="middle" font-size="3.6" font-family="sans-serif" fill="#4E554B">MALVAZIJA • REBULA</text>
-              <text x="50" y="160" text-anchor="middle" font-size="3.6" font-family="sans-serif" fill="#4E554B">VITOVSKA GRGANJA</text>
-            </svg>
+            <img class="card-media-img" src="vino-kozarec.jpg" alt="Kozarec belega vina Hišna bela zvrst" loading="lazy" />
           </div>
           <div class="wine-meta" data-sl="Suho belo vino (na liter)" data-en="Dry white blend (by the liter)" data-it="Vino bianco secco (a litro)">Suho belo vino (na liter)</div>
           <h3 data-sl="Hišna bela zvrst" data-en="House White Blend" data-it="Uvaggio Bianco della Casa">Hišna bela zvrst</h3>
@@ -302,20 +292,7 @@
         <!-- Suhomesnine -->
         <article class="wine-card" data-parallax="0.14">
           <div class="bottle-wrap">
-            <svg viewBox="0 0 180 140" width="165" aria-label="Domače suhomesnine">
-              <!-- Wooden board -->
-              <rect x="20" y="28" width="132" height="84" rx="10" fill="none" stroke="#234B2E" stroke-width="2"/>
-              <path d="M152,58 L168,58 C173,58 175,62 175,70 C175,78 173,82 168,82 L152,82" fill="none" stroke="#234B2E" stroke-width="2"/>
-              <!-- Salami / šalam & slices -->
-              <rect x="36" y="45" width="52" height="18" rx="9" fill="#234B2E" fill-opacity="0.14" stroke="#234B2E" stroke-width="1.5"/>
-              <circle cx="108" cy="54" r="9" fill="#234B2E" fill-opacity="0.14" stroke="#234B2E" stroke-width="1.4"/>
-              <circle cx="128" cy="58" r="8" fill="#234B2E" fill-opacity="0.14" stroke="#234B2E" stroke-width="1.4"/>
-              <!-- Pancetta & sausage lines -->
-              <rect x="38" y="76" width="44" height="18" rx="3" fill="#234B2E" fill-opacity="0.14" stroke="#234B2E" stroke-width="1.5"/>
-              <line x1="42" y1="82" x2="78" y2="82" stroke="#234B2E" stroke-width="1"/>
-              <line x1="42" y1="88" x2="78" y2="88" stroke="#234B2E" stroke-width="1"/>
-              <path d="M96,80 C108,90 124,90 136,80" fill="none" stroke="#141813" stroke-width="2.5" stroke-linecap="round"/>
-            </svg>
+            <img class="card-media-img" src="suhomesnine-deska.jpg" alt="Domače suhomesnine na leseni deski" loading="lazy" />
           </div>
           <div class="wine-meta" data-sl="Iz domače zorilnice" data-en="Cellar-cured pork" data-it="Stagionati nella nostra cantina">Iz domače zorilnice</div>
           <h3 data-sl="Domače suhomesnine" data-en="Homemade Cured Meats" data-it="Salumi Fatti in Casa">Domače suhomesnine</h3>
@@ -336,18 +313,7 @@
         <!-- Napolitanske pice -->
         <article class="wine-card" data-parallax="0.18">
           <div class="bottle-wrap">
-            <svg viewBox="0 0 180 140" width="165" aria-label="Napolitanska pica iz vrtljive peči">
-              <!-- Rotating oven stone & pizza -->
-              <circle cx="90" cy="70" r="46" fill="none" stroke="#234B2E" stroke-width="2"/>
-              <circle cx="90" cy="70" r="36" fill="#234B2E" fill-opacity="0.12" stroke="#234B2E" stroke-width="1.4"/>
-              <line x1="90" y1="34" x2="90" y2="106" stroke="#234B2E" stroke-width="0.9"/>
-              <line x1="54" y1="70" x2="126" y2="70" stroke="#234B2E" stroke-width="0.9"/>
-              <line x1="65" y1="45" x2="115" y2="95" stroke="#234B2E" stroke-width="0.9"/>
-              <line x1="115" y1="45" x2="65" y2="95" stroke="#234B2E" stroke-width="0.9"/>
-              <!-- Rotation arc arrow -->
-              <path d="M144,46 A58,58 0 0 1 144,94" fill="none" stroke="#141813" stroke-width="1.4" stroke-dasharray="3 3"/>
-              <path d="M36,94 A58,58 0 0 1 36,46" fill="none" stroke="#141813" stroke-width="1.4" stroke-dasharray="3 3"/>
-            </svg>
+            <img class="card-media-img" src="napolitanska-pica.jpg" alt="Sveže pečena napolitanska pica" loading="lazy" />
           </div>
           <div class="wine-meta" data-sl="Iz vrtljive električne peči" data-en="Rotating electric oven" data-it="Dal forno elettrico rotante">Iz vrtljive električne peči</div>
           <h3 data-sl="Napolitanske pice" data-en="Neapolitan Pizza" data-it="Pizze Napoletane">Napolitanske pice</h3>
@@ -631,6 +597,6 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script src="script.js?v=20261116e"></script>
+  <script src="script.js?v=20261116f"></script>
 </body>
 </html>

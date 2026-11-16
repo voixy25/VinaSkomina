@@ -341,7 +341,6 @@ function openItemModal(key) {
 
   const modalBackdrop = document.getElementById('wineModal');
   modalBackdrop.classList.add('open');
-  document.documentElement.classList.add('modal-open');
   document.body.classList.add('modal-open');
   focusModalFirstElement(modalBackdrop);
 }
@@ -350,7 +349,6 @@ function closeWineModal() {
   const modalBackdrop = document.getElementById('wineModal');
   if (!modalBackdrop || !modalBackdrop.classList.contains('open')) return;
   modalBackdrop.classList.remove('open');
-  document.documentElement.classList.remove('modal-open');
   document.body.classList.remove('modal-open');
   if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
     lastFocusedElement.focus({ preventScroll: true });
@@ -467,7 +465,6 @@ function openFaqModal() {
   if (!modal) return;
   lastFocusedElement = document.activeElement;
   modal.classList.add('open');
-  document.documentElement.classList.add('modal-open');
   document.body.classList.add('modal-open');
   focusModalFirstElement(modal);
 }
@@ -476,7 +473,6 @@ function closeFaqModal() {
   const modal = document.getElementById('faqModal');
   if (!modal || !modal.classList.contains('open')) return;
   modal.classList.remove('open');
-  document.documentElement.classList.remove('modal-open');
   document.body.classList.remove('modal-open');
   if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
     lastFocusedElement.focus({ preventScroll: true });
@@ -835,6 +831,9 @@ function updateActiveDots(activeId) {
   document.querySelectorAll('.section-dot').forEach(dot => {
     dot.classList.toggle('active', dot.getAttribute('data-target') === activeId);
   });
+  document.querySelectorAll('#mainNav ul a').forEach(link => {
+    link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
+  });
 }
 
 function animateScrollToY(targetY, duration = 460) {
@@ -941,10 +940,21 @@ function canSectionScrollInternally(sectionEl, deltaY) {
   return false;
 }
 
+window.addEventListener('touchmove', (e) => {
+  if (document.body.classList.contains('modal-open') && !e.target.closest('.modal')) {
+    e.preventDefault();
+  }
+}, { passive: false });
+
 window.addEventListener('wheel', (e) => {
+  if (document.body.classList.contains('modal-open')) {
+    if (!e.target.closest('.modal')) {
+      e.preventDefault();
+    }
+    return;
+  }
   // On phone/tablet, use default native scroll
   if (!isDesktopScrollMode()) return;
-  if (document.body.classList.contains('modal-open')) return;
   if (e.target.closest('#terroirMap') || e.target.closest('.modal')) return;
 
   const sections = getSnapSections();
