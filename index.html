@@ -12,8 +12,8 @@
 </head>
 <body>
 
-  <!-- Sticky Header -->
-  <header id="siteHeader">
+  <!-- Fixed Header (transparent on Hero & O nas) -->
+  <header id="siteHeader" class="nav-transparent">
     <div class="container nav-inner">
       <a href="#domov" class="logo" onclick="scrollToSection(event, 'domov')">
         Vina Skomina
@@ -26,7 +26,6 @@
           <li><a href="#terroir" onclick="navJump(event, 'terroir')" data-sl="Terroir" data-en="Terroir" data-it="Terroir">Terroir</a></li>
           <li><a href="#vina" onclick="navJump(event, 'vina')" data-sl="Vino in hrana" data-en="Wine & Food" data-it="Vino e cibo">Vino in hrana</a></li>
           <li><a href="#degustacije" onclick="navJump(event, 'degustacije')" data-sl="Degustacije" data-en="Tastings" data-it="Degustazioni">Degustacije</a></li>
-          <li><a href="#kontakt" onclick="navJump(event, 'kontakt')" data-sl="Kontakt" data-en="Contact" data-it="Contatti">Kontakt</a></li>
         </ul>
         <div class="mobile-menu-cta">
           <a href="#degustacije" onclick="navJump(event, 'degustacije')" class="btn btn-primary" data-sl="Rezerviraj degustacijo" data-en="Book a Tasting" data-it="Prenota degustazione">Rezerviraj degustacijo</a>
@@ -62,17 +61,14 @@
     <button type="button" class="section-dot" data-target="degustacije" onclick="scrollToSection(event, 'degustacije')" aria-label="Degustacije">
       <span class="dot-label" data-sl="Degustacije" data-en="Tastings" data-it="Degustazioni">Degustacije</span>
     </button>
-    <button type="button" class="section-dot" data-target="kontakt" onclick="scrollToSection(event, 'kontakt')" aria-label="Kontakt">
-      <span class="dot-label" data-sl="Kontakt" data-en="Contact" data-it="Contatti">Kontakt</span>
-    </button>
   </aside>
 
   <!-- Hero -->
-  <section class="hero snap-section" id="domov" data-section="domov">
+  <section class="hero snap-section" id="domov" data-section="domov" data-dark-nav="true">
     <img class="hero-bg-img" data-parallax-hero src="https://i.ibb.co/5h4zMxWS/vinograd.png" alt="Vinograd Vina Skomina v Oševljeku" referrerpolicy="no-referrer" onerror="this.style.display='none'" />
     <div class="hero-overlay" aria-hidden="true"></div>
 
-    <div class="container hero-content" data-parallax="0.18">
+    <div class="container hero-content" data-parallax="0.14">
       <span class="eyebrow" data-sl="Primorska, Oševljek 14" data-en="Primorska, Oševljek 14" data-it="Primorska, Oševljek 14">Primorska, Oševljek 14</span>
       <h1 data-sl="Vino, domače mesnine in napolitanske pice v Oševljeku." data-en="Wine, cured meats, and Neapolitan pizza in Oševljek." data-it="Vino, salumi fatti in casa e pizza napoletana a Oševljek.">Vino, domače mesnine in napolitanske pice v Oševljeku.</h1>
       <p data-sl="Iz dveh vinogradov pridelujemo belo zvrst Malvazije, Rebule in Vitovske grganje. Ob obiskih postrežemo svoje suhomesnine in pice iz vrtljive peči."
@@ -88,14 +84,15 @@
   </section>
 
   <!-- Section 1: O nas -->
-  <section class="about-section snap-section" id="zgodba" data-section="zgodba">
-    <div class="parallax-bg-accent" data-parallax="-0.12" aria-hidden="true"></div>
+  <section class="about-section snap-section" id="zgodba" data-section="zgodba" data-dark-nav="true">
+    <img class="section-bg-img" data-parallax-about src="klet.jpg" alt="Vinska klet in lesen vinski sod Vina Skomina" />
+    <div class="about-overlay" aria-hidden="true"></div>
     <div class="container about-grid">
-      <div data-parallax="0.08">
+      <div data-parallax="0.06">
         <span class="eyebrow" data-sl="O nas" data-en="Our Story" data-it="Chi siamo">O nas</span>
         <h2 data-sl="Družinska vinska klet v Oševljeku med trto, suhomesninami in pečjo." data-en="A family wine cellar in Oševljek with wine, cured meats, and pizza." data-it="Una cantina di famiglia a Oševljek tra vigne, salumi e forno per la pizza.">Družinska vinska klet v Oševljeku med trto, suhomesninami in pečjo.</h2>
       </div>
-      <div class="about-body" data-parallax="0.16">
+      <div class="about-body" data-parallax="0.12">
         <p data-sl="V naši družinski vinski kleti v Oševljeku obdelujemo dva vinograda na obrobju Spodnje Vipavske doline. Malvazijo, Rebulo in Vitovsko grganjo potrgamo ročno in jih v kleti združimo v eno belo zvrst."
            data-en="At our family wine cellar in Oševljek, we tend two vineyards on the edge of the Lower Vipava Valley. We pick Malvazija, Rebula, and Vitovska Grganja by hand and blend all three in our cellar into one white blend."
            data-it="Nella nostra cantina di famiglia a Oševljek coltiviamo due vigneti ai margini della Bassa Valle del Vipacco. Vendemmiamo a mano Malvasia, Ribolla Gialla e Vitovska Grganja e le uniamo in cantina in un unico uvaggio bianco.">
@@ -106,22 +103,22 @@
            data-it="Oltre alla viticoltura prepariamo salumi e insaccati fatti in casa. Fino a qualche anno fa allevavamo i maiali noi stessi; oggi li acquistiamo, macelliamo e prepariamo le carni nella Dolenjska. Asciugiamo e stagioniamo poi prosciutto crudo, salame (šalam) e pancetta nella nostra cantina a Oševljek, oltre a preparare salsicce (sladke klobase) e cotechini (krodegine) da cuocere. Durante le degustazioni in cantina sforniamo pizze napoletane nel forno elettrico rotante.">
           Poleg vinarstva pripravljamo domače mesnine. Do pred nekaj leti smo prašiče redili sami, danes pa jih kupimo, zakoljemo in mesnine pripravimo na Dolenjskem. Pršut, šalam in panceto nato sušimo in zorimo v domači kleti v Oševljeku, pripravimo pa tudi sladke klobase in krodegine za kuhanje. Ob degustacijah v kleti v vrtljivi električni peči pečemo napolitanske pice.
         </p>
-        <a href="#degustacije" onclick="scrollToSection(event, 'degustacije')" class="btn btn-outline" style="margin-top: 0.5rem;" data-sl="Obiščite našo vinsko klet" data-en="Visit our wine cellar" data-it="Visita la nostra cantina">Obiščite našo vinsko klet</a>
+        <a href="#degustacije" onclick="scrollToSection(event, 'degustacije')" class="btn btn-light-outline" style="margin-top: 0.5rem;" data-sl="Obiščite našo vinsko klet" data-en="Visit our wine cellar" data-it="Visita la nostra cantina">Obiščite našo vinsko klet</a>
       </div>
     </div>
   </section>
 
   <!-- Section 2: Terroir -->
   <section class="terroir-section snap-section" id="terroir" data-section="terroir">
-    <div class="parallax-bg-accent parallax-bg-right" data-parallax="-0.14" aria-hidden="true"></div>
+    <div class="parallax-bg-accent parallax-bg-right" data-parallax="-0.1" aria-hidden="true"></div>
     <div class="container terroir-grid">
-      <div class="terroir-text" data-parallax="0.08">
+      <div class="terroir-text" data-parallax="0.06">
         <span class="eyebrow" data-sl="Terroir" data-en="Terroir" data-it="Terroir">Terroir</span>
         <h2 data-sl="Dva vinograda med flišem in Krasom" data-en="Two vineyards between flysch and Karst" data-it="Due vigneti tra flysch e Carso">Dva vinograda med flišem in Krasom</h2>
-        <p data-sl="Spodnji vinograd leži na odprti sončni legi pod vasjo Oševljek, kjer piha vipavska burja. Zgornji vinograd je skrit na mirni gozdni jasi višje proti kraškemu robu, kjer se flišna tla prepletajo z apnencem."
-           data-en="Our lower vineyard sits on an open sunlit slope below Oševljek, cooled by the bora wind. Our upper vineyard lies in a sheltered forest clearing higher toward the Karst ridge, where flysch marl meets limestone."
-           data-it="Il vigneto inferiore si trova su un pendio soleggiato sotto il borgo di Oševljek, accarezzato dalla bora del Vipacco. Il vigneto superiore è immerso in una tranquilla radura boschiva verso il ciglione carsico, dove la marna arenacea (flysch) incontra il calcare.">
-          Spodnji vinograd leži na odprti sončni legi pod vasjo Oševljek, kjer piha vipavska burja. Zgornji vinograd je skrit na mirni gozdni jasi višje proti kraškemu robu, kjer se flišna tla prepletajo z apnencem.
+        <p data-sl="Spodnji vinograd leži na odprti sončni legi pod vasjo Oševljek, kjer piha vipavska burja. Zgornji vinograd leži višje proti kraškemu robu, kjer se flišna tla prepletajo z apnencem."
+           data-en="Our lower vineyard sits on an open sunlit slope below Oševljek, cooled by the bora wind. Our upper vineyard lies higher toward the Karst ridge, where flysch marl meets limestone."
+           data-it="Il vigneto inferiore si trova su un pendio soleggiato sotto Oševljek, accarezzato dalla bora del Vipacco. Il vigneto superiore si trova più in alto verso il ciglione carsico, dove il flysch incontra il calcare.">
+          Spodnji vinograd leži na odprti sončni legi pod vasjo Oševljek, kjer piha vipavska burja. Zgornji vinograd leži višje proti kraškemu robu, kjer se flišna tla prepletajo z apnencem.
         </p>
 
         <div class="terroir-stats">
@@ -144,11 +141,11 @@
         </div>
       </div>
 
-      <div class="terroir-card" data-parallax="0.15">
+      <div class="terroir-card" data-parallax="0.1">
         <div class="map-card-header">
           <div>
-            <h3 style="font-size: 1.45rem;" data-sl="Google Maps: Vinska klet in oba vinograda" data-en="Google Maps: Wine Cellar & Both Vineyards" data-it="Google Maps: Cantina e i due vigneti">Google Maps: Vinska klet in oba vinograda</h3>
-            <p class="map-subtitle" data-sl="Vinska klet (Oševljek 14), spodnji vinograd ob vasi in zgornji vinograd na jasi" data-en="Wine cellar (Oševljek 14), lower village vineyard, and upper clearing vineyard" data-it="Cantina (Oševljek 14), vigneto inferiore vicino al borgo e vigneto superiore nella radura">Vinska klet (Oševljek 14), spodnji vinograd ob vasi in zgornji vinograd na jasi</p>
+            <h3 style="font-size: 1.35rem;" data-sl="Google Maps: Vinska klet in oba vinograda" data-en="Google Maps: Wine Cellar & Both Vineyards" data-it="Google Maps: Cantina e i due vigneti">Google Maps: Vinska klet in oba vinograda</h3>
+            <p class="map-subtitle" data-sl="Vinska klet (Oševljek 14), spodnji vinograd in zgornji vinograd" data-en="Wine cellar (Oševljek 14), lower vineyard, and upper vineyard" data-it="Cantina (Oševljek 14), vigneto inferiore e vigneto superiore">Vinska klet (Oševljek 14), spodnji vinograd in zgornji vinograd</p>
           </div>
           <div class="map-layer-switch" role="group" aria-label="Map view mode">
             <button type="button" id="btnLayerSat" class="active" onclick="setMapLayer('sat')" data-sl="Satelit" data-en="Satellite" data-it="Satellite">Satelit</button>
@@ -168,7 +165,7 @@
           </button>
           <button type="button" class="map-pill" data-loc="upper" onclick="focusMapLocation('upper')">
             <span class="pin-dot pin-upper"></span>
-            <span data-sl="Zgornji vinograd (jasa)" data-en="Upper vineyard (clearing)" data-it="Vigneto superiore (radura)">Zgornji vinograd (jasa)</span>
+            <span data-sl="Zgornji vinograd" data-en="Upper vineyard" data-it="Vigneto superiore">Zgornji vinograd</span>
           </button>
         </div>
 
@@ -177,7 +174,7 @@
         </div>
 
         <div class="map-card-footer">
-          <span style="font-size: 0.82rem; color: var(--muted);"
+          <span style="font-size: 0.8rem; color: var(--muted);"
              data-sl="Kliknite oznako na zemljevidu za podrobnosti o legi."
              data-en="Click a marker on the map for parcel details."
              data-it="Clicca su un segnaposto sulla mappa per i dettagli.">
@@ -194,7 +191,7 @@
   <!-- Section 3: Wine & Food -->
   <section class="wines-section snap-section" id="vina" data-section="vina">
     <div class="container">
-      <div class="section-header" data-parallax="0.06">
+      <div class="section-header" data-parallax="0.04">
         <span class="eyebrow" data-sl="Vino in hrana" data-en="Wine and food" data-it="Vino e cibo">Vino in hrana</span>
         <h2 data-sl="Kaj negujemo v kleti in spečemo" data-en="What we craft in our cellar, cure, and bake" data-it="Cosa affiniamo in cantina e sforniamo">Kaj negujemo v kleti in spečemo</h2>
         <p data-sl="Odprto vino v litrih in domače suhomesnine lahko naročite za domov, napolitanske pice pa spečemo ob vašem obisku v vinski kleti."
@@ -206,9 +203,9 @@
 
       <div class="wine-grid">
         <!-- Bela zvrst -->
-        <article class="wine-card" data-parallax="0.1">
+        <article class="wine-card" data-parallax="0.06">
           <div class="bottle-wrap">
-            <svg viewBox="0 0 100 220" height="180" aria-label="Bela zvrst Vina Skomina">
+            <svg viewBox="0 0 100 220" height="135" aria-label="Bela zvrst Vina Skomina">
               <rect x="42" y="10" width="16" height="36" rx="2" fill="#234B2E"/>
               <rect x="41" y="10" width="18" height="14" rx="1" fill="#141813"/>
               <path d="M42,46 C42,64 26,72 26,92 L26,204 C26,209 30,212 34,212 L66,212 C70,212 74,209 74,204 L74,92 C74,72 58,64 58,46 Z" fill="#2d4c34"/>
@@ -247,9 +244,9 @@
         </article>
 
         <!-- Suhomesnine -->
-        <article class="wine-card" data-parallax="0.14">
+        <article class="wine-card" data-parallax="0.08">
           <div class="bottle-wrap">
-            <svg viewBox="0 0 180 140" width="165" aria-label="Domače suhomesnine">
+            <svg viewBox="0 0 180 140" width="145" aria-label="Domače suhomesnine">
               <!-- Wooden board -->
               <rect x="20" y="28" width="132" height="84" rx="10" fill="none" stroke="#234B2E" stroke-width="2"/>
               <path d="M152,58 L168,58 C173,58 175,62 175,70 C175,78 173,82 168,82 L152,82" fill="none" stroke="#234B2E" stroke-width="2"/>
@@ -281,9 +278,9 @@
         </article>
 
         <!-- Napolitanske pice -->
-        <article class="wine-card" data-parallax="0.18">
+        <article class="wine-card" data-parallax="0.1">
           <div class="bottle-wrap">
-            <svg viewBox="0 0 180 140" width="165" aria-label="Napolitanska pica iz vrtljive peči">
+            <svg viewBox="0 0 180 140" width="145" aria-label="Napolitanska pica iz vrtljive peči">
               <!-- Rotating oven stone & pizza -->
               <circle cx="90" cy="70" r="46" fill="none" stroke="#234B2E" stroke-width="2"/>
               <circle cx="90" cy="70" r="36" fill="#234B2E" fill-opacity="0.12" stroke="#234B2E" stroke-width="1.4"/>
@@ -315,167 +312,152 @@
     </div>
   </section>
 
-  <!-- Section 4: Tastings & Orders -->
+  <!-- Section 4: Tastings, Orders & Footer -->
   <section class="tastings-section snap-section" id="degustacije" data-section="degustacije">
-    <div class="parallax-bg-accent" data-parallax="-0.1" aria-hidden="true"></div>
-    <div class="container tastings-grid">
-      <div data-parallax="0.08">
-        <span class="eyebrow" data-sl="Obisk kleti in nakup" data-en="Cellar visits and orders" data-it="Visite in cantina e acquisti">Obisk kleti in nakup</span>
-        <h2 style="font-size: clamp(2rem, 4vw, 3rem); line-height: 1.12; margin-bottom: 1rem;"
-            data-sl="Degustacije v vinski kleti ali nakup za domov" data-en="Tastings in our wine cellar or home orders" data-it="Degustazioni in cantina o acquisti per casa">
-          Degustacije v vinski kleti ali nakup za domov
-        </h2>
-        <p style="color: var(--muted); margin-bottom: 1.75rem;"
-           data-sl="V vinski kleti v Oševljeku 14 sprejemamo najavljene skupine in pare v slovenščini, angleščini ali italijanščini. Vino na liter in suhomesnine lahko prevzamete osebno v kleti."
-           data-en="At our wine cellar at Oševljek 14, we host scheduled visits in Slovenian, English, or Italian. Wine by the liter and cured pork products are available for pickup at the cellar."
-           data-it="Nella nostra cantina a Oševljek 14 accogliamo gruppi e coppie su prenotazione in sloveno, inglese o italiano. Il vino sfuso a litri e i salumi si possono ritirare di persona in cantina.">
-          V vinski kleti v Oševljeku 14 sprejemamo najavljene skupine in pare v slovenščini, angleščini ali italijanščini. Vino na liter in suhomesnine lahko prevzamete osebno v kleti.
-        </p>
-
-        <div class="tasting-tier">
-          <div class="tier-head">
-            <h4 data-sl="Degustacija vina in suhomesnin v kleti" data-en="Cellar wine and cured meats tasting" data-it="Degustazione di vino e salumi in cantina">Degustacija vina in suhomesnin v kleti</h4>
-            <span class="tier-price" data-sl="Po dogovoru" data-en="By arrangement" data-it="Su accordo">Po dogovoru</span>
-          </div>
-          <p data-sl="Pokušnja naše bele zvrsti (Malvazija, Rebula, Vitovska grganja) v vinski kleti z narezkom pršuta, šalama, pancete in sladkih klobas, pozimi po dogovoru tudi s kuhanimi krodeginami."
-             data-en="Cellar tasting of our white blend (Malvazija, Rebula, Vitovska Grganja) with prosciutto, šalam, pancetta, and sladke klobase, plus boiled krodegine in winter by request."
-             data-it="Degustazione in cantina del nostro uvaggio bianco (Malvasia, Ribolla Gialla, Vitovska Grganja) con tagliere di prosciutto crudo, salame, pancetta e salsicce, in inverno su richiesta anche con cotechini (krodegine) cotti.">
-            Pokušnja naše bele zvrsti (Malvazija, Rebula, Vitovska grganja) v vinski kleti z narezkom pršuta, šalama, pancete in sladkih klobas, pozimi po dogovoru tudi s kuhanimi krodeginami.
+    <div class="parallax-bg-accent" data-parallax="-0.08" aria-hidden="true"></div>
+    <div class="container tastings-main-wrap">
+      <div class="tastings-grid">
+        <div data-parallax="0.04">
+          <span class="eyebrow" data-sl="Obisk kleti in nakup" data-en="Cellar visits and orders" data-it="Visite in cantina e acquisti">Obisk kleti in nakup</span>
+          <h2 class="tastings-heading"
+              data-sl="Degustacije v vinski kleti ali nakup za domov" data-en="Tastings in our wine cellar or home orders" data-it="Degustazioni in cantina o acquisti per casa">
+            Degustacije v vinski kleti ali nakup za domov
+          </h2>
+          <p class="tastings-lead"
+             data-sl="V vinski kleti v Oševljeku 14 sprejemamo najavljene skupine in pare v slovenščini, angleščini ali italijanščini. Vino na liter in suhomesnine lahko prevzamete osebno v kleti."
+             data-en="At our wine cellar at Oševljek 14, we host scheduled visits in Slovenian, English, or Italian. Wine by the liter and cured pork products are available for pickup at the cellar."
+             data-it="Nella nostra cantina a Oševljek 14 accogliamo gruppi e coppie su prenotazione in sloveno, inglese o italiano. Il vino sfuso a litri e i salumi si possono ritirare di persona in cantina.">
+            V vinski kleti v Oševljeku 14 sprejemamo najavljene skupine in pare v slovenščini, angleščini ali italijanščini. Vino na liter in suhomesnine lahko prevzamete osebno v kleti.
           </p>
+
+          <div class="tasting-tier">
+            <div class="tier-head">
+              <h4 data-sl="Degustacija vina in suhomesnin v kleti" data-en="Cellar wine and cured meats tasting" data-it="Degustazione di vino e salumi in cantina">Degustacija vina in suhomesnin v kleti</h4>
+              <span class="tier-price" data-sl="Po dogovoru" data-en="By arrangement" data-it="Su accordo">Po dogovoru</span>
+            </div>
+            <p data-sl="Pokušnja naše bele zvrsti (Malvazija, Rebula, Vitovska grganja) v vinski kleti z narezkom pršuta, šalama, pancete in sladkih klobas, pozimi po dogovoru tudi s kuhanimi krodeginami."
+               data-en="Cellar tasting of our white blend (Malvazija, Rebula, Vitovska Grganja) with prosciutto, šalam, pancetta, and sladke klobase, plus boiled krodegine in winter by request."
+               data-it="Degustazione in cantina del nostro uvaggio bianco (Malvasia, Ribolla Gialla, Vitovska Grganja) con tagliere di prosciutto crudo, salame, pancetta e salsicce, in inverno su richiesta anche con cotechini (krodegine) cotti.">
+              Pokušnja naše bele zvrsti (Malvazija, Rebula, Vitovska grganja) v vinski kleti z narezkom pršuta, šalama, pancete in sladkih klobas, pozimi po dogovoru tudi s kuhanimi krodeginami.
+            </p>
+          </div>
+
+          <div class="tasting-tier">
+            <div class="tier-head">
+              <h4 data-sl="Vino, suhomesnine in napolitanske pice" data-en="Wine, cured meats, and Neapolitan pizza" data-it="Vino, salumi e pizze napoletane">Vino, suhomesnine in napolitanske pice</h4>
+              <span class="tier-price" data-sl="Po dogovoru" data-en="By arrangement" data-it="Su accordo">Po dogovoru</span>
+            </div>
+            <p data-sl="Sprehod do vinogradov v Oševljeku, pokušnja vina in suhomesnin v kleti ter peka svežih napolitanskih pic v naši vrtljivi električni peči."
+               data-en="Walk to our Oševljek vineyards, cellar wine and cured meats tasting, and fresh Neapolitan pizzas baked in our rotating electric oven."
+               data-it="Passeggiata fino ai vigneti di Oševljek, degustazione di vino e salumi in cantina e pizze napoletane appena sfornate dal nostro forno elettrico rotante.">
+              Sprehod do vinogradov v Oševljeku, pokušnja vina in suhomesnin v kleti ter peka svežih napolitanskih pic v naši vrtljivi električni peči.
+            </p>
+          </div>
         </div>
 
-        <div class="tasting-tier">
-          <div class="tier-head">
-            <h4 data-sl="Vino, suhomesnine in napolitanske pice" data-en="Wine, cured meats, and Neapolitan pizza" data-it="Vino, salumi e pizze napoletane">Vino, suhomesnine in napolitanske pice</h4>
-            <span class="tier-price" data-sl="Po dogovoru" data-en="By arrangement" data-it="Su accordo">Po dogovoru</span>
-          </div>
-          <p data-sl="Sprehod do vinogradov v Oševljeku, pokušnja vina in suhomesnin v kleti ter peka svežih napolitanskih pic v naši vrtljivi električni peči."
-             data-en="Walk to our Oševljek vineyards, cellar wine and cured meats tasting, and fresh Neapolitan pizzas baked in our rotating electric oven."
-             data-it="Passeggiata fino ai vigneti di Oševljek, degustazione di vino e salumi in cantina e pizze napoletane appena sfornate dal nostro forno elettrico rotante.">
-            Sprehod do vinogradov v Oševljeku, pokušnja vina in suhomesnin v kleti ter peka svežih napolitanskih pic v naši vrtljivi električni peči.
+        <div class="booking-box" data-parallax="0.06">
+          <h3 data-sl="Rezervacija ali naročilo" data-en="Book a visit or order" data-it="Prenotazione o ordine">Rezervacija ali naročilo</h3>
+          <p data-sl="Izberite vrsto obiska kleti ali napišite, koliko litrov vina oziroma suhomesnin želite naročiti."
+             data-en="Choose a cellar visit option or specify how many liters of wine or cured meats you would like to order."
+             data-it="Scegliete il tipo di visita in cantina o indicate quanti litri di vino o salumi desiderate ordinare.">
+            Izberite vrsto obiska kleti ali napišite, koliko litrov vina oziroma suhomesnin želite naročiti.
           </p>
-        </div>
-      </div>
 
-      <div class="booking-box" data-parallax="0.14">
-        <h3 data-sl="Rezervacija ali naročilo" data-en="Book a visit or order" data-it="Prenotazione o ordine">Rezervacija ali naročilo</h3>
-        <p data-sl="Izberite vrsto obiska kleti ali napišite, koliko litrov vina oziroma suhomesnin želite naročiti."
-           data-en="Choose a cellar visit option or specify how many liters of wine or cured meats you would like to order."
-           data-it="Scegliete il tipo di visita in cantina o indicate quanti litri di vino o salumi desiderate ordinare.">
-          Izberite vrsto obiska kleti ali napišite, koliko litrov vina oziroma suhomesnin želite naročiti.
-        </p>
-
-        <div class="booking-phone-callout">
-          <div class="booking-phone-text">
-            <span class="booking-phone-eyebrow" data-sl="Hiter dogovor po telefonu" data-en="Quick arrangement by phone" data-it="Accordo rapido per telefono">Hiter dogovor po telefonu</span>
-            <span data-sl="Raje pokličete in se zmenite neposredno?" data-en="Prefer to call and arrange directly?" data-it="Preferite chiamare e accordarvi direttamente?">Raje pokličete in se zmenite neposredno?</span>
+          <div class="booking-phone-callout">
+            <div class="booking-phone-text">
+              <span class="booking-phone-eyebrow" data-sl="Hiter dogovor po telefonu" data-en="Quick arrangement by phone" data-it="Accordo rapido per telefono">Hiter dogovor po telefonu</span>
+              <span data-sl="Raje pokličete in se zmenite neposredno?" data-en="Prefer to call and arrange directly?" data-it="Preferite chiamare e accordarvi direttamente?">Raje pokličete in se zmenite neposredno?</span>
+            </div>
+            <a href="tel:+38631728563" class="booking-phone-btn" aria-label="Pokličite +386 31 728 563">
+              <span aria-hidden="true">📞</span>
+              <span>+386 31 728 563</span>
+            </a>
           </div>
-          <a href="tel:+38631728563" class="booking-phone-btn" aria-label="Pokličite +386 31 728 563">
-            <span aria-hidden="true">📞</span>
-            <span>+386 31 728 563</span>
-          </a>
-        </div>
 
-        <form id="bookingForm" onsubmit="handleBooking(event)">
-          <div class="form-grid">
-            <div class="form-group">
-              <label for="bName" data-sl="Ime in priimek" data-en="Full Name" data-it="Nome e cognome">Ime in priimek</label>
-              <input id="bName" type="text" required placeholder="Ana Novak" data-ph-sl="Ana Novak" data-ph-en="Ana Novak" data-ph-it="Ana Novak" autocomplete="name" />
-            </div>
-            <div class="form-group">
-              <label for="bEmail" data-sl="E-pošta" data-en="Email" data-it="Email">E-pošta</label>
-              <input id="bEmail" type="email" required placeholder="ana.novak@gmail.com" data-ph-sl="ana.novak@gmail.com" data-ph-en="ana.novak@gmail.com" data-ph-it="ana.novak@gmail.com" autocomplete="email" />
-            </div>
-            <div class="form-group full">
-              <label for="bPackage" data-sl="Vrsta povpraševanja" data-en="Request Type" data-it="Tipo di richiesta">Vrsta povpraševanja</label>
-              <select id="bPackage" onchange="syncFormRequirements()">
-                <option value="meats" data-sl="Degustacija vina in suhomesnin" data-en="Wine and cured meats tasting" data-it="Degustazione di vino e salumi">Degustacija vina in suhomesnin</option>
-                <option value="pizza" data-sl="Degustacija z napolitanskimi picami" data-en="Tasting with Neapolitan pizza" data-it="Degustazione con pizze napoletane">Degustacija z napolitanskimi picami</option>
-                <option value="order" data-sl="Nakup vina ali suhomesnin" data-en="Wine or cured meats order" data-it="Acquisto di vino o salumi">Nakup vina ali suhomesnin</option>
-              </select>
-            </div>
-            <div class="form-group" id="dateGroup">
-              <label for="bDate" id="bDateLabel" data-sl="Datum obiska ali prevzema" data-en="Visit or pickup date" data-it="Data di visita o ritiro">Datum obiska ali prevzema</label>
-              <input id="bDate" type="date" required />
-            </div>
-            <div class="form-group" id="guestsGroup">
-              <label for="bGuests" data-sl="Število oseb" data-en="Guests" data-it="Numero di persone">Število oseb</label>
-              <select id="bGuests">
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="4" selected>4</option>
-                <option value="6">6</option>
-                <option value="8">8</option>
-                <option value="10+">10+</option>
-              </select>
-            </div>
-            <div class="form-group" id="orderQtyGroup" style="display: none;">
-              <label for="bOrderQty" data-sl="Količina vina (v litrih)" data-en="Wine quantity (liters)" data-it="Quantità di vino (in litri)">Količina vina (v litrih)</label>
-              <div class="qty-stepper form-qty-stepper">
-                <button type="button" class="qty-btn" onclick="stepWineQty(-1, true)" aria-label="Manj litrov">−</button>
-                <input type="number" id="bOrderQty" value="1" min="1" max="500" onchange="syncWineQty(this.value, true)" />
-                <button type="button" class="qty-btn" onclick="stepWineQty(1, true)" aria-label="Več litrov">+</button>
+          <form id="bookingForm" onsubmit="handleBooking(event)">
+            <div class="form-grid">
+              <div class="form-group">
+                <label for="bName" data-sl="Ime in priimek" data-en="Full Name" data-it="Nome e cognome">Ime in priimek</label>
+                <input id="bName" type="text" required placeholder="Ana Novak" data-ph-sl="Ana Novak" data-ph-en="Ana Novak" data-ph-it="Ana Novak" autocomplete="name" />
+              </div>
+              <div class="form-group">
+                <label for="bEmail" data-sl="E-pošta" data-en="Email" data-it="Email">E-pošta</label>
+                <input id="bEmail" type="email" required placeholder="ana.novak@gmail.com" data-ph-sl="ana.novak@gmail.com" data-ph-en="ana.novak@gmail.com" data-ph-it="ana.novak@gmail.com" autocomplete="email" />
+              </div>
+              <div class="form-group full">
+                <label for="bPackage" data-sl="Vrsta povpraševanja" data-en="Request Type" data-it="Tipo di richiesta">Vrsta povpraševanja</label>
+                <select id="bPackage" onchange="syncFormRequirements()">
+                  <option value="meats" data-sl="Degustacija vina in suhomesnin" data-en="Wine and cured meats tasting" data-it="Degustazione di vino e salumi">Degustacija vina in suhomesnin</option>
+                  <option value="pizza" data-sl="Degustacija z napolitanskimi picami" data-en="Tasting with Neapolitan pizza" data-it="Degustazione con pizze napoletane">Degustacija z napolitanskimi picami</option>
+                  <option value="order" data-sl="Nakup vina ali suhomesnin" data-en="Wine or cured meats order" data-it="Acquisto di vino o salumi">Nakup vina ali suhomesnin</option>
+                </select>
+              </div>
+              <div class="form-group" id="dateGroup">
+                <label for="bDate" id="bDateLabel" data-sl="Datum obiska ali prevzema" data-en="Visit or pickup date" data-it="Data di visita o ritiro">Datum obiska ali prevzema</label>
+                <input id="bDate" type="date" required />
+              </div>
+              <div class="form-group" id="guestsGroup">
+                <label for="bGuests" data-sl="Število oseb" data-en="Guests" data-it="Numero di persone">Število oseb</label>
+                <select id="bGuests">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="4" selected>4</option>
+                  <option value="6">6</option>
+                  <option value="8">8</option>
+                  <option value="10+">10+</option>
+                </select>
+              </div>
+              <div class="form-group" id="orderQtyGroup" style="display: none;">
+                <label for="bOrderQty" data-sl="Količina vina (v litrih)" data-en="Wine quantity (liters)" data-it="Quantità di vino (in litri)">Količina vina (v litrih)</label>
+                <div class="qty-stepper form-qty-stepper">
+                  <button type="button" class="qty-btn" onclick="stepWineQty(-1, true)" aria-label="Manj litrov">−</button>
+                  <input type="number" id="bOrderQty" value="1" min="1" max="500" onchange="syncWineQty(this.value, true)" />
+                  <button type="button" class="qty-btn" onclick="stepWineQty(1, true)" aria-label="Več litrov">+</button>
+                </div>
+              </div>
+              <div class="form-group full">
+                <label for="bNotes" data-sl="Naročilo ali opombe" data-en="Order details or notes" data-it="Dettagli dell'ordine o note">Naročilo ali opombe</label>
+                <textarea id="bNotes" rows="2"></textarea>
               </div>
             </div>
-            <div class="form-group full">
-              <label for="bNotes" data-sl="Naročilo ali opombe" data-en="Order details or notes" data-it="Dettagli dell'ordine o note">Naročilo ali opombe</label>
-              <textarea id="bNotes" rows="3"></textarea>
+            <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.55rem;" data-sl="Pošlji povpraševanje" data-en="Send Request" data-it="Invia richiesta">Pošlji povpraševanje</button>
+            <div class="form-success" id="bookingSuccess"
+                 data-sl="Hvala. Vaše povpraševanje je zabeleženo v tem predogledu obrazca."
+                 data-en="Thank you. Your request has been recorded in this form preview."
+                 data-it="Grazie. La vostra richiesta è stata registrata in questa anteprima del modulo.">
+              Hvala. Vaše povpraševanje je zabeleženo v tem predogledu obrazca.
             </div>
-          </div>
-          <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 0.75rem;" data-sl="Pošlji povpraševanje" data-en="Send Request" data-it="Invia richiesta">Pošlji povpraševanje</button>
-          <div class="form-success" id="bookingSuccess"
-               data-sl="Hvala. Vaše povpraševanje je zabeleženo v tem predogledu obrazca."
-               data-en="Thank you. Your request has been recorded in this form preview."
-               data-it="Grazie. La vostra richiesta è stata registrata in questa anteprima del modulo.">
-            Hvala. Vaše povpraševanje je zabeleženo v tem predogledu obrazca.
-          </div>
-        </form>
+          </form>
+        </div>
       </div>
     </div>
+
+    <!-- Integrated Footer inside Degustacije Section -->
+    <footer id="kontakt" class="integrated-footer">
+      <div class="container">
+        <div class="footer-compact-row">
+          <div class="footer-brand-inline">
+            <span class="footer-logo">Vina Skomina</span>
+            <span class="footer-sep">·</span>
+            <span>Oševljek 14, <span data-sl="5292 Renče, Slovenija" data-en="5292 Renče, Slovenia" data-it="5292 Renče, Slovenia">5292 Renče, Slovenija</span></span>
+            <span class="footer-sep">·</span>
+            <span data-sl="Vinorodna dežela Primorska" data-en="Primorska wine region" data-it="Regione vinicola Primorska">Vinorodna dežela Primorska</span>
+          </div>
+          <div class="footer-contact-inline">
+            <a href="tel:+38631728563">+386 31 728 563</a>
+            <span class="footer-sep">·</span>
+            <a href="mailto:vina@skomina.si">vina@skomina.si</a>
+            <span class="footer-sep">·</span>
+            <span data-sl="Obiski po predhodnem dogovoru" data-en="Visits by prior appointment" data-it="Visite su prenotazione">Obiski po predhodnem dogovoru</span>
+          </div>
+        </div>
+        <div class="footer-bottom">
+          <span data-sl="© 2026 Vina Skomina. Vse pravice pridržane." data-en="© 2026 Vina Skomina. All rights reserved." data-it="© 2026 Vina Skomina. Tutti i diritti riservati.">© 2026 Vina Skomina. Vse pravice pridržane.</span>
+          <span data-sl="Uživanje alkohola lahko škoduje zdravju. Pijte odgovorno." data-en="Please drink responsibly." data-it="Bevi responsabilmente.">Uživanje alkohola lahko škoduje zdravju. Pijte odgovorno.</span>
+        </div>
+      </div>
+    </footer>
   </section>
-
-  <!-- Footer / Contact -->
-  <footer id="kontakt" class="snap-section" data-section="kontakt">
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="logo">Vina Skomina</div>
-          <p data-sl="Družinska vinska klet v Oševljeku (Spodnja Vipavska dolina). Bela zvrst Malvazije, Rebule in Vitovske grganje, domače suhomesnine in napolitanske pice."
-             data-en="Family wine cellar in Oševljek, Lower Vipava Valley. White blend of Malvazija, Rebula, and Vitovska Grganja, homemade cured pork, and Neapolitan pizza."
-             data-it="Cantina di famiglia a Oševljek (Bassa Valle del Vipacco). Uvaggio bianco di Malvasia, Ribolla Gialla e Vitovska Grganja, salumi fatti in casa e pizze napoletane.">
-            Družinska vinska klet v Oševljeku (Spodnja Vipavska dolina). Bela zvrst Malvazije, Rebule in Vitovske grganje, domače suhomesnine in napolitanske pice.
-          </p>
-        </div>
-
-        <div>
-          <h5 data-sl="Kje nas najdete" data-en="Visit Us" data-it="Dove siamo">Kje nas najdete</h5>
-          <ul>
-            <li>Oševljek 14</li>
-            <li data-sl="5292 Renče, Slovenija" data-en="5292 Renče, Slovenia" data-it="5292 Renče, Slovenia">5292 Renče, Slovenija</li>
-            <li data-sl="Vinorodna dežela Primorska" data-en="Primorska wine region" data-it="Regione vinicola del Litorale (Primorska)">Vinorodna dežela Primorska</li>
-            <li style="margin-top: 0.6rem;"><a href="tel:+38631728563">+386 31 728 563</a></li>
-            <li><a href="mailto:vina@skomina.si">vina@skomina.si</a></li>
-          </ul>
-        </div>
-
-        <div>
-          <h5 data-sl="Odpiralni čas in povezave" data-en="Hours and links" data-it="Orari e link">Odpiralni čas in povezave</h5>
-          <ul>
-            <li data-sl="Obiski po predhodnem dogovoru" data-en="Visits by prior appointment" data-it="Visite su prenotazione">Obiski po predhodnem dogovoru</li>
-            <li style="margin-top: 0.6rem;"><a href="#zgodba" onclick="scrollToSection(event, 'zgodba')" data-sl="O nas" data-en="Our Story" data-it="Chi siamo">O nas</a></li>
-            <li><a href="#terroir" onclick="scrollToSection(event, 'terroir')" data-sl="Terroir" data-en="Terroir" data-it="Terroir">Terroir</a></li>
-            <li><a href="#vina" onclick="scrollToSection(event, 'vina')" data-sl="Vino in hrana" data-en="Wine & Food" data-it="Vino e cibo">Vino in hrana</a></li>
-            <li><a href="#degustacije" onclick="scrollToSection(event, 'degustacije')" data-sl="Degustacije" data-en="Tastings" data-it="Degustazioni">Degustacije</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <span data-sl="© 2026 Vina Skomina. Vse pravice pridržane." data-en="© 2026 Vina Skomina. All rights reserved." data-it="© 2026 Vina Skomina. Tutti i diritti riservati.">© 2026 Vina Skomina. Vse pravice pridržane.</span>
-        <span data-sl="Uživanje alkohola lahko škoduje zdravju. Pijte odgovorno." data-en="Please drink responsibly." data-it="Bevi responsabilmente.">Uživanje alkohola lahko škoduje zdravju. Pijte odgovorno.</span>
-      </div>
-    </div>
-  </footer>
 
   <!-- Detail Modal -->
   <div class="modal-backdrop" id="wineModal" onclick="if(event.target===this) closeWineModal()">

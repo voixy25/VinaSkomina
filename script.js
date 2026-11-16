@@ -236,7 +236,9 @@ function setLang(lang) {
 function toggleMenu() {
   const nav = document.getElementById('mainNav');
   const btn = document.getElementById('menuToggleBtn');
+  const header = document.getElementById('siteHeader');
   const isOpen = nav.classList.toggle('open');
+  if (header) header.classList.toggle('menu-open', isOpen);
   btn.setAttribute('aria-expanded', isOpen);
   btn.textContent = isOpen ? '✕' : '☰';
 }
@@ -244,7 +246,9 @@ function toggleMenu() {
 function closeMenu() {
   const nav = document.getElementById('mainNav');
   const btn = document.getElementById('menuToggleBtn');
+  const header = document.getElementById('siteHeader');
   nav.classList.remove('open');
+  if (header) header.classList.remove('menu-open');
   btn.setAttribute('aria-expanded', 'false');
   btn.textContent = '☰';
 }
@@ -428,37 +432,29 @@ const mapLocations = {
     }
   },
   lower: {
-    coords: [45.87809, 13.69629],
+    coords: [45.87802, 13.69624],
     polygon: [
-      [45.87841, 13.69621],
-      [45.87831, 13.69638],
-      [45.87822, 13.69646],
-      [45.87804, 13.69656],
-      [45.87793, 13.69654],
-      [45.87779, 13.69645],
-      [45.87774, 13.69631],
-      [45.87789, 13.69620],
-      [45.87799, 13.69616],
-      [45.87814, 13.69607],
       [45.87824, 13.69604],
-      [45.87839, 13.69612]
+      [45.87823, 13.69627],
+      [45.87797, 13.69644],
+      [45.87774, 13.69626]
     ],
     color: '#2E7D47',
     zoom: 18,
     sl: {
       short: 'Spodnji vinograd',
-      title: 'Spodnji vinograd (pod vasjo)',
-      desc: 'Odprta sončna lega tik ob cesti pod vasjo Oševljek, zračena z vipavsko burjo na flišnih tleh.'
+      title: 'Spodnji vinograd',
+      desc: 'Odprta sončna lega v Oševljeku, zračena z vipavsko burjo na flišnih tleh.'
     },
     en: {
       short: 'Lower vineyard',
-      title: 'Lower Vineyard (below village)',
-      desc: 'Open sunlit parcel right alongside the road below Oševljek village, cooled by the Vipava bora wind.'
+      title: 'Lower Vineyard',
+      desc: 'Open sunlit parcel in Oševljek, cooled by the Vipava bora wind on flysch soils.'
     },
     it: {
       short: 'Vigneto inferiore',
-      title: 'Vigneto inferiore (sotto il borgo)',
-      desc: 'Parcella soleggiata lungo la strada sotto il borgo di Oševljek, ventilata dalla bora del Vipacco su terreni di flysch.'
+      title: 'Vigneto inferiore',
+      desc: 'Parcella soleggiata a Oševljek, ventilata dalla bora del Vipacco su terreni di flysch.'
     }
   },
   upper: {
@@ -480,19 +476,19 @@ const mapLocations = {
     color: '#D49B27',
     zoom: 18,
     sl: {
-      short: 'Zgornji vinograd (jasa)',
-      title: 'Zgornji vinograd (gozdna jasa)',
-      desc: 'Zavetni vinograd na mirni gozdni jasi višje proti kraškemu robu, kjer se fliš sreča z apnencem.'
+      short: 'Zgornji vinograd',
+      title: 'Zgornji vinograd',
+      desc: 'Zavetni vinograd višje proti kraškemu robu, kjer se fliš sreča z apnencem.'
     },
     en: {
-      short: 'Upper vineyard (clearing)',
-      title: 'Upper Vineyard (forest clearing)',
-      desc: 'Sheltered parcel in a quiet forest clearing higher toward the Karst edge where flysch meets limestone.'
+      short: 'Upper vineyard',
+      title: 'Upper Vineyard',
+      desc: 'Sheltered parcel higher toward the Karst edge where flysch meets limestone.'
     },
     it: {
-      short: 'Vigneto superiore (radura)',
-      title: 'Vigneto superiore (radura nel bosco)',
-      desc: 'Parcella riparata in una tranquilla radura boschiva verso il ciglione carsico, dove il flysch incontra il calcare.'
+      short: 'Vigneto superiore',
+      title: 'Vigneto superiore',
+      desc: 'Parcella riparata più in alto verso il ciglione carsico, dove il flysch incontra il calcare.'
     }
   }
 };
@@ -629,14 +625,15 @@ function updateMapLanguage() {
 /* ==========================================
    Strict 1-Gesture = 1-Section Jump Scrolling & Parallax (Desktop Only)
    ========================================== */
-const snapSectionIds = ['domov', 'zgodba', 'terroir', 'vina', 'degustacije', 'kontakt'];
+const snapSectionIds = ['domov', 'zgodba', 'terroir', 'vina', 'degustacije'];
 let currentSectionIndex = 0;
 let isSectionAnimating = false;
 let wheelGestureLocked = false;
 let animUnlockTimer = null;
 let wheelQuietTimer = null;
+let scrollAnimRafId = null;
+let lastStepTime = 0;
 let lastWheelDeltaAbs = 0;
-let lastWheelTime = 0;
 
 function isDesktopScrollMode() {
   return window.innerWidth > 960 && window.matchMedia('(pointer: fine)').matches;
@@ -652,6 +649,58 @@ function updateActiveDots(activeId) {
   });
 }
 
+function updateHeaderNavState() {
+  const header = document.getElementById('siteHeader');
+  if (!header) return;
+  const terroirEl = document.getElementById('terroir');
+  const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 68;
+  const threshold = terroirEl ? (terroirEl.offsetTop - headerH * 0.55) : (window.innerHeight * 1.5);
+  const isOverDarkImageSection = window.scrollY < threshold;
+
+  header.classList.toggle('nav-transparent', isOverDarkImageSection);
+  header.classList.toggle('scrolled', !isOverDarkImageSection);
+}
+
+function animateScrollToY(targetY, duration = 640) {
+  if (scrollAnimRafId) {
+    cancelAnimationFrame(scrollAnimRafId);
+    scrollAnimRafId = null;
+  }
+
+  const startY = window.scrollY;
+  const diff = targetY - startY;
+  if (Math.abs(diff) < 2) {
+    window.scrollTo(0, targetY);
+    isSectionAnimating = false;
+    updateHeaderNavState();
+    return;
+  }
+
+  const startTime = performance.now();
+  isSectionAnimating = true;
+  clearTimeout(animUnlockTimer);
+
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(1, elapsed / duration);
+    // Ease-out cubic for smooth, controlled 1-section transition
+    const eased = 1 - Math.pow(1 - progress, 3);
+    window.scrollTo(0, Math.round(startY + diff * eased));
+
+    if (progress < 1) {
+      scrollAnimRafId = requestAnimationFrame(step);
+    } else {
+      window.scrollTo(0, targetY);
+      scrollAnimRafId = null;
+      animUnlockTimer = setTimeout(() => {
+        isSectionAnimating = false;
+      }, 90);
+    }
+  }
+
+  scrollAnimRafId = requestAnimationFrame(step);
+}
+
 function scrollToSectionIndex(idx) {
   const sections = getSnapSections();
   if (!sections.length) return;
@@ -659,14 +708,8 @@ function scrollToSectionIndex(idx) {
   currentSectionIndex = clampedIdx;
   const targetEl = sections[clampedIdx];
 
-  isSectionAnimating = true;
-  clearTimeout(animUnlockTimer);
-  animUnlockTimer = setTimeout(() => {
-    isSectionAnimating = false;
-  }, 820);
-
   updateActiveDots(targetEl.id);
-  targetEl.scrollIntoView({ behavior: 'smooth', block: targetEl.tagName === 'FOOTER' ? 'end' : 'start' });
+  animateScrollToY(targetEl.offsetTop, 640);
 }
 
 function scrollToSection(e, id) {
@@ -681,7 +724,7 @@ function scrollToSection(e, id) {
     scrollToSectionIndex(idx);
   } else {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) animateScrollToY(el.offsetTop, 640);
   }
 }
 
@@ -692,8 +735,7 @@ function navJump(e, id) {
 
 function detectCurrentSectionIndex() {
   const sections = getSnapSections();
-  const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 72;
-  const probeY = window.scrollY + headerH + window.innerHeight * 0.35;
+  const probeY = window.scrollY + window.innerHeight * 0.45;
 
   let bestIdx = 0;
   sections.forEach((sec, i) => {
@@ -702,24 +744,6 @@ function detectCurrentSectionIndex() {
     }
   });
   return bestIdx;
-}
-
-function canSectionScrollInternally(sectionEl, deltaY) {
-  if (!sectionEl) return false;
-  const rect = sectionEl.getBoundingClientRect();
-  const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 72;
-  const viewH = window.innerHeight;
-
-  // Allow internal scroll only when a section is taller than the viewport on smaller screens
-  if (rect.height > viewH - headerH + 36) {
-    if (deltaY > 0 && rect.bottom > viewH + 18) {
-      return true;
-    }
-    if (deltaY < 0 && rect.top < headerH - 18) {
-      return true;
-    }
-  }
-  return false;
 }
 
 window.addEventListener('wheel', (e) => {
@@ -731,42 +755,43 @@ window.addEventListener('wheel', (e) => {
   const sections = getSnapSections();
   if (!sections.length) return;
 
-  const activeSection = sections[currentSectionIndex] || sections[detectCurrentSectionIndex()];
-
-  if (canSectionScrollInternally(activeSection, e.deltaY)) {
-    return;
-  }
-
   // Always block native wheel scroll on desktop so browser momentum never skips multiple sections
   e.preventDefault();
 
   const absDelta = Math.abs(e.deltaY);
   const now = performance.now();
 
-  // Keep gesture locked as long as wheel/trackpad inertia events keep arriving
+  // Keep gesture locked as long as wheel/trackpad inertia events keep streaming
   clearTimeout(wheelQuietTimer);
   wheelQuietTimer = setTimeout(() => {
     wheelGestureLocked = false;
     lastWheelDeltaAbs = 0;
-  }, 240);
+  }, 260);
 
-  if (absDelta < 4) return;
+  if (absDelta < 5) return;
 
-  // Do not allow another section jump until BOTH the animation finished AND the wheel gesture ended
-  if (isSectionAnimating || wheelGestureLocked) {
+  // Strict single-step lock: never allow a second section jump during animation, cooldown, or decaying inertia
+  if (isSectionAnimating || (now - lastStepTime < 740)) {
     lastWheelDeltaAbs = absDelta;
-    lastWheelTime = now;
     return;
+  }
+
+  if (wheelGestureLocked) {
+    // Only unlock early if animation is long finished AND the user clearly initiated a brand-new sharp flick after inertia decayed
+    const isFreshFlickAfterDecay = (now - lastStepTime > 900) && (lastWheelDeltaAbs < 12) && (absDelta > lastWheelDeltaAbs * 2.5);
+    if (!isFreshFlickAfterDecay) {
+      lastWheelDeltaAbs = absDelta;
+      return;
+    }
   }
 
   wheelGestureLocked = true;
   lastWheelDeltaAbs = absDelta;
-  lastWheelTime = now;
+  lastStepTime = now;
 
   const dir = e.deltaY > 0 ? 1 : -1;
-  const baseIdx = detectCurrentSectionIndex();
-  const nextIdx = Math.max(0, Math.min(sections.length - 1, baseIdx + dir));
-  if (nextIdx !== baseIdx) {
+  const nextIdx = Math.max(0, Math.min(sections.length - 1, currentSectionIndex + dir));
+  if (nextIdx !== currentSectionIndex) {
     scrollToSectionIndex(nextIdx);
   }
 }, { passive: false });
@@ -785,21 +810,14 @@ document.addEventListener('keydown', (e) => {
 
   if (e.key === 'ArrowDown' || e.key === 'PageDown') {
     const sections = getSnapSections();
-    const activeIdx = detectCurrentSectionIndex();
-    if (!canSectionScrollInternally(sections[activeIdx], 1)) {
-      e.preventDefault();
-      if (!isSectionAnimating && activeIdx < sections.length - 1) {
-        scrollToSectionIndex(activeIdx + 1);
-      }
+    e.preventDefault();
+    if (!isSectionAnimating && currentSectionIndex < sections.length - 1) {
+      scrollToSectionIndex(currentSectionIndex + 1);
     }
   } else if (e.key === 'ArrowUp' || e.key === 'PageUp') {
-    const sections = getSnapSections();
-    const activeIdx = detectCurrentSectionIndex();
-    if (!canSectionScrollInternally(sections[activeIdx], -1)) {
-      e.preventDefault();
-      if (!isSectionAnimating && activeIdx > 0) {
-        scrollToSectionIndex(activeIdx - 1);
-      }
+    e.preventDefault();
+    if (!isSectionAnimating && currentSectionIndex > 0) {
+      scrollToSectionIndex(currentSectionIndex - 1);
     }
   }
 });
@@ -807,12 +825,14 @@ document.addEventListener('keydown', (e) => {
 let parallaxTicking = false;
 function updateParallax() {
   const scrollY = window.scrollY;
-  document.getElementById('siteHeader').classList.toggle('scrolled', scrollY > 12);
+  updateHeaderNavState();
 
   // Disable parallax and section tracking on mobile/tablet
   if (!isDesktopScrollMode()) {
     const heroImg = document.querySelector('[data-parallax-hero]');
     if (heroImg) heroImg.style.removeProperty('--hero-parallax');
+    const aboutImg = document.querySelector('[data-parallax-about]');
+    if (aboutImg) aboutImg.style.removeProperty('--about-parallax');
     document.querySelectorAll('[data-parallax]').forEach(el => {
       el.style.removeProperty('--parallax-y');
     });
@@ -832,8 +852,19 @@ function updateParallax() {
   // Hero background parallax
   const heroImg = document.querySelector('[data-parallax-hero]');
   if (heroImg && scrollY < window.innerHeight * 1.4) {
-    const heroOffset = Math.min(140, scrollY * 0.34);
+    const heroOffset = Math.min(130, scrollY * 0.32);
     heroImg.style.setProperty('--hero-parallax', `${heroOffset.toFixed(1)}px`);
+  }
+
+  // O nas (cellar & barrel) background parallax
+  const aboutImg = document.querySelector('[data-parallax-about]');
+  const aboutSec = document.getElementById('zgodba');
+  if (aboutImg && aboutSec) {
+    const relY = scrollY - aboutSec.offsetTop;
+    if (Math.abs(relY) < window.innerHeight * 1.4) {
+      const aboutOffset = Math.max(-90, Math.min(90, relY * 0.24));
+      aboutImg.style.setProperty('--about-parallax', `${aboutOffset.toFixed(1)}px`);
+    }
   }
 
   // Multi-element section parallax
@@ -843,7 +874,7 @@ function updateParallax() {
     const rect = el.getBoundingClientRect();
     const elCenter = rect.top + rect.height / 2;
     const distFromCenter = elCenter - viewportCenter;
-    const offset = Math.max(-48, Math.min(48, distFromCenter * speed));
+    const offset = Math.max(-44, Math.min(44, distFromCenter * speed));
     el.style.setProperty('--parallax-y', `${offset.toFixed(1)}px`);
   });
 
