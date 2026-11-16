@@ -228,6 +228,25 @@ function setLang(lang) {
     }
   });
 
+  const seoByLang = {
+    sl: {
+      title: 'Degustacija vin v Vipavski dolini | Vina Skomina',
+      desc: 'Doživite degustacijo domačega vina, suhomesnin in sveže pečenih napolitanskih pic v družinski vinski kleti Skomina v Vipavski dolini. Rezervirajte obisk.'
+    },
+    en: {
+      title: 'Wine Tasting in Vipava Valley | Vina Skomina',
+      desc: 'Experience homemade white wine, cellar-aged cured meats, and freshly baked Neapolitan pizza at the Skomina family wine cellar in the Vipava Valley. Book your visit.'
+    },
+    it: {
+      title: 'Degustazione di vini nella Valle del Vipacco | Vina Skomina',
+      desc: 'Vivete una degustazione di vino della casa, salumi artigianali e pizze napoletane appena sfornate nella cantina di famiglia Skomina nella Valle del Vipacco. Prenotate una visita.'
+    }
+  };
+  const seo = seoByLang[lang] || seoByLang.sl;
+  document.title = seo.title;
+  const metaDesc = document.querySelector('meta[name="description"]');
+  if (metaDesc) metaDesc.setAttribute('content', seo.desc);
+
   updateQtyUI();
   syncFormRequirements();
   updateMapLanguage();
@@ -380,13 +399,103 @@ function selectPizzaVisit(e) {
   scrollToSection(null, 'degustacije');
 }
 
-function handleBooking(e) {
+function selectTastingPackage(pkg) {
+  const pkgSelect = document.getElementById('bPackage');
+  if (pkgSelect) {
+    pkgSelect.value = pkg;
+    syncFormRequirements();
+  }
+  const nameInput = document.getElementById('bName');
+  if (nameInput) {
+    setTimeout(() => nameInput.focus({ preventScroll: true }), 250);
+  }
+}
+
+function openFaqModal() {
+  const modal = document.getElementById('faqModal');
+  if (!modal) return;
+  modal.classList.add('open');
+  document.body.classList.add('modal-open');
+}
+
+function closeFaqModal() {
+  const modal = document.getElementById('faqModal');
+  if (!modal) return;
+  modal.classList.remove('open');
+  document.body.classList.remove('modal-open');
+}
+
+async function handleBooking(e) {
   e.preventDefault();
-  document.getElementById('bookingSuccess').style.display = 'block';
-  e.target.reset();
-  wineQty = 1;
-  updateQtyUI();
-  syncFormRequirements();
+  const form = e.target;
+  const submitBtn = document.getElementById('bookingSubmitBtn');
+  const successEl = document.getElementById('bookingSuccess');
+  const originalBtnText = submitBtn ? submitBtn.textContent : '';
+
+  const name = (document.getElementById('bName')?.value || '').trim();
+  const email = (document.getElementById('bEmail')?.value || '').trim();
+  const pkgEl = document.getElementById('bPackage');
+  const pkgValue = pkgEl ? pkgEl.value : 'meats';
+  const pkgLabel = pkgEl && pkgEl.selectedOptions[0] ? pkgEl.selectedOptions[0].textContent : pkgValue;
+  const date = document.getElementById('bDate')?.value || '-';
+  const guests = pkgValue === 'order' ? '-' : (document.getElementById('bGuests')?.value || '-');
+  const orderQty = pkgValue === 'order' ? `${wineQty} L` : '-';
+  const notes = (document.getElementById('bNotes')?.value || '').trim();
+
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = currentLang === 'en' ? 'Sending...' : (currentLang === 'it' ? 'Invio in corso...' : 'Pošiljanje...');
+  }
+
+  const payload = {
+    _subject: `Vina Skomina — ${pkgLabel} (${name})`,
+    _replyto: email,
+    _template: 'table',
+    Ime_in_priimek: name,
+    E_posta: email,
+    Vrsta_povprasevanja: pkgLabel,
+    Datum: date,
+    Stevilo_oseb: guests,
+    Kolicina_vina: orderQty,
+    Opombe: notes || '-',
+    Jezik: currentLang.toUpperCase()
+  };
+
+  try {
+    const res = await fetch('https://formsubmit.co/ajax/vina@skomina.si', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+
+    if (successEl) successEl.style.display = 'block';
+    form.reset();
+    wineQty = 1;
+    updateQtyUI();
+    syncFormRequirements();
+  } catch (err) {
+    // Fallback: open pre-filled email client so no inquiry is ever lost
+    const bodyLines = [
+      `Ime in priimek: ${name}`,
+      `E-pošta: ${email}`,
+      `Vrsta: ${pkgLabel}`,
+      `Datum: ${date}`,
+      pkgValue === 'order' ? `Količina: ${orderQty}` : `Število oseb: ${guests}`,
+      `Opombe: ${notes || '-'}`
+    ].join('\n');
+    window.location.href = `mailto:vina@skomina.si?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(bodyLines)}`;
+    if (successEl) successEl.style.display = 'block';
+  } finally {
+    if (submitBtn) {
+      submitBtn.disabled = false;
+      submitBtn.textContent = originalBtnText;
+    }
+  }
 }
 
 /* ==========================================
@@ -794,6 +903,7 @@ window.addEventListener('wheel', (e) => {
 document.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') {
     closeWineModal();
+    closeFaqModal();
     closeMenu();
     return;
   }
@@ -896,6 +1006,11 @@ window.addEventListener('resize', () => {
 
 window.addEventListener('DOMContentLoaded', () => {
   currentSectionIndex = detectCurrentSectionIndex();
+  const params = new URLSearchParams(window.location.search);
+  const urlLang = params.get('lang');
+  if (urlLang && ['sl', 'en', 'it'].includes(urlLang)) {
+    setLang(urlLang);
+  }
   updateQtyUI();
   syncFormRequirements();
   initTerroirMap();

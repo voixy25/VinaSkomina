@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>https://voixy25.github.io/VinaSkomina/</loc>
+    <xhtml:link rel="alternate" hreflang="sl" href="https://voixy25.github.io/VinaSkomina/sl/degustacija-vin/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://voixy25.github.io/VinaSkomina/en/wine-tasting-vipava-valley/" />
+    <xhtml:link rel="alternate" hreflang="it" href="https://voixy25.github.io/VinaSkomina/it/degustazione-vini-valle-vipava/" />
+    <priority>1.0</priority>
+  </url>
+  <url>
+    <loc>https://voixy25.github.io/VinaSkomina/sl/degustacija-vin/</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://voixy25.github.io/VinaSkomina/en/wine-tasting-vipava-valley/</loc>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://voixy25.github.io/VinaSkomina/it/degustazione-vini-valle-vipava/</loc>
+    <priority>0.9</priority>
+  </url>
+</urlset>

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://voixy25.github.io/VinaSkomina/sitemap.xml

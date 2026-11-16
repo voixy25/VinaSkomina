@@ -1033,8 +1033,63 @@ nav a:hover {
 }
 
 .tasting-tier p {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
   color: var(--muted);
+}
+
+.tier-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.65rem;
+  margin-top: 0.65rem;
+}
+
+.tier-meta-pill {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.22rem 0.55rem;
+  font-size: 0.74rem;
+  font-weight: 500;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  white-space: nowrap;
+}
+
+.tier-cta-link {
+  margin-left: auto;
+  border: none;
+  background: transparent;
+  padding: 0.25rem 0;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--accent);
+  white-space: nowrap;
+}
+
+.tier-cta-link:hover {
+  text-decoration: underline;
+}
+
+.tasting-faq-bar {
+  margin-top: 0.85rem;
+}
+
+.faq-trigger-btn {
+  border: none;
+  background: transparent;
+  padding: 0.25rem 0;
+  font-size: 0.84rem;
+  font-weight: 600;
+  color: var(--muted);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.faq-trigger-btn:hover {
+  color: var(--accent);
 }
 
 .booking-box {
