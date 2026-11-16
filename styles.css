@@ -21,15 +21,6 @@
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
-}
-
-html::-webkit-scrollbar,
-body::-webkit-scrollbar {
-  display: none;
-  width: 0;
-  height: 0;
 }
 
 body {
@@ -40,8 +31,6 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
 }
 
 body.modal-open {
@@ -49,6 +38,7 @@ body.modal-open {
 }
 
 .snap-section {
+  scroll-margin-top: var(--header-h);
   position: relative;
 }
 
@@ -171,7 +161,7 @@ h1, h2, h3, h4 {
   letter-spacing: 0.14em;
   text-transform: uppercase;
   color: var(--accent);
-  margin-bottom: 0.55rem;
+  margin-bottom: 0.65rem;
   display: block;
 }
 
@@ -186,8 +176,8 @@ h1, h2, h3, h4 {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  min-height: 44px;
-  padding: 0.7rem 1.45rem;
+  min-height: 46px;
+  padding: 0.78rem 1.5rem;
   font-size: 0.85rem;
   font-weight: 600;
   letter-spacing: 0.03em;
@@ -228,31 +218,20 @@ h1, h2, h3, h4 {
   color: var(--ink);
 }
 
-/* Fixed Header (Transparent on Hero & O nas, Solid on Light Sections) */
+/* Sticky Header */
 header {
-  position: fixed;
+  position: -webkit-sticky;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 50;
   width: 100%;
-  background: rgba(255, 255, 255, 0.94);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: #FFFFFF;
   border-bottom: 1px solid var(--border);
-  transition: background-color 0.28s ease, border-color 0.28s ease, box-shadow 0.28s ease, color 0.28s ease;
+  transition: box-shadow 0.2s ease;
 }
 
 header.scrolled {
   box-shadow: 0 6px 20px rgba(20, 24, 19, 0.06);
-}
-
-header.nav-transparent:not(.menu-open) {
-  background: linear-gradient(180deg, rgba(10, 14, 10, 0.55) 0%, rgba(10, 14, 10, 0) 100%);
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border-bottom-color: transparent;
-  box-shadow: none;
 }
 
 .nav-inner {
@@ -271,8 +250,6 @@ header.nav-transparent:not(.menu-open) {
   text-transform: uppercase;
   white-space: nowrap;
   line-height: 1.08;
-  color: var(--ink);
-  transition: color 0.25s ease;
 }
 
 .logo span {
@@ -283,15 +260,6 @@ header.nav-transparent:not(.menu-open) {
   color: var(--muted);
   font-weight: 500;
   margin-top: 2px;
-  transition: color 0.25s ease;
-}
-
-header.nav-transparent:not(.menu-open) .logo {
-  color: #FFFFFF;
-}
-
-header.nav-transparent:not(.menu-open) .logo span {
-  color: rgba(255, 255, 255, 0.78);
 }
 
 nav ul {
@@ -306,19 +274,10 @@ nav a {
   font-weight: 500;
   color: var(--ink);
   padding: 0.25rem 0;
-  transition: color 0.22s ease;
 }
 
 nav a:hover {
   color: var(--accent);
-}
-
-header.nav-transparent:not(.menu-open) nav a {
-  color: rgba(255, 255, 255, 0.92);
-}
-
-header.nav-transparent:not(.menu-open) nav a:hover {
-  color: #FFFFFF;
 }
 
 .mobile-menu-cta {
@@ -338,7 +297,6 @@ header.nav-transparent:not(.menu-open) nav a:hover {
   border-radius: var(--radius);
   overflow: hidden;
   background: var(--surface);
-  transition: background-color 0.25s ease, border-color 0.25s ease;
 }
 
 .lang-switch button {
@@ -350,26 +308,11 @@ header.nav-transparent:not(.menu-open) nav a:hover {
   font-weight: 600;
   letter-spacing: 0.06em;
   color: var(--muted);
-  transition: background-color 0.2s ease, color 0.2s ease;
 }
 
 .lang-switch button.active {
   background: var(--ink);
   color: #FFFFFF;
-}
-
-header.nav-transparent:not(.menu-open) .lang-switch {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.32);
-}
-
-header.nav-transparent:not(.menu-open) .lang-switch button {
-  color: rgba(255, 255, 255, 0.88);
-}
-
-header.nav-transparent:not(.menu-open) .lang-switch button.active {
-  background: #FFFFFF;
-  color: var(--ink);
 }
 
 .nav-cta {
@@ -389,22 +332,12 @@ header.nav-transparent:not(.menu-open) .lang-switch button.active {
   height: 38px;
   font-size: 1.15rem;
   color: var(--ink);
-  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
-}
-
-header.nav-transparent:not(.menu-open) .mobile-toggle {
-  background: rgba(255, 255, 255, 0.14);
-  border-color: rgba(255, 255, 255, 0.32);
-  color: #FFFFFF;
 }
 
 /* Hero */
 .hero {
   position: relative;
-  min-height: 100svh;
-  min-height: 100dvh;
-  height: 100vh;
-  padding-top: var(--header-h);
+  min-height: calc(100svh - var(--header-h));
   display: flex;
   align-items: center;
   color: #FFFFFF;
@@ -412,30 +345,22 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
   background: #141A15;
 }
 
-.hero-bg-img,
-.section-bg-img {
+.hero-bg-img {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
   object-position: center 30%;
-  transform: translate3d(0, var(--hero-parallax, 0px), 0) scale(1.18);
+  transform: translate3d(0, var(--hero-parallax, 0px), 0) scale(1.24);
   transform-origin: center 28%;
-  opacity: 0.88;
+  opacity: 0.86;
   pointer-events: none;
   z-index: 0;
   will-change: transform;
 }
 
-.section-bg-img {
-  object-position: center center;
-  transform: translate3d(0, var(--about-parallax, 0px), 0) scale(1.14);
-  opacity: 0.82;
-}
-
-.hero-overlay,
-.about-overlay {
+.hero-overlay {
   position: absolute;
   inset: 0;
   background: linear-gradient(
@@ -448,38 +373,28 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
   z-index: 1;
 }
 
-.about-overlay {
-  background: linear-gradient(
-    90deg,
-    rgba(12, 14, 11, 0.88) 0%,
-    rgba(12, 14, 11, 0.74) 56%,
-    rgba(12, 14, 11, 0.48) 100%
-  );
-}
-
 .hero-content {
   position: relative;
   z-index: 2;
   max-width: 620px;
-  padding: 2.5rem 0;
+  padding: 4.5rem 0;
 }
 
-.hero .eyebrow,
-.about-section .eyebrow {
+.hero .eyebrow {
   color: #DCE8DC;
 }
 
 .hero h1 {
-  font-size: clamp(2.35rem, 5.5vw, 4.2rem);
+  font-size: clamp(2.4rem, 6vw, 4.4rem);
   line-height: 1.06;
-  margin-bottom: 1.15rem;
+  margin-bottom: 1.2rem;
 }
 
 .hero p {
-  font-size: clamp(1rem, 2vw, 1.08rem);
+  font-size: clamp(1rem, 2.2vw, 1.1rem);
   color: rgba(255, 255, 255, 0.94);
   max-width: 520px;
-  margin-bottom: 1.85rem;
+  margin-bottom: 2rem;
 }
 
 .hero-buttons {
@@ -488,48 +403,40 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
   gap: 0.85rem;
 }
 
-/* Section 1: About (O nas — with cellar & barrel background image) */
+/* Section 1: About (O nas) */
 .about-section {
-  position: relative;
-  min-height: 100svh;
-  min-height: 100dvh;
-  height: 100vh;
-  padding-top: var(--header-h);
+  min-height: calc(100svh - var(--header-h));
   display: flex;
   align-items: center;
-  color: #FFFFFF;
-  background: #141712;
+  padding: 5rem 0;
   overflow: hidden;
 }
 
 .about-grid {
   position: relative;
-  z-index: 2;
+  z-index: 1;
   display: grid;
   grid-template-columns: 0.9fr 1.1fr;
-  gap: 3.25rem;
-  align-items: center;
+  gap: 3.5rem;
+  align-items: start;
 }
 
 .about-grid h2 {
-  font-size: clamp(2rem, 3.8vw, 2.95rem);
+  font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.12;
-  color: #FFFFFF;
 }
 
 .about-body p {
-  color: rgba(255, 255, 255, 0.9);
-  margin-bottom: 1.1rem;
-  font-size: 1rem;
+  color: var(--muted);
+  margin-bottom: 1.15rem;
 }
 
 /* Section 2: Terroir */
 .terroir-section {
-  min-height: 100vh;
-  height: 100vh;
-  padding-top: var(--header-h);
+  min-height: calc(100svh - var(--header-h));
   display: flex;
   align-items: center;
+  padding: 4.25rem 0;
   border-top: 1px solid var(--border);
   overflow: hidden;
 }
@@ -538,8 +445,8 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
   position: relative;
   z-index: 1;
   display: grid;
-  grid-template-columns: 0.9fr 1.2fr;
-  gap: 2.75rem;
+  grid-template-columns: 0.92fr 1.18fr;
+  gap: 3rem;
   align-items: center;
 }
 
@@ -752,72 +659,69 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 
 /* Section 3: Wine & Food */
 .wines-section {
-  min-height: 100vh;
-  height: 100vh;
-  padding-top: var(--header-h);
+  min-height: calc(100svh - var(--header-h));
   display: flex;
   align-items: center;
+  padding: 4.25rem 0;
   border-top: 1px solid var(--border);
   overflow: hidden;
 }
 
 .section-header {
-  max-width: 640px;
-  margin-bottom: 1.35rem;
+  max-width: 620px;
+  margin-bottom: 2.2rem;
 }
 
 .section-header h2 {
-  font-size: clamp(1.85rem, 3.2vw, 2.55rem);
+  font-size: clamp(2rem, 4vw, 3.1rem);
   line-height: 1.12;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.65rem;
 }
 
 .section-header p {
-  font-size: 0.92rem;
   color: var(--muted);
 }
 
 .wine-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 1.4rem;
+  gap: 1.75rem;
 }
 
 .wine-card {
   background: var(--surface);
   border-radius: var(--radius);
-  padding: 1.35rem 1.45rem;
+  padding: 1.85rem;
   display: flex;
   flex-direction: column;
 }
 
 .bottle-wrap {
-  height: 132px;
+  height: 180px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0.7rem;
+  margin-bottom: 1.1rem;
 }
 
 .wine-meta {
-  font-size: 0.68rem;
+  font-size: 0.72rem;
   text-transform: uppercase;
   letter-spacing: 0.12em;
   color: var(--accent);
   font-weight: 600;
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.35rem;
 }
 
 .wine-card h3 {
-  font-size: 1.55rem;
-  margin-bottom: 0.4rem;
+  font-size: 1.85rem;
+  margin-bottom: 0.55rem;
 }
 
 .wine-card p {
-  font-size: 0.86rem;
-  line-height: 1.52;
+  font-size: 0.92rem;
   color: var(--muted);
-  margin-bottom: 0.85rem;
+  margin-bottom: 1.25rem;
   flex-grow: 1;
 }
 
@@ -825,9 +729,9 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 .qty-row {
   display: flex;
   align-items: center;
-  gap: 0.55rem;
-  margin-bottom: 0.75rem;
-  padding: 0.36rem 0.6rem;
+  gap: 0.6rem;
+  margin-bottom: 0.95rem;
+  padding: 0.5rem 0.7rem;
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -840,7 +744,7 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 
 .qty-label {
   margin: 0;
-  font-size: 0.7rem;
+  font-size: 0.72rem;
   font-weight: 600;
   color: var(--muted);
   text-transform: uppercase;
@@ -858,18 +762,18 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 
 .form-qty-stepper {
   width: 100%;
-  height: 38px;
-  min-height: 38px;
+  height: 44px;
+  min-height: 44px;
   justify-content: space-between;
 }
 
 .qty-btn {
-  width: 28px;
-  height: 28px;
+  width: 32px;
+  height: 32px;
   border: none;
   background: var(--surface);
   color: var(--ink);
-  font-size: 0.95rem;
+  font-size: 1rem;
   font-weight: 600;
   display: inline-flex;
   align-items: center;
@@ -878,7 +782,7 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 }
 
 .form-qty-stepper .qty-btn {
-  width: 38px;
+  width: 44px;
   height: 100%;
   flex-shrink: 0;
 }
@@ -888,13 +792,13 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 }
 
 .qty-stepper input[type="number"] {
-  width: 40px;
-  height: 28px;
-  min-height: 28px;
-  padding: 0.15rem;
+  width: 44px;
+  height: 32px;
+  min-height: 32px;
+  padding: 0.2rem;
   border: none;
   text-align: center;
-  font-size: 0.88rem;
+  font-size: 0.92rem;
   font-weight: 600;
   -moz-appearance: textfield;
 }
@@ -912,7 +816,7 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 }
 
 .qty-unit {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--muted);
   font-weight: 500;
 }
@@ -921,73 +825,50 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 0.75rem;
+  padding-top: 1rem;
   border-top: 1px solid var(--border);
-  gap: 0.65rem;
+  gap: 0.75rem;
   flex-wrap: wrap;
 }
 
 .wine-price {
   font-family: var(--serif);
-  font-size: 1.15rem;
+  font-size: 1.25rem;
   font-weight: 500;
 }
 
 .wine-actions {
   display: flex;
-  gap: 0.45rem;
+  gap: 0.5rem;
 }
 
 .wine-btn {
-  min-height: 36px;
-  padding: 0.38rem 0.85rem;
-  font-size: 0.76rem;
+  min-height: 40px;
+  padding: 0.45rem 0.95rem;
+  font-size: 0.78rem;
 }
 
-/* Section 4: Tastings, Orders & Integrated Footer */
+/* Section 4: Tastings & Orders */
 .tastings-section {
-  min-height: 100vh;
-  height: 100vh;
-  padding-top: var(--header-h);
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  border-top: 1px solid var(--border);
-  overflow: hidden;
-}
-
-.tastings-main-wrap {
-  flex: 1;
+  min-height: calc(100svh - var(--header-h));
   display: flex;
   align-items: center;
-  padding: 0.75rem 0;
+  padding: 4.25rem 0;
+  border-top: 1px solid var(--border);
+  overflow: hidden;
 }
 
 .tastings-grid {
   position: relative;
   z-index: 1;
-  width: 100%;
   display: grid;
-  grid-template-columns: 0.95fr 1.05fr;
-  gap: 2.75rem;
-  align-items: center;
-}
-
-.tastings-heading {
-  font-size: clamp(1.75rem, 3vw, 2.35rem);
-  line-height: 1.12;
-  margin-bottom: 0.5rem;
-}
-
-.tastings-lead {
-  font-size: 0.88rem;
-  line-height: 1.5;
-  color: var(--muted);
-  margin-bottom: 0.95rem;
+  grid-template-columns: 1fr 1fr;
+  gap: 3.5rem;
+  align-items: start;
 }
 
 .tasting-tier {
-  padding: 0.8rem 0;
+  padding: 1.35rem 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -999,55 +880,52 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
   display: flex;
   justify-content: space-between;
   align-items: baseline;
-  gap: 0.75rem;
-  margin-bottom: 0.25rem;
+  gap: 1rem;
+  margin-bottom: 0.35rem;
   flex-wrap: wrap;
 }
 
 .tier-head h4 {
-  font-size: 1.2rem;
+  font-size: 1.4rem;
 }
 
 .tier-price {
   font-family: var(--serif);
-  font-size: 1.05rem;
+  font-size: 1.15rem;
   color: var(--accent);
   font-weight: 500;
   white-space: nowrap;
 }
 
 .tasting-tier p {
-  font-size: 0.83rem;
-  line-height: 1.48;
+  font-size: 0.9rem;
   color: var(--muted);
 }
 
 .booking-box {
   background: var(--surface);
   border-radius: var(--radius);
-  padding: 1.25rem 1.45rem;
-  border: 1px solid var(--border);
+  padding: 2.2rem;
 }
 
 .booking-box h3 {
-  font-size: 1.45rem;
-  margin-bottom: 0.15rem;
+  font-size: 1.85rem;
+  margin-bottom: 0.4rem;
 }
 
 .booking-box > p {
-  font-size: 0.82rem;
-  line-height: 1.4;
+  font-size: 0.9rem;
   color: var(--muted);
-  margin-bottom: 0.65rem;
+  margin-bottom: 1.1rem;
 }
 
 .booking-phone-callout {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 0.85rem;
-  padding: 0.55rem 0.85rem;
-  margin-bottom: 0.7rem;
+  gap: 1rem;
+  padding: 0.85rem 1rem;
+  margin-bottom: 1.25rem;
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent);
@@ -1057,16 +935,16 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 .booking-phone-text {
   display: flex;
   flex-direction: column;
-  gap: 0.08rem;
-  font-size: 0.79rem;
-  line-height: 1.3;
+  gap: 0.15rem;
+  font-size: 0.85rem;
+  line-height: 1.35;
   color: var(--ink);
   flex: 1;
   min-width: 0;
 }
 
 .booking-phone-eyebrow {
-  font-size: 0.64rem;
+  font-size: 0.68rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1077,13 +955,13 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: 0.4rem;
-  height: 36px;
-  padding: 0 0.85rem;
+  gap: 0.45rem;
+  height: 40px;
+  padding: 0 0.95rem;
   background: var(--accent);
   color: #FFFFFF;
   border-radius: var(--radius);
-  font-size: 0.82rem;
+  font-size: 0.86rem;
   font-weight: 600;
   white-space: nowrap;
   flex-shrink: 0;
@@ -1098,7 +976,7 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.55rem 0.75rem;
+  gap: 0.95rem 0.9rem;
   align-items: stretch;
 }
 
@@ -1115,24 +993,24 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 
 label {
   display: block;
-  font-size: 0.67rem;
+  font-size: 0.72rem;
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.3;
   letter-spacing: 0.06em;
   text-transform: uppercase;
   color: var(--muted);
-  margin-bottom: 0.25rem;
+  margin-bottom: 0.38rem;
 }
 
 input, select, textarea {
   width: 100%;
-  height: 38px;
-  min-height: 38px;
-  padding: 0.42rem 0.75rem;
+  height: 44px;
+  min-height: 44px;
+  padding: 0.55rem 0.85rem;
   border: 1px solid var(--border);
   background: #FFFFFF;
   font-family: inherit;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.25;
   color: var(--ink);
   border-radius: var(--radius);
@@ -1145,13 +1023,13 @@ select {
   background-position: calc(100% - 16px) 50%, calc(100% - 11px) 50%;
   background-size: 5px 5px, 5px 5px;
   background-repeat: no-repeat;
-  padding-right: 2.1rem;
+  padding-right: 2.2rem;
 }
 
 textarea {
   height: auto;
-  min-height: 52px;
-  padding: 0.45rem 0.75rem;
+  min-height: 84px;
+  padding: 0.65rem 0.85rem;
   resize: vertical;
 }
 
@@ -1162,75 +1040,70 @@ input:focus, select:focus, textarea:focus {
 
 .form-success {
   display: none;
-  margin-top: 0.6rem;
-  padding: 0.65rem 0.85rem;
+  margin-top: 1rem;
+  padding: 0.9rem 1rem;
   background: #E8F0E9;
   border: 1px solid #9FC0A4;
   color: #17331E;
   border-radius: var(--radius);
-  font-size: 0.82rem;
+  font-size: 0.9rem;
 }
 
-/* Integrated Compact Footer inside Degustacije */
-.integrated-footer {
-  width: 100%;
+/* Footer */
+footer {
   background: var(--surface);
-  border-top: 1px solid var(--border);
-  padding: 0.75rem 0 calc(0.75rem + env(safe-area-inset-bottom));
-  position: relative;
-  z-index: 2;
+  padding: 4rem 0 calc(2rem + env(safe-area-inset-bottom));
 }
 
-.footer-compact-row {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  gap: 0.45rem 1.25rem;
-  font-size: 0.82rem;
-  color: var(--muted);
-  padding-bottom: 0.45rem;
+.footer-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1fr;
+  gap: 2.5rem;
+  padding-bottom: 2.5rem;
   border-bottom: 1px solid var(--border);
 }
 
-.footer-brand-inline,
-.footer-contact-inline {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  gap: 0.45rem;
+.footer-brand p {
+  font-size: 0.9rem;
+  color: var(--muted);
+  margin-top: 0.85rem;
+  max-width: 340px;
 }
 
-.footer-logo {
-  font-family: var(--serif);
-  font-size: 0.95rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
+footer h5 {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
+  margin-bottom: 0.9rem;
   color: var(--ink);
 }
 
-.footer-sep {
-  color: var(--border);
-  font-weight: 600;
+footer ul {
+  list-style: none;
+  font-size: 0.9rem;
+  color: var(--muted);
 }
 
-.footer-contact-inline a {
-  color: var(--ink);
-  font-weight: 500;
+footer li {
+  margin-bottom: 0.45rem;
 }
 
-.footer-contact-inline a:hover {
+footer a {
+  display: inline-block;
+  padding: 2px 0;
+}
+
+footer a:hover {
   color: var(--accent);
 }
 
 .footer-bottom {
-  padding-top: 0.4rem;
+  padding-top: 1.4rem;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
-  gap: 0.35rem 1.25rem;
-  font-size: 0.72rem;
+  gap: 0.75rem 1.5rem;
+  font-size: 0.78rem;
   color: var(--muted);
 }
 
@@ -1320,36 +1193,17 @@ input:focus, select:focus, textarea:focus {
     will-change: auto;
   }
 
-  .hero-bg-img,
-  .section-bg-img {
-    transform: scale(1.04) !important;
+  .hero-bg-img {
+    transform: scale(1.06) !important;
     transition: none !important;
     will-change: auto;
   }
 
-  .hero,
-  .about-section {
-    min-height: 100svh;
-    min-height: 100dvh;
-    height: auto;
-    padding: calc(var(--header-h) + 2.5rem) 0 3.5rem;
-  }
-
+  .about-section,
   .terroir-section,
-  .wines-section {
-    min-height: auto;
-    height: auto;
-    padding: 3.75rem 0;
-  }
-
+  .wines-section,
   .tastings-section {
     min-height: auto;
-    height: auto;
-    padding: 3.75rem 0 0;
-  }
-
-  .tastings-main-wrap {
-    padding: 0 0 3rem;
   }
 
   .section-dots {
@@ -1361,7 +1215,8 @@ input:focus, select:focus, textarea:focus {
 @media (max-width: 960px) {
   .about-grid,
   .terroir-grid,
-  .tastings-grid {
+  .tastings-grid,
+  .footer-grid {
     grid-template-columns: 1fr;
     gap: 2.25rem;
   }
@@ -1399,12 +1254,10 @@ input:focus, select:focus, textarea:focus {
     gap: 0.25rem;
   }
 
-  nav a,
-  header.nav-transparent nav a {
+  nav a {
     display: block;
     padding: 0.75rem 0;
     font-size: 1rem;
-    color: var(--ink);
     border-bottom: 1px solid var(--border);
   }
 
@@ -1436,23 +1289,20 @@ input:focus, select:focus, textarea:focus {
     width: 92%;
   }
 
-  .hero,
-  .about-section {
-    min-height: 100svh;
-    min-height: 100dvh;
+  .hero {
+    min-height: 70svh;
   }
 
-  .hero-overlay,
-  .about-overlay {
+  .hero-overlay {
     background: linear-gradient(
       180deg,
-      rgba(14, 18, 13, 0.62) 0%,
-      rgba(14, 18, 13, 0.86) 100%
+      rgba(14, 18, 13, 0.56) 0%,
+      rgba(14, 18, 13, 0.84) 100%
     );
   }
 
   .hero-content {
-    padding: 2rem 0;
+    padding: 3.5rem 0;
   }
 
   .hero-buttons {
@@ -1463,12 +1313,19 @@ input:focus, select:focus, textarea:focus {
     width: 100%;
   }
 
+  .about-section,
+  .terroir-section,
+  .wines-section,
+  .tastings-section {
+    padding: 3.5rem 0;
+  }
+
   .section-header {
-    margin-bottom: 1.75rem;
+    margin-bottom: 2rem;
   }
 
   .terroir-card {
-    padding: 1.25rem;
+    padding: 1.4rem;
   }
 
   .terroir-stats {
@@ -1477,7 +1334,7 @@ input:focus, select:focus, textarea:focus {
 
   .wine-grid {
     grid-template-columns: 1fr;
-    gap: 1.2rem;
+    gap: 1.25rem;
   }
 
   .wine-grid .wine-card:last-child {
@@ -1485,17 +1342,25 @@ input:focus, select:focus, textarea:focus {
   }
 
   .wine-card {
-    padding: 1.35rem;
+    padding: 1.4rem;
+  }
+
+  .bottle-wrap {
+    height: 165px;
+  }
+
+  .bottle-wrap svg {
+    height: 150px;
   }
 
   .booking-box {
-    padding: 1.3rem;
+    padding: 1.4rem;
   }
 
   .booking-phone-callout {
     flex-direction: column;
     align-items: stretch;
-    gap: 0.6rem;
+    gap: 0.65rem;
   }
 
   .booking-phone-btn {
@@ -1504,7 +1369,16 @@ input:focus, select:focus, textarea:focus {
 
   .form-grid {
     grid-template-columns: 1fr;
-    gap: 0.7rem;
+    gap: 0.75rem;
+  }
+
+  footer {
+    padding: 3rem 0 calc(1.75rem + env(safe-area-inset-bottom));
+  }
+
+  .footer-grid {
+    gap: 1.85rem;
+    padding-bottom: 2rem;
   }
 
   .modal-backdrop {
@@ -1532,14 +1406,13 @@ input:focus, select:focus, textarea:focus {
   }
 
   .google-map-wrap {
-    height: 245px;
+    height: 255px;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   [data-parallax],
-  .hero-bg-img,
-  .section-bg-img {
+  .hero-bg-img {
     transform: none !important;
     transition: none !important;
   }
