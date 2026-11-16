@@ -21,6 +21,15 @@
 html {
   scroll-behavior: smooth;
   overflow-x: clip;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 body {
@@ -31,6 +40,7 @@ body {
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
+  scrollbar-width: none;
 }
 
 body.modal-open {
@@ -227,11 +237,56 @@ header {
   width: 100%;
   background: #FFFFFF;
   border-bottom: 1px solid var(--border);
-  transition: box-shadow 0.2s ease;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease;
 }
 
 header.scrolled {
   box-shadow: 0 6px 20px rgba(20, 24, 19, 0.06);
+}
+
+/* Transparent header over the hero image */
+header.nav-transparent:not(.menu-open) {
+  background: transparent;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+
+header.nav-transparent:not(.menu-open) .logo {
+  color: #FFFFFF;
+}
+
+header.nav-transparent:not(.menu-open) .logo span {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+header.nav-transparent:not(.menu-open) .lang-switch {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+}
+
+header.nav-transparent:not(.menu-open) .lang-switch button {
+  color: rgba(255, 255, 255, 0.85);
+}
+
+header.nav-transparent:not(.menu-open) .lang-switch button.active {
+  background: #FFFFFF;
+  color: var(--ink);
+}
+
+header.nav-transparent:not(.menu-open) .mobile-toggle {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.35);
+  color: #FFFFFF;
+}
+
+@media (min-width: 961px) {
+  header.nav-transparent nav > ul a {
+    color: #FFFFFF;
+  }
+
+  header.nav-transparent nav > ul a:hover {
+    color: #DCE8DC;
+  }
 }
 
 .nav-inner {
@@ -337,7 +392,9 @@ nav a:hover {
 /* Hero */
 .hero {
   position: relative;
-  min-height: calc(100svh - var(--header-h));
+  margin-top: calc(-1 * var(--header-h) - 1px);
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
   color: #FFFFFF;
@@ -373,11 +430,22 @@ nav a:hover {
   z-index: 1;
 }
 
+/* Darker strip at the top so the transparent header stays readable */
+.hero-overlay::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  height: calc(var(--header-h) * 2);
+  background: linear-gradient(180deg, rgba(14, 18, 13, 0.55) 0%, rgba(14, 18, 13, 0) 100%);
+}
+
 .hero-content {
   position: relative;
   z-index: 2;
   max-width: 620px;
-  padding: 4.5rem 0;
+  padding: calc(var(--header-h) + 3rem) 0 3.5rem;
 }
 
 .hero .eyebrow {
@@ -410,6 +478,28 @@ nav a:hover {
   align-items: center;
   padding: 5rem 0;
   overflow: hidden;
+  background: #FFFFFF;
+}
+
+.about-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 60%;
+  opacity: 0.16;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.about-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.15) 60%, rgba(255, 255, 255, 0) 100%);
+  pointer-events: none;
+  z-index: 0;
 }
 
 .about-grid {
@@ -427,7 +517,7 @@ nav a:hover {
 }
 
 .about-body p {
-  color: var(--muted);
+  color: #3F463C;
   margin-bottom: 1.15rem;
 }
 
@@ -662,18 +752,18 @@ nav a:hover {
   min-height: calc(100svh - var(--header-h));
   display: flex;
   align-items: center;
-  padding: 4.25rem 0;
+  padding: 2.25rem 0;
   border-top: 1px solid var(--border);
   overflow: hidden;
 }
 
 .section-header {
-  max-width: 620px;
-  margin-bottom: 2.2rem;
+  max-width: 680px;
+  margin-bottom: 1.4rem;
 }
 
 .section-header h2 {
-  font-size: clamp(2rem, 4vw, 3.1rem);
+  font-size: clamp(1.8rem, 3.2vw, 2.6rem);
   line-height: 1.12;
   margin-bottom: 0.65rem;
 }
@@ -691,17 +781,22 @@ nav a:hover {
 .wine-card {
   background: var(--surface);
   border-radius: var(--radius);
-  padding: 1.85rem;
+  padding: 1.35rem 1.5rem;
   display: flex;
   flex-direction: column;
 }
 
 .bottle-wrap {
-  height: 180px;
+  height: 120px;
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.7rem;
+}
+
+.bottle-wrap svg {
+  height: 120px;
+  width: auto;
 }
 
 .wine-meta {
@@ -714,14 +809,15 @@ nav a:hover {
 }
 
 .wine-card h3 {
-  font-size: 1.85rem;
-  margin-bottom: 0.55rem;
+  font-size: 1.6rem;
+  margin-bottom: 0.4rem;
 }
 
 .wine-card p {
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+  line-height: 1.55;
   color: var(--muted);
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.9rem;
   flex-grow: 1;
 }
 
@@ -730,8 +826,8 @@ nav a:hover {
   display: flex;
   align-items: center;
   gap: 0.6rem;
-  margin-bottom: 0.95rem;
-  padding: 0.5rem 0.7rem;
+  margin-bottom: 0.75rem;
+  padding: 0.4rem 0.7rem;
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-radius: var(--radius);
@@ -825,7 +921,7 @@ nav a:hover {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 1rem;
+  padding-top: 0.8rem;
   border-top: 1px solid var(--border);
   gap: 0.75rem;
   flex-wrap: wrap;
@@ -852,10 +948,17 @@ nav a:hover {
 .tastings-section {
   min-height: calc(100svh - var(--header-h));
   display: flex;
-  align-items: center;
-  padding: 4.25rem 0;
+  flex-direction: column;
+  padding: 2rem 0 0;
   border-top: 1px solid var(--border);
   overflow: hidden;
+}
+
+.tastings-section > .tastings-grid {
+  flex: 1;
+  align-content: center;
+  width: min(1160px, 90%);
+  padding-bottom: 1.5rem;
 }
 
 .tastings-grid {
@@ -863,12 +966,12 @@ nav a:hover {
   z-index: 1;
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 3.5rem;
-  align-items: start;
+  gap: 3rem;
+  align-items: center;
 }
 
 .tasting-tier {
-  padding: 1.35rem 0;
+  padding: 0.95rem 0;
   border-bottom: 1px solid var(--border);
 }
 
@@ -886,7 +989,7 @@ nav a:hover {
 }
 
 .tier-head h4 {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
 }
 
 .tier-price {
@@ -905,18 +1008,18 @@ nav a:hover {
 .booking-box {
   background: var(--surface);
   border-radius: var(--radius);
-  padding: 2.2rem;
+  padding: 1.5rem 1.6rem;
 }
 
 .booking-box h3 {
-  font-size: 1.85rem;
-  margin-bottom: 0.4rem;
+  font-size: 1.6rem;
+  margin-bottom: 0.25rem;
 }
 
 .booking-box > p {
-  font-size: 0.9rem;
+  font-size: 0.86rem;
   color: var(--muted);
-  margin-bottom: 1.1rem;
+  margin-bottom: 0.8rem;
 }
 
 .booking-phone-callout {
@@ -924,8 +1027,8 @@ nav a:hover {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.85rem 1rem;
-  margin-bottom: 1.25rem;
+  padding: 0.6rem 0.9rem;
+  margin-bottom: 0.9rem;
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent);
@@ -976,7 +1079,7 @@ nav a:hover {
 .form-grid {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 0.95rem 0.9rem;
+  gap: 0.7rem 0.9rem;
   align-items: stretch;
 }
 
@@ -1028,7 +1131,7 @@ select {
 
 textarea {
   height: auto;
-  min-height: 84px;
+  min-height: 64px;
   padding: 0.65rem 0.85rem;
   resize: vertical;
 }
@@ -1105,6 +1208,53 @@ footer a:hover {
   gap: 0.75rem 1.5rem;
   font-size: 0.78rem;
   color: var(--muted);
+}
+
+/* Compact footer inside Degustacije */
+.integrated-footer {
+  position: relative;
+  z-index: 1;
+  padding: 1.1rem 0 calc(1.1rem + env(safe-area-inset-bottom));
+  border-top: 1px solid var(--border);
+}
+
+.footer-row {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 1rem 2.5rem;
+}
+
+.integrated-footer .footer-brand .logo {
+  font-size: 1.15rem;
+}
+
+.integrated-footer .footer-brand span {
+  display: block;
+  font-size: 0.75rem;
+  color: var(--muted);
+}
+
+.footer-contact {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.2rem 1.4rem;
+  margin: 0;
+  font-size: 0.84rem;
+}
+
+.footer-contact li {
+  margin: 0;
+}
+
+.footer-legal {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  font-size: 0.72rem;
+  color: var(--muted);
+  text-align: right;
 }
 
 /* Modal */
@@ -1221,6 +1371,17 @@ footer a:hover {
     gap: 2.25rem;
   }
 
+  .footer-row {
+    grid-template-columns: 1fr;
+    text-align: center;
+    justify-items: center;
+  }
+
+  .footer-legal {
+    align-items: center;
+    text-align: center;
+  }
+
   .wine-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -1290,7 +1451,8 @@ footer a:hover {
   }
 
   .hero {
-    min-height: 70svh;
+    min-height: 100vh;
+    min-height: 100svh;
   }
 
   .hero-overlay {
@@ -1302,7 +1464,7 @@ footer a:hover {
   }
 
   .hero-content {
-    padding: 3.5rem 0;
+    padding: calc(var(--header-h) + 2rem) 0 2.5rem;
   }
 
   .hero-buttons {
@@ -1315,9 +1477,16 @@ footer a:hover {
 
   .about-section,
   .terroir-section,
-  .wines-section,
-  .tastings-section {
+  .wines-section {
     padding: 3.5rem 0;
+  }
+
+  .tastings-section {
+    padding: 3.5rem 0 0;
+  }
+
+  .tastings-section > .tastings-grid {
+    width: 92%;
   }
 
   .section-header {

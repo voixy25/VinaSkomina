@@ -237,6 +237,7 @@ function toggleMenu() {
   const nav = document.getElementById('mainNav');
   const btn = document.getElementById('menuToggleBtn');
   const isOpen = nav.classList.toggle('open');
+  document.getElementById('siteHeader').classList.toggle('menu-open', isOpen);
   btn.setAttribute('aria-expanded', isOpen);
   btn.textContent = isOpen ? '✕' : '☰';
 }
@@ -245,6 +246,7 @@ function closeMenu() {
   const nav = document.getElementById('mainNav');
   const btn = document.getElementById('menuToggleBtn');
   nav.classList.remove('open');
+  document.getElementById('siteHeader').classList.remove('menu-open');
   btn.setAttribute('aria-expanded', 'false');
   btn.textContent = '☰';
 }
@@ -428,36 +430,28 @@ const mapLocations = {
     }
   },
   lower: {
-    coords: [45.87809, 13.69629],
+    coords: [45.87802, 13.69624],
     polygon: [
-      [45.87841, 13.69621],
-      [45.87831, 13.69638],
-      [45.87822, 13.69646],
-      [45.87804, 13.69656],
-      [45.87793, 13.69654],
-      [45.87779, 13.69645],
-      [45.87774, 13.69631],
-      [45.87789, 13.69620],
-      [45.87799, 13.69616],
-      [45.87814, 13.69607],
       [45.87824, 13.69604],
-      [45.87839, 13.69612]
+      [45.87823, 13.69627],
+      [45.87797, 13.69644],
+      [45.87774, 13.69626]
     ],
     color: '#2E7D47',
     zoom: 18,
     sl: {
       short: 'Spodnji vinograd',
-      title: 'Spodnji vinograd (pod vasjo)',
+      title: 'Spodnji vinograd',
       desc: 'Odprta sončna lega tik ob cesti pod vasjo Oševljek, zračena z vipavsko burjo na flišnih tleh.'
     },
     en: {
       short: 'Lower vineyard',
-      title: 'Lower Vineyard (below village)',
+      title: 'Lower Vineyard',
       desc: 'Open sunlit parcel right alongside the road below Oševljek village, cooled by the Vipava bora wind.'
     },
     it: {
       short: 'Vigneto inferiore',
-      title: 'Vigneto inferiore (sotto il borgo)',
+      title: 'Vigneto inferiore',
       desc: 'Parcella soleggiata lungo la strada sotto il borgo di Oševljek, ventilata dalla bora del Vipacco su terreni di flysch.'
     }
   },
@@ -480,18 +474,18 @@ const mapLocations = {
     color: '#D49B27',
     zoom: 18,
     sl: {
-      short: 'Zgornji vinograd (jasa)',
-      title: 'Zgornji vinograd (gozdna jasa)',
+      short: 'Zgornji vinograd',
+      title: 'Zgornji vinograd',
       desc: 'Zavetni vinograd na mirni gozdni jasi višje proti kraškemu robu, kjer se fliš sreča z apnencem.'
     },
     en: {
-      short: 'Upper vineyard (clearing)',
-      title: 'Upper Vineyard (forest clearing)',
+      short: 'Upper vineyard',
+      title: 'Upper Vineyard',
       desc: 'Sheltered parcel in a quiet forest clearing higher toward the Karst edge where flysch meets limestone.'
     },
     it: {
-      short: 'Vigneto superiore (radura)',
-      title: 'Vigneto superiore (radura nel bosco)',
+      short: 'Vigneto superiore',
+      title: 'Vigneto superiore',
       desc: 'Parcella riparata in una tranquilla radura boschiva verso il ciglione carsico, dove il flysch incontra il calcare.'
     }
   }
@@ -629,7 +623,7 @@ function updateMapLanguage() {
 /* ==========================================
    Strict 1-Gesture = 1-Section Jump Scrolling & Parallax (Desktop Only)
    ========================================== */
-const snapSectionIds = ['domov', 'zgodba', 'terroir', 'vina', 'degustacije', 'kontakt'];
+const snapSectionIds = ['domov', 'zgodba', 'terroir', 'vina', 'degustacije'];
 let currentSectionIndex = 0;
 let isSectionAnimating = false;
 let wheelGestureLocked = false;
@@ -661,9 +655,22 @@ function scrollToSectionIndex(idx) {
 
   isSectionAnimating = true;
   clearTimeout(animUnlockTimer);
-  animUnlockTimer = setTimeout(() => {
-    isSectionAnimating = false;
-  }, 820);
+  const releaseWhenSettled = () => {
+    let lastY = window.scrollY;
+    let stableFrames = 0;
+    const check = () => {
+      const y = window.scrollY;
+      stableFrames = Math.abs(y - lastY) < 1 ? stableFrames + 1 : 0;
+      lastY = y;
+      if (stableFrames >= 6) {
+        isSectionAnimating = false;
+      } else {
+        animUnlockTimer = setTimeout(check, 16);
+      }
+    };
+    animUnlockTimer = setTimeout(check, 450);
+  };
+  releaseWhenSettled();
 
   updateActiveDots(targetEl.id);
   targetEl.scrollIntoView({ behavior: 'smooth', block: targetEl.tagName === 'FOOTER' ? 'end' : 'start' });
@@ -731,42 +738,31 @@ window.addEventListener('wheel', (e) => {
   const sections = getSnapSections();
   if (!sections.length) return;
 
-  const activeSection = sections[currentSectionIndex] || sections[detectCurrentSectionIndex()];
-
-  if (canSectionScrollInternally(activeSection, e.deltaY)) {
-    return;
-  }
-
-  // Always block native wheel scroll on desktop so browser momentum never skips multiple sections
-  e.preventDefault();
-
-  const absDelta = Math.abs(e.deltaY);
-  const now = performance.now();
-
-  // Keep gesture locked as long as wheel/trackpad inertia events keep arriving
+  // Every wheel/trackpad event (including inertia) extends the current gesture.
+  // A new section step is only possible after the wheel has been quiet for a moment.
   clearTimeout(wheelQuietTimer);
   wheelQuietTimer = setTimeout(() => {
     wheelGestureLocked = false;
-    lastWheelDeltaAbs = 0;
-  }, 240);
+  }, 220);
 
-  if (absDelta < 4) return;
-
-  // Do not allow another section jump until BOTH the animation finished AND the wheel gesture ended
-  if (isSectionAnimating || wheelGestureLocked) {
-    lastWheelDeltaAbs = absDelta;
-    lastWheelTime = now;
+  // Rare case: a section taller than the screen (small laptop) -> scroll inside it natively,
+  // but lock the gesture so the same flick can never also jump to the next section.
+  const activeSection = sections[currentSectionIndex];
+  if (!isSectionAnimating && canSectionScrollInternally(activeSection, e.deltaY)) {
+    wheelGestureLocked = true;
     return;
   }
 
-  wheelGestureLocked = true;
-  lastWheelDeltaAbs = absDelta;
-  lastWheelTime = now;
+  // Block native wheel scroll so browser momentum never carries over multiple sections
+  e.preventDefault();
 
+  if (Math.abs(e.deltaY) < 4) return;
+  if (isSectionAnimating || wheelGestureLocked) return;
+
+  wheelGestureLocked = true;
   const dir = e.deltaY > 0 ? 1 : -1;
-  const baseIdx = detectCurrentSectionIndex();
-  const nextIdx = Math.max(0, Math.min(sections.length - 1, baseIdx + dir));
-  if (nextIdx !== baseIdx) {
+  const nextIdx = Math.max(0, Math.min(sections.length - 1, currentSectionIndex + dir));
+  if (nextIdx !== currentSectionIndex) {
     scrollToSectionIndex(nextIdx);
   }
 }, { passive: false });
@@ -807,7 +803,12 @@ document.addEventListener('keydown', (e) => {
 let parallaxTicking = false;
 function updateParallax() {
   const scrollY = window.scrollY;
-  document.getElementById('siteHeader').classList.toggle('scrolled', scrollY > 12);
+  const header = document.getElementById('siteHeader');
+  const hero = document.getElementById('domov');
+  const headerH = header ? header.offsetHeight : 72;
+  const overHero = hero ? scrollY < hero.offsetHeight - headerH - 4 : scrollY < 12;
+  header.classList.toggle('nav-transparent', overHero);
+  header.classList.toggle('scrolled', !overHero);
 
   // Disable parallax and section tracking on mobile/tablet
   if (!isDesktopScrollMode()) {
