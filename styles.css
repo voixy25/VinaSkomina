@@ -553,14 +553,44 @@ nav a:hover {
   color: var(--ink);
 }
 
+/* Full-bleed Section Background Image (shared by Terroir, Vino, Degustacije) */
+.section-bg-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  opacity: 0.72;
+  pointer-events: none;
+  z-index: 0;
+}
+
 /* Section 2: Terroir */
 .terroir-section {
+  position: relative;
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
   align-items: center;
   padding: calc(var(--header-h) + 1.5rem) 0 2rem;
+  background: #141813;
+  color: #FFFFFF;
   overflow: hidden;
+}
+
+.terroir-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(14, 18, 13, 0.84) 0%,
+    rgba(14, 18, 13, 0.66) 55%,
+    rgba(14, 18, 13, 0.44) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
 .terroir-grid {
@@ -572,14 +602,19 @@ nav a:hover {
   align-items: center;
 }
 
+.terroir-text .eyebrow {
+  color: #DCE8DC;
+}
+
 .terroir-text h2 {
   font-size: clamp(1.9rem, 3.6vw, 2.65rem);
   line-height: 1.14;
   margin-bottom: 1rem;
+  color: #FFFFFF;
 }
 
 .terroir-text p {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.88);
   margin-bottom: 1.5rem;
 }
 
@@ -588,30 +623,32 @@ nav a:hover {
   grid-template-columns: repeat(2, 1fr);
   gap: 1.25rem;
   padding-top: 1.5rem;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgba(255, 255, 255, 0.22);
 }
 
 .stat strong {
   display: block;
   font-family: var(--serif);
   font-size: 1.65rem;
-  color: var(--accent);
+  color: #DCE8DC;
   line-height: 1.1;
 }
 
 .stat span {
   font-size: 0.82rem;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.82);
 }
 
 .terroir-card {
   background: var(--surface);
+  color: var(--ink);
   border-radius: var(--radius);
   padding: 1.5rem;
   display: flex;
   flex-direction: column;
   gap: 0.85rem;
   border: 1px solid var(--border);
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
 }
 
 .map-card-header {
@@ -782,12 +819,34 @@ nav a:hover {
 
 /* Section 3: Wine & Food */
 .wines-section {
+  position: relative;
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
   align-items: center;
   padding: calc(var(--header-h) + 1.25rem) 0 1.75rem;
+  background: #141813;
+  color: #FFFFFF;
   overflow: hidden;
+}
+
+.wines-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(14, 18, 13, 0.82) 0%,
+    rgba(14, 18, 13, 0.62) 50%,
+    rgba(14, 18, 13, 0.72) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.wines-section > .container {
+  position: relative;
+  z-index: 1;
 }
 
 .section-header {
@@ -795,14 +854,19 @@ nav a:hover {
   margin-bottom: 1.4rem;
 }
 
+.section-header .eyebrow {
+  color: #DCE8DC;
+}
+
 .section-header h2 {
   font-size: clamp(1.8rem, 3.2vw, 2.6rem);
   line-height: 1.12;
   margin-bottom: 0.65rem;
+  color: #FFFFFF;
 }
 
 .section-header p {
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.88);
 }
 
 .wine-grid {
@@ -812,11 +876,13 @@ nav a:hover {
 }
 
 .wine-card {
-  background: var(--surface);
+  background: rgba(244, 245, 242, 0.96);
+  color: var(--ink);
   border-radius: var(--radius);
   padding: 1.35rem 1.5rem;
   display: flex;
   flex-direction: column;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
 }
 
 .bottle-wrap {
@@ -979,12 +1045,29 @@ nav a:hover {
 
 /* Section 4: Tastings & Orders */
 .tastings-section {
+  position: relative;
   min-height: 100vh;
   min-height: 100svh;
   display: flex;
   flex-direction: column;
   padding: calc(var(--header-h) + 1rem) 0 0;
+  background: #141813;
+  color: #FFFFFF;
   overflow: hidden;
+}
+
+.tastings-section::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    90deg,
+    rgba(14, 18, 13, 0.85) 0%,
+    rgba(14, 18, 13, 0.68) 55%,
+    rgba(14, 18, 13, 0.48) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
 }
 
 .tastings-section > .tastings-grid {
@@ -1003,13 +1086,25 @@ nav a:hover {
   align-items: center;
 }
 
+.tastings-grid .eyebrow {
+  color: #DCE8DC;
+}
+
+.tastings-grid h2 {
+  color: #FFFFFF;
+}
+
+.tastings-grid > div:first-child > p {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
 .tasting-tier {
   padding: 0.95rem 0;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .tasting-tier:first-of-type {
-  border-top: 1px solid var(--border);
+  border-top: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .tier-head {
@@ -1024,19 +1119,20 @@ nav a:hover {
 .tier-head h3,
 .tier-head h4 {
   font-size: 1.25rem;
+  color: #FFFFFF;
 }
 
 .tier-price {
   font-family: var(--serif);
   font-size: 1.15rem;
-  color: var(--accent);
+  color: #DCE8DC;
   font-weight: 500;
   white-space: nowrap;
 }
 
 .tasting-tier p {
   font-size: 0.88rem;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.85);
 }
 
 .tier-meta-row {
@@ -1053,12 +1149,12 @@ nav a:hover {
   gap: 0.3rem;
   font-size: 0.76rem;
   font-weight: 500;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.85);
   white-space: nowrap;
 }
 
 .tier-meta-item svg {
-  color: var(--accent);
+  color: #DCE8DC;
   flex-shrink: 0;
 }
 
@@ -1069,7 +1165,7 @@ nav a:hover {
   padding: 0.25rem 0;
   font-size: 0.78rem;
   font-weight: 600;
-  color: var(--accent);
+  color: #FFFFFF;
   white-space: nowrap;
 }
 
@@ -1087,19 +1183,21 @@ nav a:hover {
   padding: 0.25rem 0;
   font-size: 0.84rem;
   font-weight: 600;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.85);
   text-decoration: underline;
   text-underline-offset: 3px;
 }
 
 .faq-trigger-btn:hover {
-  color: var(--accent);
+  color: #FFFFFF;
 }
 
 .booking-box {
-  background: var(--surface);
+  background: rgba(244, 245, 242, 0.97);
+  color: var(--ink);
   border-radius: var(--radius);
   padding: 1.25rem 1.45rem;
+  box-shadow: 0 18px 42px rgba(0, 0, 0, 0.28);
 }
 
 .booking-box h3 {
@@ -1315,7 +1413,11 @@ footer a:hover {
   position: relative;
   z-index: 1;
   padding: 1.05rem 0 calc(1.05rem + env(safe-area-inset-bottom));
-  border-top: 1px solid var(--border);
+  background: rgba(14, 18, 13, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  color: #FFFFFF;
 }
 
 .footer-row {
@@ -1331,12 +1433,13 @@ footer a:hover {
 
 .integrated-footer .footer-brand .logo {
   font-size: 1.12rem;
+  color: #FFFFFF;
 }
 
 .integrated-footer .footer-brand span {
   display: block;
   font-size: 0.74rem;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.78);
 }
 
 .footer-contact {
@@ -1347,6 +1450,7 @@ footer a:hover {
   gap: 1.05rem;
   margin: 0;
   font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.9);
   white-space: nowrap;
 }
 
@@ -1354,12 +1458,16 @@ footer a:hover {
   margin: 0;
 }
 
+.footer-contact a:hover {
+  color: #DCE8DC;
+}
+
 .footer-legal {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
   font-size: 0.71rem;
-  color: var(--muted);
+  color: rgba(255, 255, 255, 0.75);
   text-align: right;
   white-space: nowrap;
 }
