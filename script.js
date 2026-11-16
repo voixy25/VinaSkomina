@@ -1070,7 +1070,9 @@ function updateParallax() {
 
   // Floating sticky CTA & Back-to-Top button visibility
   const floatingCta = document.getElementById('floatingCta');
+  const floatingOfferCta = document.getElementById('floatingOfferCta');
   const backToTopBtn = document.getElementById('backToTopBtn');
+  const vinaEl = document.getElementById('vina');
   const degustacijeEl = document.getElementById('degustacije');
   if (backToTopBtn) {
     backToTopBtn.classList.toggle('is-hidden', scrollY < window.innerHeight * 0.5);
@@ -1080,6 +1082,12 @@ function updateParallax() {
       ? degustacijeEl.getBoundingClientRect().top < window.innerHeight * 0.65
       : false;
     floatingCta.classList.toggle('is-hidden', inDegustacije);
+  }
+  if (floatingOfferCta) {
+    const inOrPastVina = vinaEl
+      ? vinaEl.getBoundingClientRect().top < window.innerHeight * 0.65
+      : false;
+    floatingOfferCta.classList.toggle('is-hidden', inOrPastVina);
   }
 
   // Disable parallax and section tracking on mobile/tablet

@@ -362,12 +362,13 @@ header.nav-transparent:not(.menu-open) .mobile-toggle {
 
 .logo {
   font-family: var(--serif);
-  font-size: clamp(1.25rem, 3.8vw, 1.6rem);
-  font-weight: 500;
-  letter-spacing: 0.06em;
+  font-size: clamp(1.28rem, 3.9vw, 1.65rem);
+  font-weight: 700;
+  font-variation-settings: "opsz" 72;
+  letter-spacing: 0.015em;
   text-transform: uppercase;
   white-space: nowrap;
-  line-height: 1.08;
+  line-height: 1.05;
 }
 
 .logo span {
@@ -1606,7 +1607,10 @@ footer a:hover {
 }
 
 .integrated-footer .footer-brand .logo {
-  font-size: 1.12rem;
+  font-size: 1.18rem;
+  font-weight: 700;
+  font-variation-settings: "opsz" 72;
+  letter-spacing: 0.015em;
   color: #FFFFFF;
 }
 
@@ -1789,6 +1793,10 @@ footer a:hover {
   white-space: nowrap;
 }
 
+.floating-cta-offer {
+  display: none;
+}
+
 .back-to-top-btn {
   width: 44px;
   height: 44px;
@@ -1882,6 +1890,15 @@ footer a:hover {
   .wines-section,
   .tastings-section {
     min-height: auto;
+  }
+
+  .hero-buttons,
+  .about-visit-cta {
+    display: none !important;
+  }
+
+  .floating-cta-offer {
+    display: inline-flex;
   }
 
   .section-dots {
@@ -2149,8 +2166,15 @@ footer a:hover {
   }
 
   .floating-actions {
-    right: 1rem;
+    right: 0.85rem;
     bottom: calc(1rem + env(safe-area-inset-bottom));
+    gap: 0.4rem;
+  }
+
+  .floating-cta {
+    padding: 0 0.75rem;
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
   }
 
   .modal-actions .btn {
