@@ -820,7 +820,7 @@ let scrollAnimRafId = null;
 let lastStepTime = 0;
 
 function isDesktopScrollMode() {
-  return window.innerWidth > 960 && window.matchMedia('(pointer: fine)').matches;
+  return window.innerWidth > 960 && !window.matchMedia('(pointer: coarse)').matches;
 }
 
 function getSnapSections() {
@@ -1016,18 +1016,24 @@ document.addEventListener('keydown', (e) => {
   }
 });
 
-let parallaxTicking = false;
+let parallaxRafId = null;
+const parallaxCurrent = new WeakMap();
+let heroParallaxCurrent = 0;
+
+function requestParallaxFrame() {
+  if (!parallaxRafId) {
+    parallaxRafId = window.requestAnimationFrame(updateParallax);
+  }
+}
+
 function updateParallax() {
+  parallaxRafId = null;
   const scrollY = window.scrollY;
   const header = document.getElementById('siteHeader');
-  const terroir = document.getElementById('terroir');
-  const headerH = header ? header.offsetHeight : 72;
 
-  // On desktop, keep header transparent over both Hero (#domov) and O nas (#zgodba).
-  // On mobile/tablet (free scroll), keep it transparent only at the top and switch to white translucent as soon as scrolling starts.
-  const isTransparent = isDesktopScrollMode()
-    ? (terroir ? scrollY < terroir.offsetTop - headerH - 4 : scrollY < window.innerHeight * 1.5)
-    : (scrollY <= 24);
+  // On desktop, all 5 sections have full-bleed dark-overlaid photography, so keep header transparent everywhere.
+  // On mobile/tablet (free scroll), keep it transparent at top and switch to white translucent on scroll.
+  const isTransparent = isDesktopScrollMode() ? true : (scrollY <= 24);
 
   if (header) {
     header.classList.toggle('nav-transparent', isTransparent);
@@ -1035,13 +1041,15 @@ function updateParallax() {
   }
 
   // Disable parallax and section tracking on mobile/tablet
-  if (!isDesktopScrollMode()) {
+  if (!isDesktopScrollMode() || window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const heroImg = document.querySelector('[data-parallax-hero]');
     if (heroImg) heroImg.style.removeProperty('--hero-parallax');
+    document.querySelectorAll('.about-bg-img, .section-bg-img').forEach(img => {
+      img.style.removeProperty('--bg-parallax');
+    });
     document.querySelectorAll('[data-parallax]').forEach(el => {
       el.style.removeProperty('--parallax-y');
     });
-    parallaxTicking = false;
     return;
   }
 
@@ -1054,36 +1062,72 @@ function updateParallax() {
     }
   }
 
-  // Hero background parallax
+  let needsMoreFrames = false;
+  const lerpFactor = 0.16;
+
+  // Hero background parallax (lerped)
   const heroImg = document.querySelector('[data-parallax-hero]');
-  if (heroImg && scrollY < window.innerHeight * 1.4) {
-    const heroOffset = Math.min(140, scrollY * 0.34);
-    heroImg.style.setProperty('--hero-parallax', `${heroOffset.toFixed(1)}px`);
+  if (heroImg) {
+    const heroTarget = scrollY < window.innerHeight * 1.4 ? Math.min(110, scrollY * 0.28) : 110;
+    const diff = heroTarget - heroParallaxCurrent;
+    if (Math.abs(diff) > 0.15) {
+      heroParallaxCurrent += diff * lerpFactor;
+      needsMoreFrames = true;
+    } else {
+      heroParallaxCurrent = heroTarget;
+    }
+    heroImg.style.setProperty('--hero-parallax', `${heroParallaxCurrent.toFixed(2)}px`);
   }
 
-  // Multi-element section parallax
-  const viewportCenter = window.innerHeight / 2;
+  // Section background images gentle glide parallax
+  const viewH = window.innerHeight;
+  const viewportCenter = viewH / 2;
+  document.querySelectorAll('.about-bg-img, .section-bg-img').forEach(img => {
+    const sec = img.parentElement;
+    if (!sec) return;
+    const rect = sec.getBoundingClientRect();
+    const secCenter = rect.top + rect.height / 2;
+    const target = Math.max(-36, Math.min(36, (secCenter - viewportCenter) * -0.08));
+    const prev = parallaxCurrent.get(img) ?? target;
+    const diff = target - prev;
+    let next = target;
+    if (Math.abs(diff) > 0.15) {
+      next = prev + diff * lerpFactor;
+      needsMoreFrames = true;
+    }
+    parallaxCurrent.set(img, next);
+    img.style.setProperty('--bg-parallax', `${next.toFixed(2)}px`);
+  });
+
+  // Multi-element section parallax (lerped)
   document.querySelectorAll('[data-parallax]').forEach(el => {
     const speed = parseFloat(el.getAttribute('data-parallax')) || 0.1;
     const rect = el.getBoundingClientRect();
     const elCenter = rect.top + rect.height / 2;
     const distFromCenter = elCenter - viewportCenter;
-    const offset = Math.max(-48, Math.min(48, distFromCenter * speed));
-    el.style.setProperty('--parallax-y', `${offset.toFixed(1)}px`);
+    const target = Math.max(-44, Math.min(44, distFromCenter * speed));
+    const prev = parallaxCurrent.get(el) ?? target;
+    const diff = target - prev;
+    let next = target;
+    if (Math.abs(diff) > 0.15) {
+      next = prev + diff * lerpFactor;
+      needsMoreFrames = true;
+    }
+    parallaxCurrent.set(el, next);
+    el.style.setProperty('--parallax-y', `${next.toFixed(2)}px`);
   });
 
-  parallaxTicking = false;
+  if (needsMoreFrames) {
+    requestParallaxFrame();
+  }
 }
 
 window.addEventListener('scroll', () => {
-  if (!parallaxTicking) {
-    window.requestAnimationFrame(updateParallax);
-    parallaxTicking = true;
-  }
+  requestParallaxFrame();
 }, { passive: true });
 
 window.addEventListener('resize', () => {
-  updateParallax();
+  requestParallaxFrame();
 });
 
 window.addEventListener('DOMContentLoaded', () => {
