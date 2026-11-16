@@ -62,7 +62,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <link rel="stylesheet" href="styles.css?v=20261116g" />
+  <link rel="stylesheet" href="styles.css?v=20261116h" />
 </head>
 <body>
 
@@ -407,7 +407,7 @@
         </div>
 
         <div class="tasting-faq-bar">
-          <button type="button" class="faq-trigger-btn" onclick="openFaqModal()" data-sl="Prihod, parkiranje, odpoved &amp; FAQ →" data-en="Arrival, parking, cancellation &amp; FAQ →" data-it="Arrivo, parcheggio, cancellazione &amp; FAQ →">Prihod, parkiranje, odpoved &amp; FAQ →</button>
+          <button type="button" class="faq-trigger-btn" onclick="openFaqModal()" data-sl="Prihod, parkiranje, odpoved in pogosta vprašanja →" data-en="Arrival, parking, cancellation &amp; FAQ →" data-it="Arrivo, parcheggio, cancellazione e domande frequenti →">Prihod, parkiranje, odpoved in pogosta vprašanja →</button>
         </div>
       </div>
 
@@ -432,6 +432,7 @@
 
         <form id="bookingForm" onsubmit="handleBooking(event)">
           <input type="text" id="bHoney" name="_honey" tabindex="-1" autocomplete="off" style="display: none;" aria-hidden="true" />
+          <div class="form-section-title" data-sl="Obvezni podatki" data-en="Required details" data-it="Dati obbligatori">Obvezni podatki</div>
           <div class="form-grid">
             <div class="form-group">
               <label for="bName" data-sl="Ime in priimek" data-en="Full Name" data-it="Nome e cognome">Ime in priimek</label>
@@ -468,21 +469,17 @@
                 <option value="15+" data-sl="15+ (pokličite nas)" data-en="15+ (call us)" data-it="15+ (chiamateci)">15+ (pokličite nas)</option>
               </select>
             </div>
-            <div class="form-group" id="orderQtyGroup" style="display: none;">
-              <label for="bOrderQty" data-sl="Količina vina (L)" data-en="Wine quantity (L)" data-it="Quantità di vino (L)">Količina vina (L)</label>
-              <div class="qty-stepper form-qty-stepper">
-                <button type="button" class="qty-btn" onclick="stepWineQty(-1, true)" aria-label="Manj litrov">−</button>
-                <input type="number" id="bOrderQty" name="order_qty" value="1" min="1" max="500" onchange="syncWineQty(this.value, true)" aria-label="Število litrov vina" />
-                <button type="button" class="qty-btn" onclick="stepWineQty(1, true)" aria-label="Več litrov">+</button>
-              </div>
-            </div>
-            <div class="form-group">
-              <label for="bPhone" data-sl="Telefon (neobvezno)" data-en="Phone (optional)" data-it="Telefono (opzionale)">Telefon (neobvezno)</label>
+          </div>
+
+          <div class="form-section-title form-section-optional" data-sl="Neobvezni podatki" data-en="Optional details" data-it="Dati facoltativi">Neobvezni podatki</div>
+          <div class="form-grid">
+            <div class="form-group full">
+              <label for="bPhone" data-sl="Telefon" data-en="Phone" data-it="Telefono">Telefon</label>
               <input id="bPhone" name="phone" type="tel" placeholder="+386 ..." data-ph-sl="+386 ..." data-ph-en="+386 ..." data-ph-it="+39 ..." autocomplete="tel" />
             </div>
-            <div class="form-group">
+            <div class="form-group full">
               <label for="bNotes" data-sl="Naročilo ali opombe" data-en="Order details or notes" data-it="Dettagli dell'ordine o note">Naročilo ali opombe</label>
-              <input id="bNotes" name="notes" type="text" placeholder="Npr. 5 L vina, pršut, šalam..." data-ph-sl="Npr. 5 L vina, pršut, šalam..." data-ph-en="E.g. 5 L wine, prosciutto, šalam..." data-ph-it="Es. 5 L di vino, prosciutto, salame..." />
+              <input id="bNotes" name="notes" type="text" placeholder="Npr. Bela zvrst, 5 L..." data-ph-sl="Npr. Bela zvrst, 5 L..." data-ph-en="E.g. House White Blend, 5 L..." data-ph-it="Es. Uvaggio Bianco, 5 L..." />
             </div>
           </div>
           <button type="submit" id="bookingSubmitBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.65rem;" data-sl="Pošlji povpraševanje" data-en="Send Request" data-it="Invia richiesta">Pošlji povpraševanje</button>
@@ -597,6 +594,6 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script src="script.js?v=20261116g"></script>
+  <script src="script.js?v=20261116h"></script>
 </body>
 </html>

@@ -152,30 +152,21 @@ function getLiterUnitWord(qty, lang = currentLang) {
   return 'litrov';
 }
 
-function getOrderPrefix(lang = currentLang) {
-  if (lang === 'en') return 'Order inquiry: ';
-  if (lang === 'it') return 'Richiesta d\'ordine: ';
-  return 'Povpraševanje za nakup: ';
-}
-
 function formatWineOrderLabel(qty = wineQty, lang = currentLang) {
   const n = Math.max(1, parseInt(qty, 10) || 1);
-  const unit = getLiterUnitWord(n, lang);
   const wineName = itemData.zvrst.orderLabel[lang] || itemData.zvrst.orderLabel.sl;
-  return `${wineName} (${n} ${unit})`;
+  return `${wineName}, ${n} L`;
 }
 
 function updateQtyUI() {
   const unitText = getLiterUnitWord(wineQty, currentLang);
   const cardInput = document.getElementById('cardWineQty');
   const modalInput = document.getElementById('modalWineQty');
-  const formInput = document.getElementById('bOrderQty');
   const cardUnit = document.getElementById('cardWineQtyUnit');
   const modalUnit = document.getElementById('modalWineQtyUnit');
 
   if (cardInput) cardInput.value = wineQty;
   if (modalInput) modalInput.value = wineQty;
-  if (formInput) formInput.value = wineQty;
   if (cardUnit) cardUnit.textContent = unitText;
   if (modalUnit) modalUnit.textContent = unitText;
 }
@@ -189,11 +180,11 @@ function syncWineQty(val, updateNotesIfOrder = false) {
     const notes = document.getElementById('bNotes');
     if (!notes) return;
     const label = formatWineOrderLabel(wineQty, currentLang);
-    const pattern = /(Bela zvrst|Hišna bela zvrst|House White Blend|Uvaggio Bianco della Casa)\s*\(\d+\s*[^)]+\)/i;
+    const pattern = /(Bela zvrst|Hišna bela zvrst|House White Blend|Uvaggio Bianco della Casa)(?:,\s*\d+\s*L|\s*\(\d+\s*[^)]+\))/i;
     if (pattern.test(notes.value)) {
       notes.value = notes.value.replace(pattern, label);
     } else if (!notes.value.trim()) {
-      notes.value = `${getOrderPrefix(currentLang)}${label}`;
+      notes.value = label;
     }
   }
 }
@@ -427,13 +418,12 @@ function preselectOrder(itemLabel, isWineWithQty = false) {
   syncFormRequirements();
 
   const notes = document.getElementById('bNotes');
-  const prefix = getOrderPrefix(currentLang);
-  const winePattern = /(Bela zvrst|Hišna bela zvrst|House White Blend|Uvaggio Bianco della Casa)\s*\(\d+\s*[^)]+\)/i;
+  const winePattern = /(Bela zvrst|Hišna bela zvrst|House White Blend|Uvaggio Bianco della Casa)(?:,\s*\d+\s*L|\s*\(\d+\s*[^)]+\))/i;
 
   if (isWineWithQty && winePattern.test(notes.value)) {
     notes.value = notes.value.replace(winePattern, finalLabel);
   } else {
-    notes.value = notes.value ? `${notes.value}, ${finalLabel}` : `${prefix}${finalLabel}`;
+    notes.value = notes.value ? `${notes.value}, ${finalLabel}` : finalLabel;
   }
 
   scrollToSection(null, 'degustacije');
@@ -887,7 +877,7 @@ function scrollToSectionIndex(idx) {
 
   isSectionAnimating = true;
   updateActiveDots(targetEl.id);
-  animateScrollToY(targetEl.offsetTop, 420);
+  animateScrollToY(targetEl.offsetTop, 620);
 }
 
 function scrollToSection(e, id) {
@@ -902,7 +892,7 @@ function scrollToSection(e, id) {
     scrollToSectionIndex(idx);
   } else {
     const el = document.getElementById(id);
-    if (el) animateScrollToY(el.offsetTop, 420);
+    if (el) animateScrollToY(el.offsetTop, 620);
   }
 }
 
@@ -1091,12 +1081,12 @@ function updateParallax() {
   }
 
   let needsMoreFrames = false;
-  const lerpFactor = 0.16;
+  const lerpFactor = 0.14;
 
   // Hero background parallax (lerped)
   const heroImg = document.querySelector('[data-parallax-hero]');
   if (heroImg) {
-    const heroTarget = scrollY < window.innerHeight * 1.4 ? Math.min(110, scrollY * 0.28) : 110;
+    const heroTarget = scrollY < window.innerHeight * 1.4 ? Math.min(130, scrollY * 0.32) : 130;
     const diff = heroTarget - heroParallaxCurrent;
     if (Math.abs(diff) > 0.15) {
       heroParallaxCurrent += diff * lerpFactor;
@@ -1115,7 +1105,7 @@ function updateParallax() {
     if (!sec) return;
     const rect = sec.getBoundingClientRect();
     const secCenter = rect.top + rect.height / 2;
-    const target = Math.max(-36, Math.min(36, (secCenter - viewportCenter) * -0.08));
+    const target = Math.max(-52, Math.min(52, (secCenter - viewportCenter) * -0.11));
     const prev = parallaxCurrent.get(img) ?? target;
     const diff = target - prev;
     let next = target;
@@ -1133,7 +1123,7 @@ function updateParallax() {
     const rect = el.getBoundingClientRect();
     const elCenter = rect.top + rect.height / 2;
     const distFromCenter = elCenter - viewportCenter;
-    const target = Math.max(-44, Math.min(44, distFromCenter * speed));
+    const target = Math.max(-56, Math.min(56, distFromCenter * speed));
     const prev = parallaxCurrent.get(el) ?? target;
     const diff = target - prev;
     let next = target;
