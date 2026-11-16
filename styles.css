@@ -339,8 +339,13 @@ header.nav-transparent:not(.menu-open) .nav-cta:hover {
 }
 
 header.nav-transparent:not(.menu-open) .mobile-toggle {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.2));
+  backdrop-filter: blur(22px) saturate(185%);
+  -webkit-backdrop-filter: blur(22px) saturate(185%);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 14px 34px rgba(10, 14, 10, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
   color: #FFFFFF;
 }
 
@@ -772,11 +777,12 @@ nav a:hover {
 
 .map-layer-switch {
   display: inline-flex;
-  border: 1px solid rgba(255, 255, 255, 0.34);
+  border: 1px solid rgba(255, 255, 255, 0.44);
   border-radius: 0;
-  background: rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.24), rgba(255, 255, 255, 0.10));
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  box-shadow: 0 8px 20px rgba(10, 14, 10, 0.24), inset 0 1px 0 rgba(255, 255, 255, 0.52);
   overflow: hidden;
   flex-shrink: 0;
 }
@@ -787,7 +793,7 @@ nav a:hover {
   padding: 0.35rem 0.7rem;
   font-size: 0.74rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.86);
+  color: rgba(255, 255, 255, 0.9);
 }
 
 .map-layer-switch button.active {
@@ -810,22 +816,26 @@ nav a:hover {
   font-weight: 600;
   white-space: nowrap;
   border-radius: 0;
-  border: 1px solid rgba(255, 255, 255, 0.34);
-  background: rgba(255, 255, 255, 0.10);
-  backdrop-filter: blur(14px);
-  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.42);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.22), rgba(255, 255, 255, 0.08));
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  box-shadow: 0 8px 20px rgba(10, 14, 10, 0.22), inset 0 1px 0 rgba(255, 255, 255, 0.48);
   color: #FFFFFF;
   transition: all 0.2s ease;
 }
 
 .map-pill:hover {
-  border-color: rgba(255, 255, 255, 0.75);
-  background: rgba(255, 255, 255, 0.20);
+  border-color: rgba(255, 255, 255, 0.78);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.34), rgba(255, 255, 255, 0.16));
 }
 
 .map-pill.active {
-  background: var(--accent);
-  border-color: rgba(255, 255, 255, 0.65);
+  background: linear-gradient(145deg, rgba(35, 75, 46, 0.84), rgba(23, 51, 30, 0.68));
+  backdrop-filter: blur(18px) saturate(180%);
+  -webkit-backdrop-filter: blur(18px) saturate(180%);
+  border-color: rgba(255, 255, 255, 0.68);
+  box-shadow: 0 10px 24px rgba(10, 14, 10, 0.30), inset 0 1px 0 rgba(255, 255, 255, 0.48);
   color: #FFFFFF;
 }
 
@@ -1997,8 +2007,11 @@ footer a:hover {
   }
 
   header.nav-transparent.menu-open .mobile-toggle {
-    background: rgba(255, 255, 255, 0.20);
-    border-color: rgba(255, 255, 255, 0.55);
+    background: linear-gradient(145deg, rgba(255, 255, 255, 0.42), rgba(255, 255, 255, 0.24));
+    backdrop-filter: blur(22px) saturate(185%);
+    -webkit-backdrop-filter: blur(22px) saturate(185%);
+    border-color: rgba(255, 255, 255, 0.68);
+    box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.78);
     color: #FFFFFF;
   }
 
