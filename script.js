@@ -17,7 +17,7 @@ const itemData = {
         ['Sorte', 'Malvazija, Rebula, Vitovska grganja'],
         ['Profil vina', 'Suho, sveže, mineralno belo vino (1 hišna zvrst)'],
         ['Vinogradi', 'Spodnji in zgornji vinograd v Oševljeku'],
-        ['Prodaja', 'Odprto vino na liter (prevzem v vinski kleti)'],
+        ['Prodaja', 'Vino na liter (prevzem v vinski kleti)'],
         ['Trgatev', 'Ročna trgatev'],
         ['K hrani', 'Domače suhomesnine, napolitanske pice, bela riba']
       ]

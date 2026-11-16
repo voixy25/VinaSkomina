@@ -1795,10 +1795,6 @@ footer a:hover {
   white-space: nowrap;
 }
 
-.floating-cta-offer {
-  display: none;
-}
-
 .back-to-top-btn {
   width: 44px;
   height: 44px;
@@ -1892,15 +1888,6 @@ footer a:hover {
   .wines-section,
   .tastings-section {
     min-height: auto;
-  }
-
-  .hero-buttons,
-  .about-visit-cta {
-    display: none !important;
-  }
-
-  .floating-cta-offer {
-    display: inline-flex;
   }
 
   .section-dots {
