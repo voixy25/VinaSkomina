@@ -6,25 +6,25 @@ const itemData = {
   zvrst: {
     orderLabel: 'Bela zvrst',
     sl: {
-      cat: 'Vipavska dolina, suho belo vino',
+      cat: 'Vipavska dolina, suho belo vino (na liter)',
       title: 'Hišna bela zvrst',
-      desc: 'Naše vino je zvrst vseh treh sort iz obeh vinogradov v Oševljeku: Malvazije, Rebule in Vitovske grganje. Eno leto smo vsako sorto pridelali tudi ločeno.',
+      desc: 'Naše vino je zvrst vseh treh sort iz obeh vinogradov v Oševljeku: Malvazije, Rebule in Vitovske grganje, ki jo negujemo in točimo na liter v naši vinski kleti. Eno leto smo vsako sorto vinificirali tudi ločeno.',
       specs: [
         ['Sorte', 'Malvazija, Rebula, Vitovska grganja'],
         ['Vinogradi', 'Spodnji in zgornji vinograd v Oševljeku'],
-        ['Tla', 'Vipavski fliš, lapor in bližina kraškega apnenca'],
+        ['Prodaja', 'Odprto vino na liter (prevzem v vinski kleti)'],
         ['Trgatev', 'Ročna trgatev'],
         ['K hrani', 'Domače suhomesnine, napolitanske pice, bela riba']
       ]
     },
     en: {
-      cat: 'Vipava Valley, dry white wine',
+      cat: 'Vipava Valley, dry white wine (by the liter)',
       title: 'House White Blend',
-      desc: 'Our wine blends all three varietals from both Oševljek vineyards: Malvazija, Rebula, and Vitovska Grganja. For one vintage, we also bottled each varietal separately.',
+      desc: 'Our wine blends all three varietals from both Oševljek vineyards: Malvazija, Rebula, and Vitovska Grganja, aged and poured by the liter in our wine cellar. For one vintage, we also vinified each varietal separately.',
       specs: [
         ['Varietals', 'Malvazija, Rebula, Vitovska Grganja'],
         ['Vineyards', 'Lower and upper parcels in Oševljek'],
-        ['Soil', 'Vipava flysch marl near Karst limestone'],
+        ['Format', 'Poured by the liter (cellar pickup)'],
         ['Harvest', 'Hand-harvested'],
         ['Food pairing', 'Homemade cured meats, Neapolitan pizza, white fish']
       ]
@@ -33,80 +33,80 @@ const itemData = {
   suhomesnine: {
     orderLabel: 'Domače suhomesnine',
     sl: {
-      cat: 'Domača predelava',
+      cat: 'Iz domače zorilnice v kleti',
       title: 'Domače suhomesnine',
-      desc: 'Do pred nekaj leti smo prašiče redili doma, danes pa jih kupimo in zakoljemo na Dolenjskem, mesnine pa po družinskih receptih pripravimo v Oševljeku.',
+      desc: 'Do pred nekaj leti smo prašiče redili sami, danes pa jih kupimo in zakoljemo na Dolenjskem, mesnine pa po družinskih receptih nasolimo in sušimo v naši kleti v Oševljeku.',
       specs: [
         ['Izdelki', 'Pršut, šalam, panceta, sladke klobase, krodegine'],
         ['Poreklo mesa', 'Prašiči z Dolenjske'],
-        ['Priprava', 'Domača predelava in sušenje v Oševljeku'],
+        ['Zorenje', 'Domača predelava in sušenje v kleti v Oševljeku'],
         ['Krodegine', 'Tradicionalne kuhane klobase za zimske mesece'],
-        ['Nakup', 'Po predhodnem dogovoru ali ob degustaciji']
+        ['Nakup', 'Po predhodnem dogovoru ali ob degustaciji v kleti']
       ]
     },
     en: {
-      cat: 'Homemade cured pork',
+      cat: 'Cellar-cured pork delicacies',
       title: 'Homemade Cured Meats',
-      desc: 'Until a few years ago we raised our own pigs; today we buy and slaughter them in Dolenjska, then cure and season all pork cuts at home in Oševljek.',
+      desc: 'Until a few years ago we raised our own pigs; today we source them in Dolenjska, then season and cure all pork cuts in our cellar in Oševljek.',
       specs: [
         ['Products', 'Prosciutto, šalam, pancetta, sladke klobase, krodegine'],
         ['Pork sourcing', 'Pigs sourced and slaughtered in Dolenjska'],
-        ['Curing', 'Prepared and cured at home in Oševljek'],
+        ['Curing', 'Prepared and cured in our Oševljek cellar'],
         ['Krodegine', 'Traditional boiled pork sausages served in winter'],
-        ['Availability', 'By prior inquiry or during tastings']
+        ['Availability', 'By prior inquiry or during cellar tastings']
       ]
     }
   },
   pice: {
     orderLabel: 'Degustacija z napolitanskimi picami',
     sl: {
-      cat: 'Ob najavljenih obiskih',
+      cat: 'Ob najavljenih obiskih vinske kleti',
       title: 'Napolitanske pice iz vrtljive peči',
-      desc: 'Za goste ob degustacijah v naši električni vrtljivi peči pečemo sveže napolitanske pice, obložene tudi z našo panceto, šalamom ali pršutom.',
+      desc: 'Za goste ob degustacijah v vinski kleti v naši električni vrtljivi peči pečemo sveže napolitanske pice, obložene tudi z našo panceto, šalamom ali pršutom.',
       specs: [
         ['Peč', 'Električna vrtljiva peč za pico'],
         ['Slog', 'Napolitanska pica'],
         ['Obloge', 'Klasične sestavine in naše domače mesnine'],
-        ['Kdaj', 'Po predhodnem dogovoru za skupine'],
+        ['Kdaj', 'Po predhodnem dogovoru za skupine v kleti'],
         ['K vinu', 'Postrežemo z našo belo zvrstjo']
       ]
     },
     en: {
-      cat: 'Scheduled cellar visits',
+      cat: 'Scheduled wine cellar visits',
       title: 'Neapolitan Pizza',
-      desc: 'During scheduled visits, we bake fresh Neapolitan pizzas in our rotating electric oven, often topped with our own pancetta, šalam, or prosciutto.',
+      desc: 'During scheduled wine cellar visits, we bake fresh Neapolitan pizzas in our rotating electric oven, often topped with our own pancetta, šalam, or prosciutto.',
       specs: [
         ['Oven', 'Rotating electric pizza oven'],
         ['Style', 'Neapolitan pizza'],
         ['Toppings', 'Classic toppings and our homemade cured meats'],
-        ['Availability', 'By prior reservation for groups'],
+        ['Availability', 'By prior reservation for cellar groups'],
         ['Pairing', 'Served alongside our house white blend']
       ]
     }
   }
 };
 
-function getBottleUnitWord(qty, lang = currentLang) {
+function getLiterUnitWord(qty, lang = currentLang) {
   const n = Math.max(1, parseInt(qty, 10) || 1);
   if (lang === 'en') {
-    return n === 1 ? 'bottle' : 'bottles';
+    return n === 1 ? 'liter' : 'liters';
   }
   const mod100 = n % 100;
-  if (mod100 === 1) return 'steklenica';
-  if (mod100 === 2) return 'steklenici';
-  if (mod100 === 3 || mod100 === 4) return 'steklenice';
-  return 'steklenic';
+  if (mod100 === 1) return 'liter';
+  if (mod100 === 2) return 'litra';
+  if (mod100 === 3 || mod100 === 4) return 'litri';
+  return 'litrov';
 }
 
 function formatWineOrderLabel(qty = wineQty, lang = currentLang) {
   const n = Math.max(1, parseInt(qty, 10) || 1);
-  const unit = getBottleUnitWord(n, lang);
+  const unit = getLiterUnitWord(n, lang);
   const wineName = lang === 'sl' ? 'Bela zvrst' : 'House White Blend';
   return `${wineName} (${n} ${unit})`;
 }
 
 function updateQtyUI() {
-  const unitText = getBottleUnitWord(wineQty, currentLang);
+  const unitText = getLiterUnitWord(wineQty, currentLang);
   const cardInput = document.getElementById('cardWineQty');
   const modalInput = document.getElementById('modalWineQty');
   const formInput = document.getElementById('bOrderQty');
@@ -122,7 +122,7 @@ function updateQtyUI() {
 
 function syncWineQty(val, updateNotesIfOrder = false) {
   const parsed = parseInt(val, 10);
-  wineQty = isNaN(parsed) || parsed < 1 ? 1 : Math.min(60, parsed);
+  wineQty = isNaN(parsed) || parsed < 1 ? 1 : Math.min(500, parsed);
   updateQtyUI();
 
   if (updateNotesIfOrder) {
@@ -247,7 +247,7 @@ function syncFormRequirements() {
 
   if (dateLabel) {
     if (isOrder) {
-      dateLabel.textContent = currentLang === 'sl' ? 'Datum prevzema (neobvezno)' : 'Pickup date (optional)';
+      dateLabel.textContent = currentLang === 'sl' ? 'Datum prevzema v kleti (neobvezno)' : 'Cellar pickup date (optional)';
     } else {
       dateLabel.textContent = currentLang === 'sl' ? 'Datum obiska ali prevzema' : 'Visit or pickup date';
     }
@@ -261,7 +261,7 @@ function syncFormRequirements() {
     guestsSelect.disabled = isOrder;
   }
 
-  // Pokaži selector za količino steklenic ob nakupu
+  // Pokaži selector za količino litrov ob nakupu
   if (orderQtyGroup) {
     orderQtyGroup.style.display = isOrder ? '' : 'none';
   }
@@ -304,7 +304,7 @@ function handleBooking(e) {
 }
 
 /* ==========================================
-   Google Maps View (Oševljek 14 & Both Vineyards)
+   Google Maps View (Vinska klet Oševljek 14 & Both Vineyards)
    ========================================== */
 let terroirMap = null;
 let googleSatLayer = null;
@@ -314,48 +314,74 @@ let mapBoundsGroup = null;
 
 const mapLocations = {
   house: {
-    coords: [45.88063, 13.69531],
+    coords: [45.88042, 13.69613],
+    polygon: [
+      [45.88058, 13.69610],
+      [45.88055, 13.69629],
+      [45.88041, 13.69637],
+      [45.88030, 13.69635],
+      [45.88029, 13.69617],
+      [45.88030, 13.69594],
+      [45.88039, 13.69593],
+      [45.88054, 13.69602]
+    ],
     color: '#B84A27',
     zoom: 18,
     sl: {
-      short: 'Hiša (Oševljek 14)',
-      title: 'Hiša in vinska klet — Oševljek 14',
-      desc: 'Oševljek 14, 5292 Renče. Domačija Vina Skomina, klet, sušilnica suhomesnin in vrtljiva peč za napolitanske pice.'
+      short: 'Vinska klet (Oševljek 14)',
+      title: 'Vinska klet Skomina — Oševljek 14',
+      desc: 'Oševljek 14, 5292 Renče. Družinska vinska klet Vina Skomina, zorilnica suhomesnin in vrtljiva peč za napolitanske pice.'
     },
     en: {
-      short: 'House (Oševljek 14)',
-      title: 'Homestead & Cellar — Oševljek 14',
-      desc: 'Oševljek 14, 5292 Renče. Vina Skomina family house, wine cellar, curing room, and rotating pizza oven.'
+      short: 'Wine cellar (Oševljek 14)',
+      title: 'Skomina Wine Cellar — Oševljek 14',
+      desc: 'Oševljek 14, 5292 Renče. Vina Skomina family wine cellar, curing room, and rotating pizza oven.'
     }
   },
   lower: {
-    coords: [45.87885, 13.69415],
+    coords: [45.87809, 13.69629],
     polygon: [
-      [45.87932, 13.69375],
-      [45.87922, 13.69458],
-      [45.87838, 13.69445],
-      [45.87848, 13.69362]
+      [45.87841, 13.69621],
+      [45.87831, 13.69638],
+      [45.87822, 13.69646],
+      [45.87804, 13.69656],
+      [45.87793, 13.69654],
+      [45.87779, 13.69645],
+      [45.87774, 13.69631],
+      [45.87789, 13.69620],
+      [45.87799, 13.69616],
+      [45.87814, 13.69607],
+      [45.87824, 13.69604],
+      [45.87839, 13.69612]
     ],
     color: '#2E7D47',
     zoom: 18,
     sl: {
       short: 'Spodnji vinograd',
       title: 'Spodnji vinograd (pod vasjo)',
-      desc: 'Odprta sončna lega tik pod vasjo Oševljek, zračena z vipavsko burjo na flišnih tleh.'
+      desc: 'Odprta sončna lega tik ob cesti pod vasjo Oševljek, zračena z vipavsko burjo na flišnih tleh.'
     },
     en: {
       short: 'Lower vineyard',
       title: 'Lower Vineyard (below village)',
-      desc: 'Open sunlit slope just below Oševljek village, cooled by the Vipava bora wind on flysch soil.'
+      desc: 'Open sunlit parcel right alongside the road below Oševljek village, cooled by the Vipava bora wind.'
     }
   },
   upper: {
-    coords: [45.87675, 13.69685],
+    coords: [45.87650, 13.69690],
     polygon: [
-      [45.87712, 13.69632],
-      [45.87702, 13.69742],
-      [45.87638, 13.69728],
-      [45.87648, 13.69618]
+      [45.87672, 13.69667],
+      [45.87668, 13.69686],
+      [45.87663, 13.69704],
+      [45.87657, 13.69716],
+      [45.87647, 13.69728],
+      [45.87637, 13.69731],
+      [45.87633, 13.69709],
+      [45.87626, 13.69686],
+      [45.87628, 13.69677],
+      [45.87643, 13.69667],
+      [45.87653, 13.69656],
+      [45.87665, 13.69657]
     ],
     color: '#D49B27',
     zoom: 18,
@@ -378,7 +404,7 @@ function createPinIcon(locKey) {
   return L.divIcon({
     className: 'custom-map-pin-container',
     html: `<div class="custom-map-pin"><span class="pin-badge" style="background:${loc.color}"></span><span>${label}</span></div>`,
-    iconSize: [0, 0],
+    iconSize: null,
     iconAnchor: [0, 0],
     popupAnchor: [0, -14]
   });
@@ -403,12 +429,12 @@ function initTerroirMap() {
   if (!mapEl) return;
 
   if (typeof L === 'undefined') {
-    mapEl.innerHTML = `<iframe title="Google Maps Oševljek 14" width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen src="https://maps.google.com/maps?q=O%C5%A1evljek+14,+5292+Ren%C4%8De,+Slovenija&t=k&z=16&ie=UTF8&iwloc=&output=embed"></iframe>`;
+    mapEl.innerHTML = `<iframe title="Google Maps Oševljek 14" width="100%" height="100%" style="border:0" loading="lazy" allowfullscreen src="https://maps.google.com/maps?q=45.88042,13.69613&t=k&z=16&ie=UTF8&iwloc=&output=embed"></iframe>`;
     return;
   }
 
   terroirMap = L.map('terroirMap', {
-    center: [45.8787, 13.6955],
+    center: [45.8784, 13.6964],
     zoom: 16,
     scrollWheelZoom: false
   });
@@ -434,9 +460,9 @@ function initTerroirMap() {
     if (loc.polygon) {
       const poly = L.polygon(loc.polygon, {
         color: loc.color,
-        weight: 2.2,
+        weight: 2.4,
         fillColor: loc.color,
-        fillOpacity: 0.28
+        fillOpacity: 0.3
       }).addTo(terroirMap);
       groupLayers.push(poly);
     }
@@ -500,12 +526,16 @@ function updateMapLanguage() {
 }
 
 /* ==========================================
-   Section-to-Section Jump Scrolling & Parallax
+   Strict 1-Gesture = 1-Section Jump Scrolling & Parallax
    ========================================== */
 const snapSectionIds = ['domov', 'zgodba', 'terroir', 'vina', 'degustacije', 'kontakt'];
 let currentSectionIndex = 0;
 let isSectionAnimating = false;
-let wheelUnlockTimer = null;
+let wheelGestureLocked = false;
+let animUnlockTimer = null;
+let wheelQuietTimer = null;
+let lastWheelDeltaAbs = 0;
+let lastWheelTime = 0;
 
 function getSnapSections() {
   return snapSectionIds.map(id => document.getElementById(id)).filter(Boolean);
@@ -525,10 +555,10 @@ function scrollToSectionIndex(idx) {
   const targetEl = sections[clampedIdx];
 
   isSectionAnimating = true;
-  clearTimeout(wheelUnlockTimer);
-  wheelUnlockTimer = setTimeout(() => {
+  clearTimeout(animUnlockTimer);
+  animUnlockTimer = setTimeout(() => {
     isSectionAnimating = false;
-  }, 760);
+  }, 820);
 
   updateActiveDots(targetEl.id);
   targetEl.scrollIntoView({ behavior: 'smooth', block: targetEl.tagName === 'FOOTER' ? 'end' : 'start' });
@@ -553,7 +583,7 @@ function navJump(e, id) {
 function detectCurrentSectionIndex() {
   const sections = getSnapSections();
   const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 72;
-  const probeY = window.scrollY + headerH + window.innerHeight * 0.32;
+  const probeY = window.scrollY + headerH + window.innerHeight * 0.35;
 
   let bestIdx = 0;
   sections.forEach((sec, i) => {
@@ -570,12 +600,12 @@ function canSectionScrollInternally(sectionEl, deltaY) {
   const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 72;
   const viewH = window.innerHeight;
 
-  // If the section is taller than the visible viewport, allow scrolling to its edge before jumping
-  if (rect.height > viewH - headerH + 24) {
-    if (deltaY > 0 && rect.bottom > viewH + 14) {
+  // Allow internal scroll only when a section is taller than the viewport on smaller screens
+  if (rect.height > viewH - headerH + 36) {
+    if (deltaY > 0 && rect.bottom > viewH + 18) {
       return true;
     }
-    if (deltaY < 0 && rect.top < headerH - 14) {
+    if (deltaY < 0 && rect.top < headerH - 18) {
       return true;
     }
   }
@@ -585,24 +615,46 @@ function canSectionScrollInternally(sectionEl, deltaY) {
 window.addEventListener('wheel', (e) => {
   if (document.body.classList.contains('modal-open')) return;
   if (e.target.closest('#terroirMap') || e.target.closest('.modal')) return;
-  if (Math.abs(e.deltaY) < 12) return;
 
   const sections = getSnapSections();
   if (!sections.length) return;
 
-  const activeIdx = detectCurrentSectionIndex();
-  const activeSection = sections[activeIdx];
+  const activeSection = sections[currentSectionIndex] || sections[detectCurrentSectionIndex()];
 
   if (canSectionScrollInternally(activeSection, e.deltaY)) {
     return;
   }
 
+  // Always block native wheel scroll so browser momentum never skips multiple sections
   e.preventDefault();
-  if (isSectionAnimating) return;
+
+  const absDelta = Math.abs(e.deltaY);
+  const now = performance.now();
+
+  // Keep gesture locked as long as wheel/trackpad inertia events keep arriving
+  clearTimeout(wheelQuietTimer);
+  wheelQuietTimer = setTimeout(() => {
+    wheelGestureLocked = false;
+    lastWheelDeltaAbs = 0;
+  }, 240);
+
+  if (absDelta < 4) return;
+
+  // Do not allow another section jump until BOTH the animation finished AND the wheel gesture ended
+  if (isSectionAnimating || wheelGestureLocked) {
+    lastWheelDeltaAbs = absDelta;
+    lastWheelTime = now;
+    return;
+  }
+
+  wheelGestureLocked = true;
+  lastWheelDeltaAbs = absDelta;
+  lastWheelTime = now;
 
   const dir = e.deltaY > 0 ? 1 : -1;
-  const nextIdx = Math.max(0, Math.min(sections.length - 1, activeIdx + dir));
-  if (nextIdx !== activeIdx) {
+  const baseIdx = detectCurrentSectionIndex();
+  const nextIdx = Math.max(0, Math.min(sections.length - 1, baseIdx + dir));
+  if (nextIdx !== baseIdx) {
     scrollToSectionIndex(nextIdx);
   }
 }, { passive: false });
@@ -682,6 +734,7 @@ window.addEventListener('scroll', () => {
 }, { passive: true });
 
 window.addEventListener('DOMContentLoaded', () => {
+  currentSectionIndex = detectCurrentSectionIndex();
   updateQtyUI();
   syncFormRequirements();
   initTerroirMap();
