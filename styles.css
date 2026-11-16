@@ -653,17 +653,18 @@ nav a:hover {
 
 .map-loc-pills {
   display: flex;
-  flex-wrap: wrap;
-  gap: 0.45rem;
+  flex-wrap: nowrap;
+  gap: 0.4rem;
 }
 
 .map-pill {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.38rem 0.72rem;
-  font-size: 0.76rem;
+  gap: 0.36rem;
+  padding: 0.36rem 0.64rem;
+  font-size: 0.74rem;
   font-weight: 600;
+  white-space: nowrap;
   border-radius: 999px;
   border: 1px solid var(--border);
   background: #FFFFFF;
@@ -1498,6 +1499,10 @@ footer a:hover {
   .tier-meta-row {
     flex-wrap: wrap;
     gap: 0.45rem 0.9rem;
+  }
+
+  .map-loc-pills {
+    flex-wrap: wrap;
   }
 
   .wine-grid {
