@@ -10,7 +10,7 @@ const itemData = {
       it: 'Uvaggio Bianco della Casa'
     },
     sl: {
-      cat: 'Vipavska dolina, suho belo vino (na liter)',
+      cat: 'Vipavska dolina, suho belo vino',
       title: 'Hišna bela zvrst',
       desc: 'Naše vino je zvrst vseh treh sort iz obeh vinogradov v Oševljeku: Malvazije, Rebule in Vitovske grganje, ki jo ročno potrgamo, združimo v eno belo zvrst ter točimo na liter v naši vinski kleti.',
       specs: [
@@ -23,7 +23,7 @@ const itemData = {
       ]
     },
     en: {
-      cat: 'Vipava Valley, dry white wine (by the liter)',
+      cat: 'Vipava Valley, dry white wine',
       title: 'House White Blend',
       desc: 'Our wine blends all three varietals from both Oševljek vineyards: Malvazija, Rebula, and Vitovska Grganja, harvested by hand, blended into one white wine, and poured by the liter in our wine cellar.',
       specs: [
@@ -36,7 +36,7 @@ const itemData = {
       ]
     },
     it: {
-      cat: 'Valle del Vipacco, vino bianco secco (a litro)',
+      cat: 'Valle del Vipacco, vino bianco secco',
       title: 'Uvaggio Bianco della Casa',
       desc: 'Il nostro vino unisce tutte e tre le varietà dei nostri due vigneti a Oševljek: Malvasia, Ribolla Gialla e Vitovska Grganja, vendemmiate a mano, unite in un unico uvaggio bianco e servite sfuse a litro nella nostra cantina.',
       specs: [
@@ -356,12 +356,29 @@ function syncFormRequirements() {
 
   const dateInput = document.getElementById('bDate');
   const dateLabel = document.getElementById('bDateLabel');
+  const dateGroup = document.getElementById('dateGroup');
   const guestsGroup = document.getElementById('guestsGroup');
   const guestsSelect = document.getElementById('bGuests');
-  const orderQtyGroup = document.getElementById('orderQtyGroup');
+  const phoneGroup = document.getElementById('phoneGroup');
+  const requiredGrid = document.getElementById('requiredFormGrid');
+  const optionalGrid = document.getElementById('optionalFormGrid');
 
   if (dateInput) {
     dateInput.required = !isOrder;
+  }
+
+  if (dateGroup && requiredGrid && optionalGrid) {
+    if (isOrder) {
+      if (phoneGroup && dateGroup.parentElement !== optionalGrid) {
+        optionalGrid.insertBefore(dateGroup, phoneGroup);
+      }
+      if (phoneGroup) phoneGroup.classList.remove('full');
+    } else {
+      if (guestsGroup && dateGroup.parentElement !== requiredGrid) {
+        requiredGrid.insertBefore(dateGroup, guestsGroup);
+      }
+      if (phoneGroup) phoneGroup.classList.add('full');
+    }
   }
 
   if (dateLabel) {
@@ -400,11 +417,6 @@ function syncFormRequirements() {
       guestsSelect.value = '4';
     }
   }
-
-  // Pokaži selector za količino litrov ob nakupu
-  if (orderQtyGroup) {
-    orderQtyGroup.style.display = isOrder ? '' : 'none';
-  }
 }
 
 function preselectOrder(itemLabel, isWineWithQty = false) {
@@ -426,7 +438,7 @@ function preselectOrder(itemLabel, isWineWithQty = false) {
     notes.value = notes.value ? `${notes.value}, ${finalLabel}` : finalLabel;
   }
 
-  scrollToSection(null, 'degustacije');
+  scrollToBooking();
   setTimeout(() => notes.focus({ preventScroll: true }), 550);
 }
 
@@ -435,7 +447,7 @@ function selectPizzaVisit(e) {
   const pkgSelect = document.getElementById('bPackage');
   pkgSelect.value = 'pizza';
   syncFormRequirements();
-  scrollToSection(null, 'degustacije');
+  scrollToBooking();
 }
 
 function selectTastingPackage(pkg) {
@@ -444,9 +456,12 @@ function selectTastingPackage(pkg) {
     pkgSelect.value = pkg;
     syncFormRequirements();
   }
+  if (!isDesktopScrollMode()) {
+    scrollToBooking();
+  }
   const nameInput = document.getElementById('bName');
   if (nameInput) {
-    setTimeout(() => nameInput.focus({ preventScroll: true }), 250);
+    setTimeout(() => nameInput.focus({ preventScroll: true }), isDesktopScrollMode() ? 250 : 600);
   }
 }
 
@@ -684,14 +699,15 @@ function createPopupHTML(locKey) {
   const loc = mapLocations[locKey];
   const info = loc[currentLang] || loc.sl;
   const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${loc.coords[0]},${loc.coords[1]}`;
-  let linkText = 'Odpri v Google Maps ↗';
-  if (currentLang === 'en') linkText = 'Open in Google Maps ↗';
-  if (currentLang === 'it') linkText = 'Apri in Google Maps ↗';
+  let linkText = 'Odpri v Google Maps';
+  if (currentLang === 'en') linkText = 'Open in Google Maps';
+  if (currentLang === 'it') linkText = 'Apri in Google Maps';
+  const extIcon = `<svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" style="vertical-align:-1px;margin-left:4px;" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
   return `
     <div style="min-width:190px;max-width:240px;">
       <strong style="display:block;font-size:0.9rem;color:#141813;margin-bottom:3px;">${info.title}</strong>
       <p style="font-size:0.78rem;color:#4E554B;margin:0 0 6px;">${info.desc}</p>
-      <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" style="font-size:0.75rem;font-weight:600;color:#234B2E;text-decoration: underline;">${linkText}</a>
+      <a href="${gmapsUrl}" target="_blank" rel="noopener noreferrer" style="display:inline-flex;align-items:center;font-size:0.75rem;font-weight:600;color:#234B2E;text-decoration:underline;">${linkText}${extIcon}</a>
     </div>
   `;
 }
@@ -877,7 +893,7 @@ function scrollToSectionIndex(idx) {
 
   isSectionAnimating = true;
   updateActiveDots(targetEl.id);
-  animateScrollToY(targetEl.offsetTop, 620);
+  animateScrollToY(targetEl.offsetTop, 760);
 }
 
 function scrollToSection(e, id) {
@@ -892,8 +908,18 @@ function scrollToSection(e, id) {
     scrollToSectionIndex(idx);
   } else {
     const el = document.getElementById(id);
-    if (el) animateScrollToY(el.offsetTop, 620);
+    if (el) animateScrollToY(el.offsetTop, 760);
   }
+}
+
+function scrollToBooking(e) {
+  if (e) e.preventDefault();
+  if (!isDesktopScrollMode()) {
+    const bookingEl = document.getElementById('bookingBox') || document.getElementById('bookingForm') || document.getElementById('degustacije');
+    if (bookingEl) bookingEl.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  scrollToSection(null, 'degustacije');
 }
 
 function navJump(e, id) {
@@ -1081,12 +1107,12 @@ function updateParallax() {
   }
 
   let needsMoreFrames = false;
-  const lerpFactor = 0.14;
+  const lerpFactor = 0.075;
 
   // Hero background parallax (lerped)
   const heroImg = document.querySelector('[data-parallax-hero]');
   if (heroImg) {
-    const heroTarget = scrollY < window.innerHeight * 1.4 ? Math.min(130, scrollY * 0.32) : 130;
+    const heroTarget = scrollY < window.innerHeight * 1.4 ? Math.min(90, scrollY * 0.20) : 90;
     const diff = heroTarget - heroParallaxCurrent;
     if (Math.abs(diff) > 0.15) {
       heroParallaxCurrent += diff * lerpFactor;
@@ -1105,7 +1131,7 @@ function updateParallax() {
     if (!sec) return;
     const rect = sec.getBoundingClientRect();
     const secCenter = rect.top + rect.height / 2;
-    const target = Math.max(-52, Math.min(52, (secCenter - viewportCenter) * -0.11));
+    const target = Math.max(-36, Math.min(36, (secCenter - viewportCenter) * -0.075));
     const prev = parallaxCurrent.get(img) ?? target;
     const diff = target - prev;
     let next = target;
@@ -1119,11 +1145,11 @@ function updateParallax() {
 
   // Multi-element section parallax (lerped)
   document.querySelectorAll('[data-parallax]').forEach(el => {
-    const speed = parseFloat(el.getAttribute('data-parallax')) || 0.1;
+    const speed = (parseFloat(el.getAttribute('data-parallax')) || 0.1) * 0.65;
     const rect = el.getBoundingClientRect();
     const elCenter = rect.top + rect.height / 2;
     const distFromCenter = elCenter - viewportCenter;
-    const target = Math.max(-56, Math.min(56, distFromCenter * speed));
+    const target = Math.max(-38, Math.min(38, distFromCenter * speed));
     const prev = parallaxCurrent.get(el) ?? target;
     const diff = target - prev;
     let next = target;

@@ -62,7 +62,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <link rel="stylesheet" href="styles.css?v=20261116h" />
+  <link rel="stylesheet" href="styles.css?v=20261116i" />
 </head>
 <body>
 
@@ -82,7 +82,7 @@
           <li><a href="#degustacije" onclick="navJump(event, 'degustacije')" data-sl="Degustacije" data-en="Tastings" data-it="Degustazioni">Degustacije</a></li>
         </ul>
         <div class="mobile-menu-cta">
-          <a href="#degustacije" onclick="navJump(event, 'degustacije')" class="btn btn-primary" data-sl="Kontakt" data-en="Contact" data-it="Contatto">Kontakt</a>
+          <a href="#bookingBox" onclick="closeMenu(); scrollToBooking(event)" class="btn btn-primary" data-sl="Kontakt" data-en="Contact" data-it="Contatto">Kontakt</a>
         </div>
       </nav>
 
@@ -92,7 +92,7 @@
           <button type="button" id="btnEn" onclick="setLang('en')">EN</button>
           <button type="button" id="btnIt" onclick="setLang('it')">IT</button>
         </div>
-        <a href="#degustacije" onclick="scrollToSection(event, 'degustacije')" class="btn btn-primary nav-cta" data-sl="Kontakt" data-en="Contact" data-it="Contatto">Kontakt</a>
+        <a href="#degustacije" onclick="scrollToBooking(event)" class="btn btn-primary nav-cta" data-sl="Kontakt" data-en="Contact" data-it="Contatto">Kontakt</a>
         <button type="button" id="menuToggleBtn" class="mobile-toggle" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">☰</button>
       </div>
     </div>
@@ -156,7 +156,7 @@
            data-it="Oltre alla viticoltura prepariamo salumi e insaccati fatti in casa. Fino a qualche anno fa allevavamo i maiali noi stessi; oggi li acquistiamo, macelliamo e prepariamo le carni nella Dolenjska. Asciugiamo e stagioniamo poi prosciutto crudo, salame (šalam) e pancetta nella nostra cantina a Oševljek, oltre a preparare salsicce (sladke klobase) e cotechini (krodegine) da cuocere. Durante le degustazioni in cantina sforniamo pizze napoletane nel forno elettrico rotante.">
           Poleg vinarstva pripravljamo domače mesnine. Do pred nekaj leti smo prašiče redili sami, danes pa jih kupimo, zakoljemo in mesnine pripravimo na Dolenjskem. Pršut, šalam in panceto nato sušimo in zorimo v domači kleti v Oševljeku, pripravimo pa tudi sladke klobase in krodegine za kuhanje. Ob degustacijah v kleti v vrtljivi električni peči pečemo napolitanske pice.
         </p>
-        <a href="#degustacije" onclick="scrollToSection(event, 'degustacije')" class="btn btn-outline" style="margin-top: 0.5rem;" data-sl="Obiščite našo vinsko klet" data-en="Visit our wine cellar" data-it="Visita la nostra cantina">Obiščite našo vinsko klet</a>
+        <a href="#degustacije" onclick="scrollToBooking(event)" class="btn btn-outline" style="margin-top: 0.5rem;" data-sl="Obiščite našo vinsko klet" data-en="Visit our wine cellar" data-it="Visita la nostra cantina">Obiščite našo vinsko klet</a>
       </div>
     </div>
   </section>
@@ -235,8 +235,10 @@
             Kliknite oznako na zemljevidu za podrobnosti o legi.
           </span>
           <a href="https://www.google.com/maps/search/?api=1&query=45.88042,13.69613"
-             target="_blank" rel="noopener noreferrer" class="map-ext-link"
-             data-sl="Odpri v Google Maps ↗" data-en="Open in Google Maps ↗" data-it="Apri in Google Maps ↗">Odpri v Google Maps ↗</a>
+             target="_blank" rel="noopener noreferrer" class="map-ext-link">
+            <span data-sl="Odpri v Google Maps" data-en="Open in Google Maps" data-it="Apri in Google Maps">Odpri v Google Maps</span>
+            <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+          </a>
         </div>
       </div>
     </div>
@@ -262,7 +264,7 @@
           <div class="bottle-wrap">
             <img class="card-media-img" src="vino-kozarec.jpg" alt="Kozarec belega vina Hišna bela zvrst" loading="lazy" />
           </div>
-          <div class="wine-meta" data-sl="Suho belo vino (na liter)" data-en="Dry white blend (by the liter)" data-it="Vino bianco secco (a litro)">Suho belo vino (na liter)</div>
+          <div class="wine-meta" data-sl="Suho belo vino" data-en="Dry white blend" data-it="Vino bianco secco">Suho belo vino</div>
           <h3 data-sl="Hišna bela zvrst" data-en="House White Blend" data-it="Uvaggio Bianco della Casa">Hišna bela zvrst</h3>
           <p data-sl="Mešanica vseh treh sort iz naših dveh vinogradov: Malvazije, Rebule in Vitovske grganje, ki jo točimo neposredno v naši vinski kleti."
              data-en="A blend of all three varietals from our two vineyards: Malvazija, Rebula, and Vitovska Grganja, poured directly in our wine cellar."
@@ -411,7 +413,7 @@
         </div>
       </div>
 
-      <div class="booking-box" data-parallax="0.14">
+      <div class="booking-box" id="bookingBox" data-parallax="0.14">
         <h3 data-sl="Rezervacija ali naročilo" data-en="Book a visit or order" data-it="Prenotazione o ordine">Rezervacija ali naročilo</h3>
         <p data-sl="Izberite vrsto obiska kleti ali napišite, koliko litrov vina oziroma suhomesnin želite naročiti."
            data-en="Choose a cellar visit option or specify how many liters of wine or cured meats you would like to order."
@@ -433,7 +435,7 @@
         <form id="bookingForm" onsubmit="handleBooking(event)">
           <input type="text" id="bHoney" name="_honey" tabindex="-1" autocomplete="off" style="display: none;" aria-hidden="true" />
           <div class="form-section-title" data-sl="Obvezni podatki" data-en="Required details" data-it="Dati obbligatori">Obvezni podatki</div>
-          <div class="form-grid">
+          <div class="form-grid" id="requiredFormGrid">
             <div class="form-group">
               <label for="bName" data-sl="Ime in priimek" data-en="Full Name" data-it="Nome e cognome">Ime in priimek</label>
               <input id="bName" name="name" type="text" required placeholder="Ana Novak" data-ph-sl="Ana Novak" data-ph-en="Ana Novak" data-ph-it="Ana Novak" autocomplete="name" />
@@ -472,12 +474,12 @@
           </div>
 
           <div class="form-section-title form-section-optional" data-sl="Neobvezni podatki" data-en="Optional details" data-it="Dati facoltativi">Neobvezni podatki</div>
-          <div class="form-grid">
-            <div class="form-group full">
+          <div class="form-grid" id="optionalFormGrid">
+            <div class="form-group full" id="phoneGroup">
               <label for="bPhone" data-sl="Telefon" data-en="Phone" data-it="Telefono">Telefon</label>
               <input id="bPhone" name="phone" type="tel" placeholder="+386 ..." data-ph-sl="+386 ..." data-ph-en="+386 ..." data-ph-it="+39 ..." autocomplete="tel" />
             </div>
-            <div class="form-group full">
+            <div class="form-group full" id="notesGroup">
               <label for="bNotes" data-sl="Naročilo ali opombe" data-en="Order details or notes" data-it="Dettagli dell'ordine o note">Naročilo ali opombe</label>
               <input id="bNotes" name="notes" type="text" placeholder="Npr. Bela zvrst, 5 L..." data-ph-sl="Npr. Bela zvrst, 5 L..." data-ph-en="E.g. House White Blend, 5 L..." data-ph-it="Es. Uvaggio Bianco, 5 L..." />
             </div>
@@ -523,7 +525,7 @@
 
   <!-- Floating Sticky CTA & Back to Top -->
   <div class="floating-actions" id="floatingActions">
-    <a href="#degustacije" onclick="scrollToSection(event, 'degustacije')" class="floating-cta" id="floatingCta"
+    <a href="#degustacije" onclick="scrollToBooking(event)" class="floating-cta" id="floatingCta"
        data-sl="Rezerviraj obisk" data-en="Book a Visit" data-it="Prenota">Rezerviraj obisk</a>
     <button type="button" class="back-to-top-btn" id="backToTopBtn" onclick="scrollToSection(event, 'domov')" aria-label="Na vrh">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
@@ -549,7 +551,7 @@
       </div>
       <div class="modal-actions">
         <button type="button" class="btn btn-primary" id="mOrderBtn" data-sl="Povpraševanje za nakup" data-en="Order inquiry" data-it="Richiesta d'ordine">Povpraševanje za nakup</button>
-        <a href="#degustacije" class="btn btn-outline" onclick="closeWineModal(); scrollToSection(event, 'degustacije')" data-sl="Rezerviraj obisk" data-en="Book a visit" data-it="Prenota una visita">Rezerviraj obisk</a>
+        <a href="#degustacije" class="btn btn-outline" onclick="closeWineModal(); scrollToBooking(event)" data-sl="Rezerviraj obisk" data-en="Book a visit" data-it="Prenota una visita">Rezerviraj obisk</a>
       </div>
     </div>
   </div>
@@ -587,13 +589,13 @@
         </div>
       </div>
       <div class="modal-actions">
-        <a href="#degustacije" class="btn btn-primary" onclick="closeFaqModal(); scrollToSection(event, 'degustacije')" data-sl="Rezerviraj termin" data-en="Book a visit" data-it="Prenota una visita">Rezerviraj termin</a>
+        <a href="#degustacije" class="btn btn-primary" onclick="closeFaqModal(); scrollToBooking(event)" data-sl="Rezerviraj termin" data-en="Book a visit" data-it="Prenota una visita">Rezerviraj termin</a>
         <a href="tel:+38631728563" class="btn btn-outline">+386 31 728 563</a>
       </div>
     </div>
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script src="script.js?v=20261116h"></script>
+  <script src="script.js?v=20261116i"></script>
 </body>
 </html>

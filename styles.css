@@ -479,6 +479,8 @@ nav a:hover {
   transform: translate3d(0, var(--hero-parallax, 0px), 0) scale(1.24);
   transform-origin: center 28%;
   opacity: 0.86;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 76%, transparent 100%);
+  mask-image: linear-gradient(180deg, #000 0%, #000 76%, transparent 100%);
   pointer-events: none;
   z-index: 0;
   will-change: transform;
@@ -566,6 +568,8 @@ nav a:hover {
   object-position: center 55%;
   opacity: 0.48;
   transform: scale(1.06) translate3d(0, var(--bg-parallax, 0px), 0);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
   will-change: transform;
   pointer-events: none;
   z-index: 0;
@@ -630,6 +634,8 @@ nav a:hover {
   object-position: center;
   opacity: 0.48;
   transform: scale(1.06) translate3d(0, var(--bg-parallax, 0px), 0);
+  -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
+  mask-image: linear-gradient(180deg, transparent 0%, #000 18%, #000 82%, transparent 100%);
   will-change: transform;
   pointer-events: none;
   z-index: 0;
@@ -850,6 +856,9 @@ nav a:hover {
 }
 
 .map-ext-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
   font-size: 0.8rem;
   font-weight: 600;
   color: #DCE8DC;
@@ -1310,6 +1319,7 @@ nav a:hover {
 }
 
 .booking-box {
+  scroll-margin-top: calc(var(--header-h) + 12px);
   background: linear-gradient(145deg, rgba(255, 255, 255, 0.16) 0%, rgba(255, 255, 255, 0.06) 55%, rgba(255, 255, 255, 0.12) 100%);
   backdrop-filter: blur(28px) saturate(185%);
   -webkit-backdrop-filter: blur(28px) saturate(185%);
@@ -1731,6 +1741,9 @@ footer a:hover {
 
 .modal-actions {
   display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
   gap: 0.75rem;
   flex-wrap: wrap;
 }
@@ -1826,10 +1839,12 @@ footer a:hover {
     inset: 0;
     background: linear-gradient(
       180deg,
-      rgba(20, 24, 19, 0.92) 0%,
-      rgba(20, 24, 19, 0) 14%,
-      rgba(20, 24, 19, 0) 86%,
-      rgba(20, 24, 19, 0.94) 100%
+      rgba(20, 24, 19, 0.96) 0%,
+      rgba(20, 24, 19, 0.35) 14%,
+      rgba(20, 24, 19, 0) 26%,
+      rgba(20, 24, 19, 0) 74%,
+      rgba(20, 24, 19, 0.38) 86%,
+      rgba(20, 24, 19, 0.96) 100%
     );
     pointer-events: none;
     z-index: 1;
@@ -1838,9 +1853,16 @@ footer a:hover {
   .hero::after {
     background: linear-gradient(
       180deg,
-      rgba(20, 24, 19, 0) 82%,
-      rgba(20, 24, 19, 0.96) 100%
+      rgba(20, 24, 19, 0) 68%,
+      rgba(20, 24, 19, 0.45) 84%,
+      rgba(20, 24, 19, 0.98) 100%
     );
+  }
+
+  .about-bg-img,
+  .section-bg-img {
+    -webkit-mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 76%, transparent 100%);
+    mask-image: linear-gradient(180deg, transparent 0%, #000 24%, #000 76%, transparent 100%);
   }
 
   .about-grid,
@@ -1912,16 +1934,53 @@ footer a:hover {
     justify-self: center;
   }
 
+  header.nav-transparent.menu-open {
+    background: linear-gradient(180deg, rgba(16, 22, 15, 0.78) 0%, rgba(16, 22, 15, 0.64) 100%);
+    backdrop-filter: blur(28px) saturate(185%);
+    -webkit-backdrop-filter: blur(28px) saturate(185%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.24);
+  }
+
+  header.nav-transparent.menu-open .logo {
+    color: #FFFFFF;
+  }
+
+  header.nav-transparent.menu-open .logo span {
+    color: rgba(255, 255, 255, 0.78);
+  }
+
+  header.nav-transparent.menu-open .lang-switch {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.35);
+  }
+
+  header.nav-transparent.menu-open .lang-switch button {
+    color: rgba(255, 255, 255, 0.85);
+  }
+
+  header.nav-transparent.menu-open .lang-switch button.active {
+    background: #FFFFFF;
+    color: var(--ink);
+  }
+
+  header.nav-transparent.menu-open .mobile-toggle {
+    background: rgba(255, 255, 255, 0.20);
+    border-color: rgba(255, 255, 255, 0.55);
+    color: #FFFFFF;
+  }
+
   nav {
     display: none;
     position: absolute;
     top: var(--header-h);
     left: 0;
     right: 0;
-    background: #FFFFFF;
-    border-bottom: 1px solid var(--border);
+    background: linear-gradient(155deg, rgba(20, 26, 19, 0.78) 0%, rgba(14, 18, 13, 0.66) 100%);
+    backdrop-filter: blur(32px) saturate(185%);
+    -webkit-backdrop-filter: blur(32px) saturate(185%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.34);
     padding: 1.25rem 5% 1.75rem;
-    box-shadow: 0 18px 32px rgba(20, 24, 19, 0.08);
+    box-shadow: 0 24px 54px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.30);
   }
 
   nav.open {
@@ -1938,7 +1997,12 @@ footer a:hover {
     display: block;
     padding: 0.75rem 0;
     font-size: 1rem;
-    border-bottom: 1px solid var(--border);
+    color: #FFFFFF;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+  }
+
+  nav a:hover {
+    color: #DCE8DC;
   }
 
   .mobile-menu-cta {
