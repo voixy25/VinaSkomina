@@ -56,7 +56,7 @@ const itemData = {
       it: 'Salumi Fatti in Casa'
     },
     sl: {
-      cat: 'Iz domače zorilnice v kleti',
+      cat: 'Dolgoletna tradicionalna receptura',
       title: 'Domače suhomesnine',
       desc: 'Do pred nekaj leti smo prašiče redili sami, danes pa jih kupimo, zakoljemo in mesnine pripravimo na Dolenjskem. Pršut, šalam in panceto nato sušimo in zorimo v domači kleti v Oševljeku, pripravimo pa tudi sladke klobase in krodegine za kuhanje.',
       specs: [
@@ -68,7 +68,7 @@ const itemData = {
       ]
     },
     en: {
-      cat: 'Cellar-aged pork delicacies',
+      cat: 'Longstanding traditional recipe',
       title: 'Homemade Cured Meats',
       desc: 'Until a few years ago we raised our own pigs; today we buy and slaughter them and prepare the meats in Dolenjska. We then dry and age prosciutto, šalam, and pancetta in our home cellar in Oševljek, and also make sladke klobase and krodegine sausages for cooking.',
       specs: [
@@ -80,7 +80,7 @@ const itemData = {
       ]
     },
     it: {
-      cat: 'Stagionati nella nostra cantina',
+      cat: 'Ricetta tradizionale di lunga data',
       title: 'Salumi Fatti in Casa',
       desc: 'Fino a qualche anno fa allevavamo i maiali noi stessi; oggi li acquistiamo, macelliamo e prepariamo le carni nella Dolenjska. Asciugiamo e stagioniamo poi prosciutto crudo, salame (šalam) e pancetta nella nostra cantina a Oševljek, oltre a preparare salsicce (sladke klobase) e cotechini (krodegine) da cuocere.',
       specs: [
@@ -1172,8 +1172,51 @@ function updateParallax() {
   }
 }
 
+let scrollSettleTimer = null;
+
+function settleDesktopSectionIfMidway() {
+  if (!isDesktopScrollMode() || isSectionAnimating || document.body.classList.contains('modal-open')) return;
+  const sections = getSnapSections();
+  if (!sections.length) return;
+
+  const y = window.scrollY;
+  const viewH = window.innerHeight;
+
+  // Check if legitimately inside a tall section that overflows the viewport
+  for (const sec of sections) {
+    if (sec.offsetHeight > viewH + 24) {
+      const minY = sec.offsetTop;
+      const maxY = sec.offsetTop + sec.offsetHeight - viewH;
+      if (y >= minY - 4 && y <= maxY + 4) {
+        return;
+      }
+    }
+  }
+
+  // Find nearest section top
+  let nearestIdx = 0;
+  let minDist = Infinity;
+  sections.forEach((sec, i) => {
+    const dist = Math.abs(y - sec.offsetTop);
+    if (dist < minDist) {
+      minDist = dist;
+      nearestIdx = i;
+    }
+  });
+
+  if (minDist > 6) {
+    currentSectionIndex = nearestIdx;
+    updateActiveDots(sections[nearestIdx].id);
+    animateScrollToY(sections[nearestIdx].offsetTop, 700);
+  }
+}
+
 window.addEventListener('scroll', () => {
   requestParallaxFrame();
+  if (isDesktopScrollMode()) {
+    clearTimeout(scrollSettleTimer);
+    scrollSettleTimer = setTimeout(settleDesktopSectionIfMidway, 160);
+  }
 }, { passive: true });
 
 window.addEventListener('resize', () => {

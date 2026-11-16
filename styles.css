@@ -303,17 +303,39 @@ header.nav-transparent:not(.menu-open) .logo span {
 }
 
 header.nav-transparent:not(.menu-open) .lang-switch {
-  background: rgba(255, 255, 255, 0.12);
-  border-color: rgba(255, 255, 255, 0.35);
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.2));
+  backdrop-filter: blur(22px) saturate(185%);
+  -webkit-backdrop-filter: blur(22px) saturate(185%);
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 14px 34px rgba(10, 14, 10, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
 }
 
 header.nav-transparent:not(.menu-open) .lang-switch button {
-  color: rgba(255, 255, 255, 0.85);
+  color: #FFFFFF;
 }
 
 header.nav-transparent:not(.menu-open) .lang-switch button.active {
   background: #FFFFFF;
   color: var(--ink);
+}
+
+header.nav-transparent:not(.menu-open) .nav-cta {
+  background: linear-gradient(145deg, rgba(255, 255, 255, 0.36), rgba(255, 255, 255, 0.2));
+  backdrop-filter: blur(22px) saturate(185%);
+  -webkit-backdrop-filter: blur(22px) saturate(185%);
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #FFFFFF;
+  box-shadow:
+    0 14px 34px rgba(10, 14, 10, 0.34),
+    inset 0 1px 0 rgba(255, 255, 255, 0.78);
+}
+
+header.nav-transparent:not(.menu-open) .nav-cta:hover {
+  background: rgba(255, 255, 255, 0.44);
+  border-color: rgba(255, 255, 255, 0.75);
+  color: #FFFFFF;
 }
 
 header.nav-transparent:not(.menu-open) .mobile-toggle {
@@ -440,6 +462,8 @@ nav a:hover {
   min-width: 132px;
   padding: 0.5rem 0.75rem;
   font-size: 0.78rem;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
   white-space: nowrap;
   text-align: center;
 }
