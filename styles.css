@@ -555,11 +555,11 @@ nav a:hover {
 
 /* Section 2: Terroir */
 .terroir-section {
-  min-height: calc(100svh - var(--header-h));
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
-  padding: 4.25rem 0;
-  border-top: 1px solid var(--border);
+  padding: calc(var(--header-h) + 1.5rem) 0 2rem;
   overflow: hidden;
 }
 
@@ -781,11 +781,11 @@ nav a:hover {
 
 /* Section 3: Wine & Food */
 .wines-section {
-  min-height: calc(100svh - var(--header-h));
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
-  padding: 2.25rem 0;
-  border-top: 1px solid var(--border);
+  padding: calc(var(--header-h) + 1.25rem) 0 1.75rem;
   overflow: hidden;
 }
 
@@ -978,11 +978,11 @@ nav a:hover {
 
 /* Section 4: Tastings & Orders */
 .tastings-section {
-  min-height: calc(100svh - var(--header-h));
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   flex-direction: column;
-  padding: 2rem 0 0;
-  border-top: 1px solid var(--border);
+  padding: calc(var(--header-h) + 1rem) 0 0;
   overflow: hidden;
 }
 
