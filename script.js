@@ -845,7 +845,7 @@ function animateScrollToY(targetY, duration = 460) {
   const startY = window.scrollY;
   const diff = targetY - startY;
   if (Math.abs(diff) < 2) {
-    window.scrollTo(0, targetY);
+    window.scrollTo({ top: targetY, behavior: 'instant' });
     isSectionAnimating = false;
     return;
   }
@@ -858,14 +858,16 @@ function animateScrollToY(targetY, duration = 460) {
     const elapsed = now - startTime;
     const progress = Math.min(1, elapsed / duration);
     const eased = 1 - Math.pow(1 - progress, 3);
-    window.scrollTo(0, Math.round(startY + diff * eased));
+    window.scrollTo({ top: Math.round(startY + diff * eased), behavior: 'instant' });
 
     if (progress < 1) {
       scrollAnimRafId = requestAnimationFrame(step);
     } else {
-      window.scrollTo(0, targetY);
+      window.scrollTo({ top: targetY, behavior: 'instant' });
       scrollAnimRafId = null;
-      isSectionAnimating = false;
+      requestAnimationFrame(() => {
+        isSectionAnimating = false;
+      });
     }
   }
 
@@ -873,7 +875,7 @@ function animateScrollToY(targetY, duration = 460) {
   // Safety fallback in case rAF is throttled
   animUnlockTimer = setTimeout(() => {
     isSectionAnimating = false;
-  }, duration + 100);
+  }, duration + 120);
 }
 
 function scrollToSectionIndex(idx) {
@@ -883,6 +885,7 @@ function scrollToSectionIndex(idx) {
   currentSectionIndex = clampedIdx;
   const targetEl = sections[clampedIdx];
 
+  isSectionAnimating = true;
   updateActiveDots(targetEl.id);
   animateScrollToY(targetEl.offsetTop, 420);
 }

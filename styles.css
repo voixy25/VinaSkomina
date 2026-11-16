@@ -230,6 +230,21 @@ h1, h2, h3, h4 {
   color: var(--ink);
 }
 
+.btn-hero-glass {
+  background: rgba(255, 255, 255, 0.16);
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(255, 255, 255, 0.72);
+  color: #FFFFFF;
+  box-shadow: 0 12px 32px rgba(10, 14, 10, 0.32), inset 0 1px 0 rgba(255, 255, 255, 0.65);
+}
+
+.btn-hero-glass:hover {
+  background: #FFFFFF;
+  color: var(--ink);
+  border-color: #FFFFFF;
+}
+
 /* Sticky Header */
 header {
   position: -webkit-sticky;
