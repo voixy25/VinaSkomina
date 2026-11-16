@@ -1289,6 +1289,81 @@ window.addEventListener('resize', () => {
   requestParallaxFrame();
 });
 
+function initBottomSheetSwipe(backdropId, closeFn) {
+  const backdrop = document.getElementById(backdropId);
+  const modal = backdrop ? backdrop.querySelector('.modal') : null;
+  if (!backdrop || !modal) return;
+
+  let startY = 0;
+  let startTime = 0;
+  let currentDeltaY = 0;
+  let isDragging = false;
+  let startedNearTop = false;
+
+  modal.addEventListener('touchstart', (e) => {
+    if (window.innerWidth > 640 || e.touches.length !== 1) return;
+    const touch = e.touches[0];
+    const rect = modal.getBoundingClientRect();
+    startedNearTop = (touch.clientY - rect.top) <= 56;
+    if (!startedNearTop && modal.scrollTop > 0) return;
+    startY = touch.clientY;
+    startTime = Date.now();
+    currentDeltaY = 0;
+    isDragging = false;
+  }, { passive: true });
+
+  modal.addEventListener('touchmove', (e) => {
+    if (window.innerWidth > 640 || e.touches.length !== 1 || startY === 0) return;
+    const dy = e.touches[0].clientY - startY;
+    if (dy <= 0) {
+      if (isDragging) {
+        currentDeltaY = 0;
+        modal.style.transform = 'translateY(0px)';
+      }
+      return;
+    }
+    if (!startedNearTop && modal.scrollTop > 0) return;
+
+    isDragging = true;
+    currentDeltaY = dy;
+    if (e.cancelable) e.preventDefault();
+    modal.style.transition = 'none';
+    modal.style.transform = `translateY(${dy}px)`;
+  }, { passive: false });
+
+  const finishDrag = () => {
+    if (!isDragging) {
+      startY = 0;
+      return;
+    }
+    const elapsed = Math.max(1, Date.now() - startTime);
+    const velocity = currentDeltaY / elapsed;
+    const shouldClose = currentDeltaY > 85 || (currentDeltaY > 36 && velocity > 0.45);
+
+    modal.style.transition = 'transform 0.2s ease';
+    if (shouldClose) {
+      modal.style.transform = 'translateY(100%)';
+      setTimeout(() => {
+        closeFn();
+        modal.style.transition = '';
+        modal.style.transform = '';
+      }, 200);
+    } else {
+      modal.style.transform = 'translateY(0px)';
+      setTimeout(() => {
+        modal.style.transition = '';
+        modal.style.transform = '';
+      }, 200);
+    }
+    isDragging = false;
+    startY = 0;
+    currentDeltaY = 0;
+  };
+
+  modal.addEventListener('touchend', finishDrag, { passive: true });
+  modal.addEventListener('touchcancel', finishDrag, { passive: true });
+}
+
 window.addEventListener('DOMContentLoaded', () => {
   currentSectionIndex = detectCurrentSectionIndex();
   const params = new URLSearchParams(window.location.search);
@@ -1298,6 +1373,8 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   updateQtyUI();
   syncFormRequirements();
+  initBottomSheetSwipe('wineModal', closeWineModal);
+  initBottomSheetSwipe('faqModal', closeFaqModal);
 
   const terroirEl = document.getElementById('terroir');
   if (terroirEl && 'IntersectionObserver' in window) {
