@@ -2316,9 +2316,21 @@ footer a:hover {
   }
 
   .modal {
-    padding: 1.75rem 1.35rem calc(1.75rem + env(safe-area-inset-bottom));
-    border-radius: 0;
+    padding: 2rem 1.35rem calc(1.75rem + env(safe-area-inset-bottom));
+    border-radius: 22px 22px 0 0;
+    border: none;
+    box-shadow: 0 -16px 48px rgba(0, 0, 0, 0.45);
     max-height: 86svh;
+  }
+
+  .modal::before {
+    content: '';
+    display: block;
+    width: 40px;
+    height: 4px;
+    border-radius: 999px;
+    background: rgba(255, 255, 255, 0.34);
+    margin: -1.1rem auto 1rem;
   }
 
   .floating-actions {
