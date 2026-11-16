@@ -15,6 +15,7 @@ const itemData = {
       desc: 'Naše vino je zvrst vseh treh sort iz obeh vinogradov v Oševljeku: Malvazije, Rebule in Vitovske grganje, ki jo ročno potrgamo, združimo v eno belo zvrst ter točimo na liter v naši vinski kleti.',
       specs: [
         ['Sorte', 'Malvazija, Rebula, Vitovska grganja'],
+        ['Profil vina', 'Suho, sveže, mineralno belo vino (1 hišna zvrst)'],
         ['Vinogradi', 'Spodnji in zgornji vinograd v Oševljeku'],
         ['Prodaja', 'Odprto vino na liter (prevzem v vinski kleti)'],
         ['Trgatev', 'Ročna trgatev'],
@@ -27,6 +28,7 @@ const itemData = {
       desc: 'Our wine blends all three varietals from both Oševljek vineyards: Malvazija, Rebula, and Vitovska Grganja, harvested by hand, blended into one white wine, and poured by the liter in our wine cellar.',
       specs: [
         ['Varietals', 'Malvazija, Rebula, Vitovska Grganja'],
+        ['Tasting profile', 'Dry, fresh, mineral white wine (1 house blend)'],
         ['Vineyards', 'Lower and upper parcels in Oševljek'],
         ['Format', 'Poured by the liter (cellar pickup)'],
         ['Harvest', 'Hand-harvested'],
@@ -39,6 +41,7 @@ const itemData = {
       desc: 'Il nostro vino unisce tutte e tre le varietà dei nostri due vigneti a Oševljek: Malvasia, Ribolla Gialla e Vitovska Grganja, vendemmiate a mano, unite in un unico uvaggio bianco e servite sfuse a litro nella nostra cantina.',
       specs: [
         ['Vitigni', 'Malvasia, Ribolla Gialla, Vitovska Grganja'],
+        ['Profilo', 'Vino bianco secco, fresco e minerale (1 uvaggio della casa)'],
         ['Vigneti', 'Vigneto inferiore e superiore a Oševljek'],
         ['Vendita', 'Vino sfuso a litro (ritiro in cantina)'],
         ['Vendemmia', 'Vendemmia manuale'],
@@ -270,7 +273,35 @@ function closeMenu() {
   btn.textContent = '☰';
 }
 
+let lastFocusedElement = null;
+
+function focusModalFirstElement(modalEl) {
+  if (!modalEl) return;
+  const focusable = modalEl.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])');
+  if (focusable.length) {
+    setTimeout(() => focusable[0].focus({ preventScroll: true }), 20);
+  }
+}
+
+function trapModalFocus(e) {
+  if (e.key !== 'Tab') return;
+  const openModal = document.querySelector('.modal-backdrop.open .modal');
+  if (!openModal) return;
+  const focusable = Array.from(openModal.querySelectorAll('button:not([disabled]), a[href], input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])')).filter(el => el.offsetParent !== null);
+  if (!focusable.length) return;
+  const first = focusable[0];
+  const last = focusable[focusable.length - 1];
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}
+
 function openItemModal(key) {
+  lastFocusedElement = document.activeElement;
   currentModalKey = key;
   const item = itemData[key];
   const info = item[currentLang] || item.sl;
@@ -308,13 +339,21 @@ function openItemModal(key) {
     };
   }
 
-  document.getElementById('wineModal').classList.add('open');
+  const modalBackdrop = document.getElementById('wineModal');
+  modalBackdrop.classList.add('open');
   document.body.classList.add('modal-open');
+  focusModalFirstElement(modalBackdrop);
 }
 
 function closeWineModal() {
-  document.getElementById('wineModal').classList.remove('open');
+  const modalBackdrop = document.getElementById('wineModal');
+  if (!modalBackdrop || !modalBackdrop.classList.contains('open')) return;
+  modalBackdrop.classList.remove('open');
   document.body.classList.remove('modal-open');
+  if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+    lastFocusedElement.focus({ preventScroll: true });
+    lastFocusedElement = null;
+  }
 }
 
 function syncFormRequirements() {
@@ -322,6 +361,7 @@ function syncFormRequirements() {
   if (!pkgSelect) return;
   const pkg = pkgSelect.value;
   const isOrder = pkg === 'order';
+  const isPizza = pkg === 'pizza';
 
   const dateInput = document.getElementById('bDate');
   const dateLabel = document.getElementById('bDateLabel');
@@ -359,6 +399,15 @@ function syncFormRequirements() {
   }
   if (guestsSelect) {
     guestsSelect.disabled = isOrder;
+    // Napolitanske pice so za skupine 4 - 15 oseb
+    Array.from(guestsSelect.options).forEach(opt => {
+      if (opt.value === '2' || opt.value === '3') {
+        opt.disabled = isPizza;
+      }
+    });
+    if (isPizza && (guestsSelect.value === '2' || guestsSelect.value === '3')) {
+      guestsSelect.value = '4';
+    }
   }
 
   // Pokaži selector za količino litrov ob nakupu
@@ -414,26 +463,47 @@ function selectTastingPackage(pkg) {
 function openFaqModal() {
   const modal = document.getElementById('faqModal');
   if (!modal) return;
+  lastFocusedElement = document.activeElement;
   modal.classList.add('open');
   document.body.classList.add('modal-open');
+  focusModalFirstElement(modal);
 }
 
 function closeFaqModal() {
   const modal = document.getElementById('faqModal');
-  if (!modal) return;
+  if (!modal || !modal.classList.contains('open')) return;
   modal.classList.remove('open');
   document.body.classList.remove('modal-open');
+  if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
+    lastFocusedElement.focus({ preventScroll: true });
+    lastFocusedElement = null;
+  }
+}
+
+function getPersonalizedSuccessText(name, email) {
+  const safeName = name || (currentLang === 'en' ? 'guest' : (currentLang === 'it' ? 'ospite' : 'gost'));
+  if (currentLang === 'en') {
+    return `Thank you, ${safeName}! We received your inquiry and will reply within 24 hours to ${email}. For urgent matters, call +386 31 728 563.`;
+  }
+  if (currentLang === 'it') {
+    return `Grazie, ${safeName}! Abbiamo ricevuto la richiesta e risponderemo entro 24 ore a ${email}. Per urgenze chiamate +386 31 728 563.`;
+  }
+  return `Hvala, ${safeName}! Povpraševanje smo prejeli. Odgovorimo v 24 urah na ${email}. Za nujne zadeve pokličite +386 31 728 563.`;
 }
 
 async function handleBooking(e) {
   e.preventDefault();
   const form = e.target;
+  const honey = (document.getElementById('bHoney')?.value || '').trim();
+  if (honey) return;
+
   const submitBtn = document.getElementById('bookingSubmitBtn');
   const successEl = document.getElementById('bookingSuccess');
   const originalBtnText = submitBtn ? submitBtn.textContent : '';
 
   const name = (document.getElementById('bName')?.value || '').trim();
   const email = (document.getElementById('bEmail')?.value || '').trim();
+  const phone = (document.getElementById('bPhone')?.value || '').trim();
   const pkgEl = document.getElementById('bPackage');
   const pkgValue = pkgEl ? pkgEl.value : 'meats';
   const pkgLabel = pkgEl && pkgEl.selectedOptions[0] ? pkgEl.selectedOptions[0].textContent : pkgValue;
@@ -453,6 +523,7 @@ async function handleBooking(e) {
     _template: 'table',
     Ime_in_priimek: name,
     E_posta: email,
+    Telefon: phone || '-',
     Vrsta_povprasevanja: pkgLabel,
     Datum: date,
     Stevilo_oseb: guests,
@@ -473,7 +544,10 @@ async function handleBooking(e) {
 
     if (!res.ok) throw new Error('HTTP ' + res.status);
 
-    if (successEl) successEl.style.display = 'block';
+    if (successEl) {
+      successEl.textContent = getPersonalizedSuccessText(name, email);
+      successEl.style.display = 'block';
+    }
     form.reset();
     wineQty = 1;
     updateQtyUI();
@@ -483,13 +557,17 @@ async function handleBooking(e) {
     const bodyLines = [
       `Ime in priimek: ${name}`,
       `E-pošta: ${email}`,
+      `Telefon: ${phone || '-'}`,
       `Vrsta: ${pkgLabel}`,
       `Datum: ${date}`,
       pkgValue === 'order' ? `Količina: ${orderQty}` : `Število oseb: ${guests}`,
       `Opombe: ${notes || '-'}`
     ].join('\n');
     window.location.href = `mailto:vina@skomina.si?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(bodyLines)}`;
-    if (successEl) successEl.style.display = 'block';
+    if (successEl) {
+      successEl.textContent = getPersonalizedSuccessText(name, email);
+      successEl.style.display = 'block';
+    }
   } finally {
     if (submitBtn) {
       submitBtn.disabled = false;
@@ -908,8 +986,12 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
+  if (document.body.classList.contains('modal-open')) {
+    trapModalFocus(e);
+    return;
+  }
+
   if (!isDesktopScrollMode()) return;
-  if (document.body.classList.contains('modal-open')) return;
   const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
   if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
 
@@ -1013,6 +1095,19 @@ window.addEventListener('DOMContentLoaded', () => {
   }
   updateQtyUI();
   syncFormRequirements();
-  initTerroirMap();
+
+  const terroirEl = document.getElementById('terroir');
+  if (terroirEl && 'IntersectionObserver' in window) {
+    const mapObserver = new IntersectionObserver((entries) => {
+      if (entries.some(entry => entry.isIntersecting)) {
+        initTerroirMap();
+        mapObserver.disconnect();
+      }
+    }, { rootMargin: '400px 0px' });
+    mapObserver.observe(terroirEl);
+  } else {
+    initTerroirMap();
+  }
+
   updateParallax();
 });

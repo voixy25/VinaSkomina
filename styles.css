@@ -990,7 +990,7 @@ nav a:hover {
   flex: 1;
   align-content: center;
   width: min(1160px, 90%);
-  padding-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
 }
 
 .tastings-grid {
@@ -1020,6 +1020,7 @@ nav a:hover {
   flex-wrap: wrap;
 }
 
+.tier-head h3,
 .tier-head h4 {
   font-size: 1.25rem;
 }
@@ -1039,17 +1040,17 @@ nav a:hover {
 
 .tier-meta-row {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   align-items: center;
-  gap: 0.4rem 1.05rem;
+  gap: 0.75rem;
   margin-top: 0.6rem;
 }
 
 .tier-meta-item {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
-  font-size: 0.78rem;
+  gap: 0.3rem;
+  font-size: 0.76rem;
   font-weight: 500;
   color: var(--muted);
   white-space: nowrap;
@@ -1065,7 +1066,7 @@ nav a:hover {
   border: none;
   background: transparent;
   padding: 0.25rem 0;
-  font-size: 0.8rem;
+  font-size: 0.78rem;
   font-weight: 600;
   color: var(--accent);
   white-space: nowrap;
@@ -1097,18 +1098,18 @@ nav a:hover {
 .booking-box {
   background: var(--surface);
   border-radius: var(--radius);
-  padding: 1.5rem 1.6rem;
+  padding: 1.25rem 1.45rem;
 }
 
 .booking-box h3 {
-  font-size: 1.6rem;
-  margin-bottom: 0.25rem;
+  font-size: 1.55rem;
+  margin-bottom: 0.2rem;
 }
 
 .booking-box > p {
-  font-size: 0.86rem;
+  font-size: 0.84rem;
   color: var(--muted);
-  margin-bottom: 0.8rem;
+  margin-bottom: 0.65rem;
 }
 
 .booking-phone-callout {
@@ -1116,8 +1117,8 @@ nav a:hover {
   align-items: center;
   justify-content: space-between;
   gap: 1rem;
-  padding: 0.6rem 0.9rem;
-  margin-bottom: 0.9rem;
+  padding: 0.55rem 0.85rem;
+  margin-bottom: 0.75rem;
   background: #FFFFFF;
   border: 1px solid var(--border);
   border-left: 3px solid var(--accent);
@@ -1230,15 +1231,24 @@ input:focus, select:focus, textarea:focus {
   border-color: var(--accent);
 }
 
+.booking-trust-note {
+  margin-top: 0.5rem;
+  font-size: 0.72rem;
+  line-height: 1.35;
+  color: var(--muted);
+  text-align: center;
+}
+
 .form-success {
   display: none;
-  margin-top: 1rem;
-  padding: 0.9rem 1rem;
+  margin-top: 0.85rem;
+  padding: 0.85rem 1rem;
   background: #E8F0E9;
   border: 1px solid #9FC0A4;
   color: #17331E;
   border-radius: var(--radius);
-  font-size: 0.9rem;
+  font-size: 0.86rem;
+  line-height: 1.45;
 }
 
 /* Footer */
@@ -1303,7 +1313,7 @@ footer a:hover {
 .integrated-footer {
   position: relative;
   z-index: 1;
-  padding: 1.1rem 0 calc(1.1rem + env(safe-area-inset-bottom));
+  padding: 1.05rem 0 calc(1.05rem + env(safe-area-inset-bottom));
   border-top: 1px solid var(--border);
 }
 
@@ -1311,26 +1321,32 @@ footer a:hover {
   display: grid;
   grid-template-columns: auto 1fr auto;
   align-items: center;
-  gap: 1rem 2.5rem;
+  gap: 0.75rem 1.5rem;
+}
+
+.integrated-footer .footer-brand {
+  white-space: nowrap;
 }
 
 .integrated-footer .footer-brand .logo {
-  font-size: 1.15rem;
+  font-size: 1.12rem;
 }
 
 .integrated-footer .footer-brand span {
   display: block;
-  font-size: 0.75rem;
+  font-size: 0.74rem;
   color: var(--muted);
 }
 
 .footer-contact {
   display: flex;
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
   justify-content: center;
-  gap: 0.2rem 1.4rem;
+  align-items: center;
+  gap: 1.05rem;
   margin: 0;
-  font-size: 0.84rem;
+  font-size: 0.8rem;
+  white-space: nowrap;
 }
 
 .footer-contact li {
@@ -1341,9 +1357,10 @@ footer a:hover {
   display: flex;
   flex-direction: column;
   align-items: flex-end;
-  font-size: 0.72rem;
+  font-size: 0.71rem;
   color: var(--muted);
   text-align: right;
+  white-space: nowrap;
 }
 
 /* Modal */
@@ -1466,9 +1483,21 @@ footer a:hover {
     justify-items: center;
   }
 
+  .footer-contact {
+    flex-wrap: wrap;
+    white-space: normal;
+    gap: 0.35rem 1.1rem;
+  }
+
   .footer-legal {
     align-items: center;
     text-align: center;
+    white-space: normal;
+  }
+
+  .tier-meta-row {
+    flex-wrap: wrap;
+    gap: 0.45rem 0.9rem;
   }
 
   .wine-grid {

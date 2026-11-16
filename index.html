@@ -119,7 +119,7 @@
 
   <!-- Hero -->
   <section class="hero snap-section" id="domov" data-section="domov">
-    <img class="hero-bg-img" data-parallax-hero src="https://i.ibb.co/5h4zMxWS/vinograd.png" alt="Vinograd Vina Skomina v Oševljeku" referrerpolicy="no-referrer" onerror="this.style.display='none'" />
+    <img class="hero-bg-img" data-parallax-hero src="https://i.ibb.co/5h4zMxWS/vinograd.png" alt="Vinograd Vina Skomina v Oševljeku" fetchpriority="high" decoding="async" referrerpolicy="no-referrer" onerror="this.style.display='none'" />
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="container hero-content" data-parallax="0.18">
@@ -139,7 +139,7 @@
 
   <!-- Section 1: O nas -->
   <section class="about-section snap-section" id="zgodba" data-section="zgodba">
-    <img class="about-bg-img" src="klet.jpg" alt="" aria-hidden="true" loading="lazy" />
+    <img class="about-bg-img" src="klet.jpg" alt="Vinska klet Vina Skomina z inox sodi in kamnitim obokom" loading="lazy" />
     <div class="parallax-bg-accent" data-parallax="-0.12" aria-hidden="true"></div>
     <div class="container about-grid">
       <div data-parallax="0.08">
@@ -385,7 +385,7 @@
 
         <div class="tasting-tier">
           <div class="tier-head">
-            <h4 data-sl="Degustacija vina in suhomesnin v kleti" data-en="Cellar wine and cured meats tasting" data-it="Degustazione di vino e salumi in cantina">Degustacija vina in suhomesnin v kleti</h4>
+            <h3 data-sl="Degustacija vina in suhomesnin v kleti" data-en="Cellar wine and cured meats tasting" data-it="Degustazione di vino e salumi in cantina">Degustacija vina in suhomesnin v kleti</h3>
             <span class="tier-price" data-sl="Po dogovoru" data-en="By arrangement" data-it="Su accordo">Po dogovoru</span>
           </div>
           <p data-sl="Pokušnja naše bele zvrsti (Malvazija, Rebula, Vitovska grganja) v vinski kleti z narezkom pršuta, šalama, pancete in sladkih klobas, pozimi po dogovoru tudi s kuhanimi krodeginami."
@@ -412,7 +412,7 @@
 
         <div class="tasting-tier">
           <div class="tier-head">
-            <h4 data-sl="Vino, suhomesnine in napolitanske pice" data-en="Wine, cured meats, and Neapolitan pizza" data-it="Vino, salumi e pizze napoletane">Vino, suhomesnine in napolitanske pice</h4>
+            <h3 data-sl="Vino, suhomesnine in napolitanske pice" data-en="Wine, cured meats, and Neapolitan pizza" data-it="Vino, salumi e pizze napoletane">Vino, suhomesnine in napolitanske pice</h3>
             <span class="tier-price" data-sl="Po dogovoru" data-en="By arrangement" data-it="Su accordo">Po dogovoru</span>
           </div>
           <p data-sl="Sprehod do vinogradov v Oševljeku, pokušnja vina in suhomesnin v kleti ter peka svežih napolitanskih pic v naši vrtljivi električni peči."
@@ -462,6 +462,7 @@
         </div>
 
         <form id="bookingForm" onsubmit="handleBooking(event)">
+          <input type="text" id="bHoney" name="_honey" tabindex="-1" autocomplete="off" style="display: none;" aria-hidden="true" />
           <div class="form-grid">
             <div class="form-group">
               <label for="bName" data-sl="Ime in priimek" data-en="Full Name" data-it="Nome e cognome">Ime in priimek</label>
@@ -486,33 +487,47 @@
             <div class="form-group" id="guestsGroup">
               <label for="bGuests" data-sl="Število oseb" data-en="Guests" data-it="Numero di persone">Število oseb</label>
               <select id="bGuests" name="guests">
-                <option value="1">1</option>
                 <option value="2">2</option>
+                <option value="3">3</option>
                 <option value="4" selected>4</option>
+                <option value="5">5</option>
                 <option value="6">6</option>
                 <option value="8">8</option>
-                <option value="10+">10+</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+                <option value="15">15</option>
+                <option value="15+" data-sl="15+ (pokličite nas)" data-en="15+ (call us)" data-it="15+ (chiamateci)">15+ (pokličite nas)</option>
               </select>
             </div>
             <div class="form-group" id="orderQtyGroup" style="display: none;">
-              <label for="bOrderQty" data-sl="Količina vina (v litrih)" data-en="Wine quantity (liters)" data-it="Quantità di vino (in litri)">Količina vina (v litrih)</label>
+              <label for="bOrderQty" data-sl="Količina vina (L)" data-en="Wine quantity (L)" data-it="Quantità di vino (L)">Količina vina (L)</label>
               <div class="qty-stepper form-qty-stepper">
                 <button type="button" class="qty-btn" onclick="stepWineQty(-1, true)" aria-label="Manj litrov">−</button>
-                <input type="number" id="bOrderQty" name="order_qty" value="1" min="1" max="500" onchange="syncWineQty(this.value, true)" />
+                <input type="number" id="bOrderQty" name="order_qty" value="1" min="1" max="500" onchange="syncWineQty(this.value, true)" aria-label="Število litrov vina" />
                 <button type="button" class="qty-btn" onclick="stepWineQty(1, true)" aria-label="Več litrov">+</button>
               </div>
             </div>
-            <div class="form-group full">
+            <div class="form-group">
+              <label for="bPhone" data-sl="Telefon (neobvezno)" data-en="Phone (optional)" data-it="Telefono (opzionale)">Telefon (neobvezno)</label>
+              <input id="bPhone" name="phone" type="tel" placeholder="+386 ..." data-ph-sl="+386 ..." data-ph-en="+386 ..." data-ph-it="+39 ..." autocomplete="tel" />
+            </div>
+            <div class="form-group">
               <label for="bNotes" data-sl="Naročilo ali opombe" data-en="Order details or notes" data-it="Dettagli dell'ordine o note">Naročilo ali opombe</label>
-              <textarea id="bNotes" name="notes" rows="2"></textarea>
+              <input id="bNotes" name="notes" type="text" placeholder="Npr. 5 L vina, pršut, šalam..." data-ph-sl="Npr. 5 L vina, pršut, šalam..." data-ph-en="E.g. 5 L wine, prosciutto, šalam..." data-ph-it="Es. 5 L di vino, prosciutto, salame..." />
             </div>
           </div>
-          <button type="submit" id="bookingSubmitBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.75rem;" data-sl="Pošlji povpraševanje" data-en="Send Request" data-it="Invia richiesta">Pošlji povpraševanje</button>
-          <div class="form-success" id="bookingSuccess"
-               data-sl="Hvala! Vaše povpraševanje je bilo poslano na vina@skomina.si. Odgovorili vam bomo v najkrajšem možnem času."
-               data-en="Thank you! Your inquiry has been sent to vina@skomina.si. We will reply shortly."
-               data-it="Grazie! La vostra richiesta è stata inviata a vina@skomina.si. Vi risponderemo al più presto.">
-            Hvala! Vaše povpraševanje je bilo poslano na vina@skomina.si. Odgovorili vam bomo v najkrajšem možnem času.
+          <button type="submit" id="bookingSubmitBtn" class="btn btn-primary" style="width: 100%; margin-top: 0.65rem;" data-sl="Pošlji povpraševanje" data-en="Send Request" data-it="Invia richiesta">Pošlji povpraševanje</button>
+          <p class="booking-trust-note"
+             data-sl="Odgovorimo v 24 urah · Brezplačna odpoved do 24h prej · Degustacija za polnoletne (18+)"
+             data-en="Reply within 24h · Free cancellation up to 24h before · Tastings for adults (18+)"
+             data-it="Risposta entro 24 ore · Cancellazione gratuita fino a 24h prima · Maggiorenni (18+)">
+            Odgovorimo v 24 urah · Brezplačna odpoved do 24h prej · Degustacija za polnoletne (18+)
+          </p>
+          <div class="form-success" id="bookingSuccess" role="status" aria-live="polite"
+               data-sl="Hvala! Vaše povpraševanje je bilo poslano na vina@skomina.si. Odgovorili vam bomo v 24 urah."
+               data-en="Thank you! Your inquiry has been sent to vina@skomina.si. We will reply within 24 hours."
+               data-it="Grazie! La vostra richiesta è stata inviata a vina@skomina.si. Vi risponderemo entro 24 ore.">
+            Hvala! Vaše povpraševanje je bilo poslano na vina@skomina.si. Odgovorili vam bomo v 24 urah.
           </div>
         </form>
       </div>
@@ -545,14 +560,14 @@
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
       <button type="button" class="modal-close" onclick="closeWineModal()" aria-label="Close">&times;</button>
       <span class="eyebrow" id="mCategory">Primorska</span>
-      <h3 id="mTitle">Title</h3>
+      <h3 id="mTitle">Hišna bela zvrst</h3>
       <p id="mDesc" style="color: var(--muted);"></p>
       <div class="modal-specs" id="mSpecs"></div>
       <div class="qty-row modal-qty-row" id="mQtyWrap" style="display: none;">
         <label for="modalWineQty" class="qty-label" data-sl="Količina:" data-en="Quantity:" data-it="Quantità:">Količina:</label>
         <div class="qty-stepper">
           <button type="button" class="qty-btn" onclick="stepWineQty(-1)" aria-label="Manj litrov">−</button>
-          <input type="number" id="modalWineQty" value="1" min="1" max="500" onchange="syncWineQty(this.value)" />
+          <input type="number" id="modalWineQty" value="1" min="1" max="500" onchange="syncWineQty(this.value)" aria-label="Število litrov" />
           <button type="button" class="qty-btn" onclick="stepWineQty(1)" aria-label="Več litrov">+</button>
         </div>
         <span class="qty-unit" id="modalWineQtyUnit">liter</span>
@@ -577,15 +592,23 @@
         </div>
         <div class="spec-row">
           <span data-sl="Rezervacije & odpoved" data-en="Booking & cancellation" data-it="Prenotazioni & cancellazione">Rezervacije & odpoved</span>
-          <span data-sl="Obiski po predhodnem dogovoru. Brezplačna odpoved ali prestavitev do 24 ur prej." data-en="By prior appointment. Free cancellation or rescheduling up to 24h in advance." data-it="Su prenotazione. Cancellazione o modifica gratuita fino a 24 ore prima.">Obiski po predhodnem dogovoru. Brezplačna odpoved ali prestavitev do 24 ur prej.</span>
+          <span data-sl="Obiski po predhodnem dogovoru; odgovorimo v 24 urah. Brezplačna odpoved do 24 ur prej, za spremembe na dan obiska pokličite +386 31 728 563." data-en="By prior appointment; we reply within 24h. Free cancellation up to 24h in advance; for same-day changes please call +386 31 728 563." data-it="Su prenotazione; rispondiamo entro 24 ore. Cancellazione gratuita fino a 24 ore prima; per modifiche dell'ultimo giorno chiamate +386 31 728 563.">Obiski po predhodnem dogovoru; odgovorimo v 24 urah. Brezplačna odpoved do 24 ur prej, za spremembe na dan obiska pokličite +386 31 728 563.</span>
         </div>
         <div class="spec-row">
-          <span data-sl="Jeziki" data-en="Languages" data-it="Lingue">Jeziki</span>
-          <span>Slovenščina, English, Italiano</span>
+          <span data-sl="Plačilo" data-en="Payment" data-it="Pagamento">Plačilo</span>
+          <span data-sl="Gotovina ali po predhodnem dogovoru ob zaključku obiska." data-en="Cash or by prior arrangement at the end of your visit." data-it="Contanti o previo accordo al termine della visita.">Gotovina ali po predhodnem dogovoru ob zaključku obiska.</span>
         </div>
         <div class="spec-row">
-          <span data-sl="Nakup na liter" data-en="Wine by the liter" data-it="Vino sfuso a litri">Nakup na liter</span>
-          <span data-sl="Odprto belo vino točimo na liter; prevzem v kleti po dogovoru." data-en="Open white blend poured by the liter; cellar pickup by arrangement." data-it="Vino bianco sfuso a litri; ritiro in cantina su accordo.">Odprto belo vino točimo na liter; prevzem v kleti po dogovoru.</span>
+          <span data-sl="Otroci, ljubljenčki & obutev" data-en="Children, pets & footwear" data-it="Bambini, animali e calzature">Otroci, ljubljenčki & obutev</span>
+          <span data-sl="Otroci dobrodošli; hišne ljubljenčke najavite vnaprej. Za sprehod do vinogradov priporočamo udobno obutev." data-en="Children welcome; please notify us in advance for pets. Comfortable shoes are recommended for the vineyard walk." data-it="Bambini benvenuti; avvisateci in anticipo per animali. Consigliamo scarpe comode per la passeggiata nei vigneti.">Otroci dobrodošli; hišne ljubljenčke najavite vnaprej. Za sprehod do vinogradov priporočamo udobno obutev.</span>
+        </div>
+        <div class="spec-row">
+          <span data-sl="Vreme & letni časi" data-en="Weather & seasons" data-it="Meteo e stagioni">Vreme & letni časi</span>
+          <span data-sl="Degustacije potekajo v pokriti kleti v vsakem vremenu skozi vse leto." data-en="Tastings take place inside our cellar year-round in any weather." data-it="Le degustazioni si svolgono in cantina tutto l'anno con qualsiasi meteo.">Degustacije potekajo v pokriti kleti v vsakem vremenu skozi vse leto.</span>
+        </div>
+        <div class="spec-row">
+          <span data-sl="Jeziki & nakup na liter" data-en="Languages & wine by the liter" data-it="Lingue & vino a litri">Jeziki & nakup na liter</span>
+          <span data-sl="Slovenščina, English, Italiano. Odprto belo vino točimo na liter; prevzem v kleti po dogovoru." data-en="Slovenščina, English, Italiano. Open white blend poured by the liter; cellar pickup by arrangement." data-it="Sloveno, Inglese, Italiano. Vino bianco sfuso a litri; ritiro in cantina su accordo.">Slovenščina, English, Italiano. Odprto belo vino točimo na liter; prevzem v kleti po dogovoru.</span>
         </div>
       </div>
       <div class="modal-actions">
@@ -596,6 +619,6 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script src="script.js?v=20261116"></script>
+  <script src="script.js?v=20261116b"></script>
 </body>
 </html>
