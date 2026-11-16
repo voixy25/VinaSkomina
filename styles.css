@@ -240,13 +240,18 @@ header {
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.2s ease;
 }
 
-header.scrolled {
+header.scrolled:not(.menu-open) {
+  background: rgba(255, 255, 255, 0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
   box-shadow: 0 6px 20px rgba(20, 24, 19, 0.06);
 }
 
-/* Transparent header over the hero image */
+/* Transparent header over hero and O nas image sections */
 header.nav-transparent:not(.menu-open) {
   background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
   border-bottom-color: transparent;
   box-shadow: none;
 }
@@ -372,8 +377,12 @@ nav a:hover {
 
 .nav-cta {
   min-height: 40px;
-  padding: 0.5rem 1.1rem;
+  width: 132px;
+  min-width: 132px;
+  padding: 0.5rem 0.75rem;
   font-size: 0.78rem;
+  white-space: nowrap;
+  text-align: center;
 }
 
 .mobile-toggle {
@@ -473,12 +482,14 @@ nav a:hover {
 
 /* Section 1: About (O nas) */
 .about-section {
-  min-height: calc(100svh - var(--header-h));
+  min-height: 100vh;
+  min-height: 100svh;
   display: flex;
   align-items: center;
-  padding: 5rem 0;
+  padding: calc(var(--header-h) + 2.5rem) 0 3.5rem;
   overflow: hidden;
-  background: #FFFFFF;
+  background: #141A15;
+  color: #FFFFFF;
 }
 
 .about-bg-img {
@@ -487,8 +498,8 @@ nav a:hover {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 60%;
-  opacity: 0.16;
+  object-position: center 55%;
+  opacity: 0.72;
   pointer-events: none;
   z-index: 0;
 }
@@ -497,7 +508,12 @@ nav a:hover {
   content: '';
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.15) 60%, rgba(255, 255, 255, 0) 100%);
+  background: linear-gradient(
+    90deg,
+    rgba(14, 18, 13, 0.84) 0%,
+    rgba(14, 18, 13, 0.68) 55%,
+    rgba(14, 18, 13, 0.44) 100%
+  );
   pointer-events: none;
   z-index: 0;
 }
@@ -511,14 +527,30 @@ nav a:hover {
   align-items: start;
 }
 
+.about-section .eyebrow {
+  color: #DCE8DC;
+}
+
 .about-grid h2 {
   font-size: clamp(2rem, 4vw, 3rem);
   line-height: 1.12;
+  color: #FFFFFF;
 }
 
 .about-body p {
-  color: #3F463C;
+  color: rgba(255, 255, 255, 0.9);
   margin-bottom: 1.15rem;
+}
+
+.about-section .btn-outline {
+  border-color: rgba(255, 255, 255, 0.85);
+  color: #FFFFFF;
+  background: rgba(14, 18, 13, 0.35);
+}
+
+.about-section .btn-outline:hover {
+  background: #FFFFFF;
+  color: var(--ink);
 }
 
 /* Section 2: Terroir */

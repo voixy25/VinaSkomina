@@ -629,8 +629,8 @@ let isSectionAnimating = false;
 let wheelGestureLocked = false;
 let animUnlockTimer = null;
 let wheelQuietTimer = null;
-let lastWheelDeltaAbs = 0;
-let lastWheelTime = 0;
+let scrollAnimRafId = null;
+let lastStepTime = 0;
 
 function isDesktopScrollMode() {
   return window.innerWidth > 960 && window.matchMedia('(pointer: fine)').matches;
@@ -646,6 +646,46 @@ function updateActiveDots(activeId) {
   });
 }
 
+function animateScrollToY(targetY, duration = 460) {
+  if (scrollAnimRafId) {
+    cancelAnimationFrame(scrollAnimRafId);
+    scrollAnimRafId = null;
+  }
+
+  const startY = window.scrollY;
+  const diff = targetY - startY;
+  if (Math.abs(diff) < 2) {
+    window.scrollTo(0, targetY);
+    isSectionAnimating = false;
+    return;
+  }
+
+  const startTime = performance.now();
+  isSectionAnimating = true;
+  clearTimeout(animUnlockTimer);
+
+  function step(now) {
+    const elapsed = now - startTime;
+    const progress = Math.min(1, elapsed / duration);
+    const eased = 1 - Math.pow(1 - progress, 3);
+    window.scrollTo(0, Math.round(startY + diff * eased));
+
+    if (progress < 1) {
+      scrollAnimRafId = requestAnimationFrame(step);
+    } else {
+      window.scrollTo(0, targetY);
+      scrollAnimRafId = null;
+      isSectionAnimating = false;
+    }
+  }
+
+  scrollAnimRafId = requestAnimationFrame(step);
+  // Safety fallback in case rAF is throttled
+  animUnlockTimer = setTimeout(() => {
+    isSectionAnimating = false;
+  }, duration + 100);
+}
+
 function scrollToSectionIndex(idx) {
   const sections = getSnapSections();
   if (!sections.length) return;
@@ -653,27 +693,8 @@ function scrollToSectionIndex(idx) {
   currentSectionIndex = clampedIdx;
   const targetEl = sections[clampedIdx];
 
-  isSectionAnimating = true;
-  clearTimeout(animUnlockTimer);
-  const releaseWhenSettled = () => {
-    let lastY = window.scrollY;
-    let stableFrames = 0;
-    const check = () => {
-      const y = window.scrollY;
-      stableFrames = Math.abs(y - lastY) < 1 ? stableFrames + 1 : 0;
-      lastY = y;
-      if (stableFrames >= 6) {
-        isSectionAnimating = false;
-      } else {
-        animUnlockTimer = setTimeout(check, 16);
-      }
-    };
-    animUnlockTimer = setTimeout(check, 450);
-  };
-  releaseWhenSettled();
-
   updateActiveDots(targetEl.id);
-  targetEl.scrollIntoView({ behavior: 'smooth', block: targetEl.tagName === 'FOOTER' ? 'end' : 'start' });
+  animateScrollToY(targetEl.offsetTop, 420);
 }
 
 function scrollToSection(e, id) {
@@ -688,7 +709,7 @@ function scrollToSection(e, id) {
     scrollToSectionIndex(idx);
   } else {
     const el = document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: 'smooth' });
+    if (el) animateScrollToY(el.offsetTop, 420);
   }
 }
 
@@ -717,8 +738,8 @@ function canSectionScrollInternally(sectionEl, deltaY) {
   const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 72;
   const viewH = window.innerHeight;
 
-  // Allow internal scroll only when a section is taller than the viewport on smaller screens
-  if (rect.height > viewH - headerH + 36) {
+  // Allow internal scroll only when a section is genuinely taller than the viewport (e.g. small laptop)
+  if (rect.height > viewH + 24) {
     if (deltaY > 0 && rect.bottom > viewH + 18) {
       return true;
     }
@@ -738,16 +759,17 @@ window.addEventListener('wheel', (e) => {
   const sections = getSnapSections();
   if (!sections.length) return;
 
-  // Every wheel/trackpad event (including inertia) extends the current gesture.
-  // A new section step is only possible after the wheel has been quiet for a moment.
+  // Unlock gesture 120ms after wheel/trackpad events stop
   clearTimeout(wheelQuietTimer);
   wheelQuietTimer = setTimeout(() => {
     wheelGestureLocked = false;
-  }, 220);
+  }, 120);
 
-  // Rare case: a section taller than the screen (small laptop) -> scroll inside it natively,
-  // but lock the gesture so the same flick can never also jump to the next section.
-  const activeSection = sections[currentSectionIndex];
+  // Sync base index from actual scroll position when not mid-animation
+  const baseIdx = isSectionAnimating ? currentSectionIndex : detectCurrentSectionIndex();
+  currentSectionIndex = baseIdx;
+  const activeSection = sections[baseIdx];
+
   if (!isSectionAnimating && canSectionScrollInternally(activeSection, e.deltaY)) {
     wheelGestureLocked = true;
     return;
@@ -760,9 +782,11 @@ window.addEventListener('wheel', (e) => {
   if (isSectionAnimating || wheelGestureLocked) return;
 
   wheelGestureLocked = true;
+  lastStepTime = performance.now();
+
   const dir = e.deltaY > 0 ? 1 : -1;
-  const nextIdx = Math.max(0, Math.min(sections.length - 1, currentSectionIndex + dir));
-  if (nextIdx !== currentSectionIndex) {
+  const nextIdx = Math.max(0, Math.min(sections.length - 1, baseIdx + dir));
+  if (nextIdx !== baseIdx) {
     scrollToSectionIndex(nextIdx);
   }
 }, { passive: false });
@@ -804,11 +828,19 @@ let parallaxTicking = false;
 function updateParallax() {
   const scrollY = window.scrollY;
   const header = document.getElementById('siteHeader');
-  const hero = document.getElementById('domov');
+  const terroir = document.getElementById('terroir');
   const headerH = header ? header.offsetHeight : 72;
-  const overHero = hero ? scrollY < hero.offsetHeight - headerH - 4 : scrollY < 12;
-  header.classList.toggle('nav-transparent', overHero);
-  header.classList.toggle('scrolled', !overHero);
+
+  // On desktop, keep header transparent over both Hero (#domov) and O nas (#zgodba).
+  // On mobile/tablet (free scroll), keep it transparent only at the top and switch to white translucent as soon as scrolling starts.
+  const isTransparent = isDesktopScrollMode()
+    ? (terroir ? scrollY < terroir.offsetTop - headerH - 4 : scrollY < window.innerHeight * 1.5)
+    : (scrollY <= 24);
+
+  if (header) {
+    header.classList.toggle('nav-transparent', isTransparent);
+    header.classList.toggle('scrolled', !isTransparent);
+  }
 
   // Disable parallax and section tracking on mobile/tablet
   if (!isDesktopScrollMode()) {
