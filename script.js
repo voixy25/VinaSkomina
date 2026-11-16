@@ -929,8 +929,7 @@ function navJump(e, id) {
 
 function detectCurrentSectionIndex() {
   const sections = getSnapSections();
-  const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 72;
-  const probeY = window.scrollY + headerH + window.innerHeight * 0.35;
+  const probeY = window.scrollY + window.innerHeight * 0.45;
 
   let bestIdx = 0;
   sections.forEach((sec, i) => {
@@ -944,7 +943,6 @@ function detectCurrentSectionIndex() {
 function canSectionScrollInternally(sectionEl, deltaY) {
   if (!sectionEl) return false;
   const rect = sectionEl.getBoundingClientRect();
-  const headerH = parseInt(getComputedStyle(document.documentElement).getPropertyValue('--header-h'), 10) || 72;
   const viewH = window.innerHeight;
 
   // Allow internal scroll only when a section is genuinely taller than the viewport (e.g. small laptop)
@@ -952,7 +950,7 @@ function canSectionScrollInternally(sectionEl, deltaY) {
     if (deltaY > 0 && rect.bottom > viewH + 18) {
       return true;
     }
-    if (deltaY < 0 && rect.top < headerH - 18) {
+    if (deltaY < 0 && rect.top < -18) {
       return true;
     }
   }
