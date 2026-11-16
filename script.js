@@ -4,11 +4,15 @@ let currentModalKey = null;
 
 const itemData = {
   zvrst: {
-    orderLabel: 'Bela zvrst',
+    orderLabel: {
+      sl: 'Bela zvrst',
+      en: 'House White Blend',
+      it: 'Uvaggio Bianco della Casa'
+    },
     sl: {
       cat: 'Vipavska dolina, suho belo vino (na liter)',
       title: 'Hišna bela zvrst',
-      desc: 'Naše vino je zvrst vseh treh sort iz obeh vinogradov v Oševljeku: Malvazije, Rebule in Vitovske grganje, ki jo negujemo in točimo na liter v naši vinski kleti. Eno leto smo vsako sorto vinificirali tudi ločeno.',
+      desc: 'Naše vino je zvrst vseh treh sort iz obeh vinogradov v Oševljeku: Malvazije, Rebule in Vitovske grganje, ki jo ročno potrgamo, združimo v eno belo zvrst ter točimo na liter v naši vinski kleti.',
       specs: [
         ['Sorte', 'Malvazija, Rebula, Vitovska grganja'],
         ['Vinogradi', 'Spodnji in zgornji vinograd v Oševljeku'],
@@ -20,7 +24,7 @@ const itemData = {
     en: {
       cat: 'Vipava Valley, dry white wine (by the liter)',
       title: 'House White Blend',
-      desc: 'Our wine blends all three varietals from both Oševljek vineyards: Malvazija, Rebula, and Vitovska Grganja, aged and poured by the liter in our wine cellar. For one vintage, we also vinified each varietal separately.',
+      desc: 'Our wine blends all three varietals from both Oševljek vineyards: Malvazija, Rebula, and Vitovska Grganja, harvested by hand, blended into one white wine, and poured by the liter in our wine cellar.',
       specs: [
         ['Varietals', 'Malvazija, Rebula, Vitovska Grganja'],
         ['Vineyards', 'Lower and upper parcels in Oševljek'],
@@ -28,37 +32,69 @@ const itemData = {
         ['Harvest', 'Hand-harvested'],
         ['Food pairing', 'Homemade cured meats, Neapolitan pizza, white fish']
       ]
+    },
+    it: {
+      cat: 'Valle del Vipacco, vino bianco secco (a litro)',
+      title: 'Uvaggio Bianco della Casa',
+      desc: 'Il nostro vino unisce tutte e tre le varietà dei nostri due vigneti a Oševljek: Malvasia, Ribolla Gialla e Vitovska Grganja, vendemmiate a mano, unite in un unico uvaggio bianco e servite sfuse a litro nella nostra cantina.',
+      specs: [
+        ['Vitigni', 'Malvasia, Ribolla Gialla, Vitovska Grganja'],
+        ['Vigneti', 'Vigneto inferiore e superiore a Oševljek'],
+        ['Vendita', 'Vino sfuso a litro (ritiro in cantina)'],
+        ['Vendemmia', 'Vendemmia manuale'],
+        ['Abbinamenti', 'Salumi fatti in casa, pizza napoletana, pesce bianco']
+      ]
     }
   },
   suhomesnine: {
-    orderLabel: 'Domače suhomesnine',
+    orderLabel: {
+      sl: 'Domače suhomesnine',
+      en: 'Homemade Cured Meats',
+      it: 'Salumi Fatti in Casa'
+    },
     sl: {
       cat: 'Iz domače zorilnice v kleti',
       title: 'Domače suhomesnine',
-      desc: 'Do pred nekaj leti smo prašiče redili sami, danes pa jih kupimo in zakoljemo na Dolenjskem, mesnine pa po družinskih receptih nasolimo in sušimo v naši kleti v Oševljeku.',
+      desc: 'Do pred nekaj leti smo prašiče redili sami, danes pa jih kupimo, zakoljemo in mesnine pripravimo na Dolenjskem. Pršut, šalam in panceto nato sušimo in zorimo v domači kleti v Oševljeku, pripravimo pa tudi sladke klobase in krodegine za kuhanje.',
       specs: [
-        ['Izdelki', 'Pršut, šalam, panceta, sladke klobase, krodegine'],
-        ['Poreklo mesa', 'Prašiči z Dolenjske'],
-        ['Zorenje', 'Domača predelava in sušenje v kleti v Oševljeku'],
-        ['Krodegine', 'Tradicionalne kuhane klobase za zimske mesece'],
+        ['Suhe mesnine (zorene v kleti)', 'Pršut, šalam, panceta'],
+        ['Za kuhanje', 'Sladke klobase in tradicionalne krodegine'],
+        ['Priprava mesa', 'Prašiči in priprava mesnin na Dolenjskem'],
+        ['Zorenje', 'Sušenje in zorenje v domači kleti v Oševljeku'],
         ['Nakup', 'Po predhodnem dogovoru ali ob degustaciji v kleti']
       ]
     },
     en: {
-      cat: 'Cellar-cured pork delicacies',
+      cat: 'Cellar-aged pork delicacies',
       title: 'Homemade Cured Meats',
-      desc: 'Until a few years ago we raised our own pigs; today we source them in Dolenjska, then season and cure all pork cuts in our cellar in Oševljek.',
+      desc: 'Until a few years ago we raised our own pigs; today we buy and slaughter them and prepare the meats in Dolenjska. We then dry and age prosciutto, šalam, and pancetta in our home cellar in Oševljek, and also make sladke klobase and krodegine sausages for cooking.',
       specs: [
-        ['Products', 'Prosciutto, šalam, pancetta, sladke klobase, krodegine'],
-        ['Pork sourcing', 'Pigs sourced and slaughtered in Dolenjska'],
-        ['Curing', 'Prepared and cured in our Oševljek cellar'],
-        ['Krodegine', 'Traditional boiled pork sausages served in winter'],
+        ['Cured cuts (cellar-aged)', 'Prosciutto, šalam, pancetta'],
+        ['For cooking', 'Sladke klobase and traditional krodegine sausages'],
+        ['Preparation', 'Pigs sourced and meats prepared in Dolenjska'],
+        ['Aging', 'Dried and aged in our cellar in Oševljek'],
         ['Availability', 'By prior inquiry or during cellar tastings']
+      ]
+    },
+    it: {
+      cat: 'Stagionati nella nostra cantina',
+      title: 'Salumi Fatti in Casa',
+      desc: 'Fino a qualche anno fa allevavamo i maiali noi stessi; oggi li acquistiamo, macelliamo e prepariamo le carni nella Dolenjska. Asciugiamo e stagioniamo poi prosciutto crudo, salame (šalam) e pancetta nella nostra cantina a Oševljek, oltre a preparare salsicce (sladke klobase) e cotechini (krodegine) da cuocere.',
+      specs: [
+        ['Salumi stagionati in cantina', 'Prosciutto crudo, salame (šalam), pancetta'],
+        ['Da cuocere', 'Salsicce dolci (sladke klobase) e cotechini (krodegine)'],
+        ['Preparazione', 'Maiali e lavorazione delle carni nella Dolenjska'],
+        ['Stagionatura', 'Asciugatura e stagionatura nella cantina a Oševljek'],
+        ['Acquisto', 'Su prenotazione o durante le degustazioni in cantina']
       ]
     }
   },
   pice: {
-    orderLabel: 'Degustacija z napolitanskimi picami',
+    orderLabel: {
+      sl: 'Degustacija z napolitanskimi picami',
+      en: 'Tasting with Neapolitan pizza',
+      it: 'Degustazione con pizze napoletane'
+    },
     sl: {
       cat: 'Ob najavljenih obiskih vinske kleti',
       title: 'Napolitanske pice iz vrtljive peči',
@@ -82,6 +118,18 @@ const itemData = {
         ['Availability', 'By prior reservation for cellar groups'],
         ['Pairing', 'Served alongside our house white blend']
       ]
+    },
+    it: {
+      cat: 'Visite in cantina su prenotazione',
+      title: 'Pizze Napoletane dal Forno Rotante',
+      desc: 'Durante le degustazioni in cantina sforniamo per gli ospiti pizze napoletane fresche nel nostro forno elettrico rotante, farcite anche con la nostra pancetta, salame o prosciutto crudo.',
+      specs: [
+        ['Forno', 'Forno elettrico rotante per pizza'],
+        ['Stile', 'Pizza napoletana'],
+        ['Farciture', 'Ingredienti classici e i nostri salumi fatti in casa'],
+        ['Quando', 'Su prenotazione per gruppi in cantina'],
+        ['Abbinamento', 'Servite con il nostro uvaggio bianco della casa']
+      ]
     }
   }
 };
@@ -91,6 +139,9 @@ function getLiterUnitWord(qty, lang = currentLang) {
   if (lang === 'en') {
     return n === 1 ? 'liter' : 'liters';
   }
+  if (lang === 'it') {
+    return n === 1 ? 'litro' : 'litri';
+  }
   const mod100 = n % 100;
   if (mod100 === 1) return 'liter';
   if (mod100 === 2) return 'litra';
@@ -98,10 +149,16 @@ function getLiterUnitWord(qty, lang = currentLang) {
   return 'litrov';
 }
 
+function getOrderPrefix(lang = currentLang) {
+  if (lang === 'en') return 'Order inquiry: ';
+  if (lang === 'it') return 'Richiesta d\'ordine: ';
+  return 'Povpraševanje za nakup: ';
+}
+
 function formatWineOrderLabel(qty = wineQty, lang = currentLang) {
   const n = Math.max(1, parseInt(qty, 10) || 1);
   const unit = getLiterUnitWord(n, lang);
-  const wineName = lang === 'sl' ? 'Bela zvrst' : 'House White Blend';
+  const wineName = itemData.zvrst.orderLabel[lang] || itemData.zvrst.orderLabel.sl;
   return `${wineName} (${n} ${unit})`;
 }
 
@@ -129,12 +186,11 @@ function syncWineQty(val, updateNotesIfOrder = false) {
     const notes = document.getElementById('bNotes');
     if (!notes) return;
     const label = formatWineOrderLabel(wineQty, currentLang);
-    const pattern = /(Bela zvrst|Hišna bela zvrst|House White Blend)\s*\(\d+\s*[^)]+\)/i;
+    const pattern = /(Bela zvrst|Hišna bela zvrst|House White Blend|Uvaggio Bianco della Casa)\s*\(\d+\s*[^)]+\)/i;
     if (pattern.test(notes.value)) {
       notes.value = notes.value.replace(pattern, label);
     } else if (!notes.value.trim()) {
-      const prefix = currentLang === 'sl' ? 'Povpraševanje za nakup: ' : 'Order inquiry: ';
-      notes.value = `${prefix}${label}`;
+      notes.value = `${getOrderPrefix(currentLang)}${label}`;
     }
   }
 }
@@ -151,15 +207,25 @@ function orderWineWithQty() {
 function setLang(lang) {
   currentLang = lang;
   document.documentElement.lang = lang;
-  document.getElementById('btnSl').classList.toggle('active', lang === 'sl');
-  document.getElementById('btnEn').classList.toggle('active', lang === 'en');
+  const btnSl = document.getElementById('btnSl');
+  const btnEn = document.getElementById('btnEn');
+  const btnIt = document.getElementById('btnIt');
+  if (btnSl) btnSl.classList.toggle('active', lang === 'sl');
+  if (btnEn) btnEn.classList.toggle('active', lang === 'en');
+  if (btnIt) btnIt.classList.toggle('active', lang === 'it');
 
   document.querySelectorAll('[data-sl]').forEach(el => {
-    el.textContent = el.getAttribute('data-' + lang);
+    const translated = el.getAttribute('data-' + lang) || el.getAttribute('data-sl');
+    if (translated !== null) {
+      el.textContent = translated;
+    }
   });
 
   document.querySelectorAll('[data-ph-sl]').forEach(el => {
-    el.placeholder = el.getAttribute('data-ph-' + lang);
+    const ph = el.getAttribute('data-ph-' + lang) || el.getAttribute('data-ph-sl');
+    if (ph !== null) {
+      el.placeholder = ph;
+    }
   });
 
   updateQtyUI();
@@ -186,7 +252,7 @@ function closeMenu() {
 function openItemModal(key) {
   currentModalKey = key;
   const item = itemData[key];
-  const info = item[currentLang];
+  const info = item[currentLang] || item.sl;
   document.getElementById('mCategory').textContent = info.cat;
   document.getElementById('mTitle').textContent = info.title;
   document.getElementById('mDesc').textContent = info.desc;
@@ -216,7 +282,8 @@ function openItemModal(key) {
   } else {
     orderBtn.onclick = () => {
       closeWineModal();
-      preselectOrder(item.orderLabel);
+      const label = (item.orderLabel && item.orderLabel[currentLang]) || item.orderLabel.sl;
+      preselectOrder(label);
     };
   }
 
@@ -247,9 +314,21 @@ function syncFormRequirements() {
 
   if (dateLabel) {
     if (isOrder) {
-      dateLabel.textContent = currentLang === 'sl' ? 'Datum prevzema v kleti (neobvezno)' : 'Cellar pickup date (optional)';
+      if (currentLang === 'en') {
+        dateLabel.textContent = 'Cellar pickup date (optional)';
+      } else if (currentLang === 'it') {
+        dateLabel.textContent = 'Data di ritiro in cantina (opzionale)';
+      } else {
+        dateLabel.textContent = 'Datum prevzema v kleti (neobvezno)';
+      }
     } else {
-      dateLabel.textContent = currentLang === 'sl' ? 'Datum obiska ali prevzema' : 'Visit or pickup date';
+      if (currentLang === 'en') {
+        dateLabel.textContent = 'Visit or pickup date';
+      } else if (currentLang === 'it') {
+        dateLabel.textContent = 'Data di visita o ritiro';
+      } else {
+        dateLabel.textContent = 'Datum obiska ali prevzema';
+      }
     }
   }
 
@@ -268,18 +347,23 @@ function syncFormRequirements() {
 }
 
 function preselectOrder(itemLabel, isWineWithQty = false) {
+  let finalLabel = itemLabel;
+  if (itemLabel === 'Domače suhomesnine' && itemData.suhomesnine.orderLabel[currentLang]) {
+    finalLabel = itemData.suhomesnine.orderLabel[currentLang];
+  }
+
   const pkgSelect = document.getElementById('bPackage');
   pkgSelect.value = 'order';
   syncFormRequirements();
 
   const notes = document.getElementById('bNotes');
-  const prefix = currentLang === 'sl' ? 'Povpraševanje za nakup: ' : 'Order inquiry: ';
-  const winePattern = /(Bela zvrst|Hišna bela zvrst|House White Blend)\s*\(\d+\s*[^)]+\)/i;
+  const prefix = getOrderPrefix(currentLang);
+  const winePattern = /(Bela zvrst|Hišna bela zvrst|House White Blend|Uvaggio Bianco della Casa)\s*\(\d+\s*[^)]+\)/i;
 
   if (isWineWithQty && winePattern.test(notes.value)) {
-    notes.value = notes.value.replace(winePattern, itemLabel);
+    notes.value = notes.value.replace(winePattern, finalLabel);
   } else {
-    notes.value = notes.value ? `${notes.value}, ${itemLabel}` : `${prefix}${itemLabel}`;
+    notes.value = notes.value ? `${notes.value}, ${finalLabel}` : `${prefix}${finalLabel}`;
   }
 
   scrollToSection(null, 'degustacije');
@@ -336,6 +420,11 @@ const mapLocations = {
       short: 'Wine cellar (Oševljek 14)',
       title: 'Skomina Wine Cellar — Oševljek 14',
       desc: 'Oševljek 14, 5292 Renče. Vina Skomina family wine cellar, curing room, and rotating pizza oven.'
+    },
+    it: {
+      short: 'Cantina (Oševljek 14)',
+      title: 'Cantina Skomina — Oševljek 14',
+      desc: 'Oševljek 14, 5292 Renče. Cantina di famiglia Vina Skomina, locale di stagionatura dei salumi e forno rotante per pizze napoletane.'
     }
   },
   lower: {
@@ -365,6 +454,11 @@ const mapLocations = {
       short: 'Lower vineyard',
       title: 'Lower Vineyard (below village)',
       desc: 'Open sunlit parcel right alongside the road below Oševljek village, cooled by the Vipava bora wind.'
+    },
+    it: {
+      short: 'Vigneto inferiore',
+      title: 'Vigneto inferiore (sotto il borgo)',
+      desc: 'Parcella soleggiata lungo la strada sotto il borgo di Oševljek, ventilata dalla bora del Vipacco su terreni di flysch.'
     }
   },
   upper: {
@@ -394,16 +488,21 @@ const mapLocations = {
       short: 'Upper vineyard (clearing)',
       title: 'Upper Vineyard (forest clearing)',
       desc: 'Sheltered parcel in a quiet forest clearing higher toward the Karst edge where flysch meets limestone.'
+    },
+    it: {
+      short: 'Vigneto superiore (radura)',
+      title: 'Vigneto superiore (radura nel bosco)',
+      desc: 'Parcella riparata in una tranquilla radura boschiva verso il ciglione carsico, dove il flysch incontra il calcare.'
     }
   }
 };
 
 function createPinIcon(locKey) {
   const loc = mapLocations[locKey];
-  const label = loc[currentLang].short;
+  const info = loc[currentLang] || loc.sl;
   return L.divIcon({
     className: 'custom-map-pin-container',
-    html: `<div class="custom-map-pin"><span class="pin-badge" style="background:${loc.color}"></span><span>${label}</span></div>`,
+    html: `<div class="custom-map-pin"><span class="pin-badge" style="background:${loc.color}"></span><span>${info.short}</span></div>`,
     iconSize: null,
     iconAnchor: [0, 0],
     popupAnchor: [0, -14]
@@ -412,9 +511,11 @@ function createPinIcon(locKey) {
 
 function createPopupHTML(locKey) {
   const loc = mapLocations[locKey];
-  const info = loc[currentLang];
+  const info = loc[currentLang] || loc.sl;
   const gmapsUrl = `https://www.google.com/maps/search/?api=1&query=${loc.coords[0]},${loc.coords[1]}`;
-  const linkText = currentLang === 'sl' ? 'Odpri v Google Maps ↗' : 'Open in Google Maps ↗';
+  let linkText = 'Odpri v Google Maps ↗';
+  if (currentLang === 'en') linkText = 'Open in Google Maps ↗';
+  if (currentLang === 'it') linkText = 'Apri in Google Maps ↗';
   return `
     <div style="min-width:190px;max-width:240px;">
       <strong style="display:block;font-size:0.9rem;color:#141813;margin-bottom:3px;">${info.title}</strong>
@@ -526,7 +627,7 @@ function updateMapLanguage() {
 }
 
 /* ==========================================
-   Strict 1-Gesture = 1-Section Jump Scrolling & Parallax
+   Strict 1-Gesture = 1-Section Jump Scrolling & Parallax (Desktop Only)
    ========================================== */
 const snapSectionIds = ['domov', 'zgodba', 'terroir', 'vina', 'degustacije', 'kontakt'];
 let currentSectionIndex = 0;
@@ -536,6 +637,10 @@ let animUnlockTimer = null;
 let wheelQuietTimer = null;
 let lastWheelDeltaAbs = 0;
 let lastWheelTime = 0;
+
+function isDesktopScrollMode() {
+  return window.innerWidth > 960 && window.matchMedia('(pointer: fine)').matches;
+}
 
 function getSnapSections() {
   return snapSectionIds.map(id => document.getElementById(id)).filter(Boolean);
@@ -566,6 +671,11 @@ function scrollToSectionIndex(idx) {
 
 function scrollToSection(e, id) {
   if (e) e.preventDefault();
+  if (!isDesktopScrollMode()) {
+    const el = document.getElementById(id);
+    if (el) el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
   const idx = snapSectionIds.indexOf(id);
   if (idx !== -1) {
     scrollToSectionIndex(idx);
@@ -613,6 +723,8 @@ function canSectionScrollInternally(sectionEl, deltaY) {
 }
 
 window.addEventListener('wheel', (e) => {
+  // On phone/tablet, use default native scroll
+  if (!isDesktopScrollMode()) return;
   if (document.body.classList.contains('modal-open')) return;
   if (e.target.closest('#terroirMap') || e.target.closest('.modal')) return;
 
@@ -625,7 +737,7 @@ window.addEventListener('wheel', (e) => {
     return;
   }
 
-  // Always block native wheel scroll so browser momentum never skips multiple sections
+  // Always block native wheel scroll on desktop so browser momentum never skips multiple sections
   e.preventDefault();
 
   const absDelta = Math.abs(e.deltaY);
@@ -666,6 +778,7 @@ document.addEventListener('keydown', (e) => {
     return;
   }
 
+  if (!isDesktopScrollMode()) return;
   if (document.body.classList.contains('modal-open')) return;
   const tag = (e.target && e.target.tagName) ? e.target.tagName.toLowerCase() : '';
   if (tag === 'input' || tag === 'textarea' || tag === 'select') return;
@@ -695,6 +808,17 @@ let parallaxTicking = false;
 function updateParallax() {
   const scrollY = window.scrollY;
   document.getElementById('siteHeader').classList.toggle('scrolled', scrollY > 12);
+
+  // Disable parallax and section tracking on mobile/tablet
+  if (!isDesktopScrollMode()) {
+    const heroImg = document.querySelector('[data-parallax-hero]');
+    if (heroImg) heroImg.style.removeProperty('--hero-parallax');
+    document.querySelectorAll('[data-parallax]').forEach(el => {
+      el.style.removeProperty('--parallax-y');
+    });
+    parallaxTicking = false;
+    return;
+  }
 
   if (!isSectionAnimating) {
     const idx = detectCurrentSectionIndex();
@@ -732,6 +856,10 @@ window.addEventListener('scroll', () => {
     parallaxTicking = true;
   }
 }, { passive: true });
+
+window.addEventListener('resize', () => {
+  updateParallax();
+});
 
 window.addEventListener('DOMContentLoaded', () => {
   currentSectionIndex = detectCurrentSectionIndex();
