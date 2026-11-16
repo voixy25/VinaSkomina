@@ -20,6 +20,10 @@ const itemData = {
         ['Prodaja', 'Vino na liter (prevzem v vinski kleti)'],
         ['Trgatev', 'Ročna trgatev'],
         ['K hrani', 'Domače suhomesnine, napolitanske pice, bela riba']
+      ],
+      prices: [
+        ['Bela zvrst (na liter)', 'Po dogovoru'],
+        ['Večje količine (10 L+)', 'Po dogovoru']
       ]
     },
     en: {
@@ -33,6 +37,10 @@ const itemData = {
         ['Format', 'Poured by the liter (cellar pickup)'],
         ['Harvest', 'Hand-harvested'],
         ['Food pairing', 'Homemade cured meats, Neapolitan pizza, white fish']
+      ],
+      prices: [
+        ['House white blend (per liter)', 'By arrangement'],
+        ['Larger quantities (10 L+)', 'By arrangement']
       ]
     },
     it: {
@@ -46,6 +54,10 @@ const itemData = {
         ['Vendita', 'Vino sfuso a litro (ritiro in cantina)'],
         ['Vendemmia', 'Vendemmia manuale'],
         ['Abbinamenti', 'Salumi fatti in casa, pizza napoletana, pesce bianco']
+      ],
+      prices: [
+        ['Uvaggio bianco (al litro)', 'Su accordo'],
+        ['Quantità maggiori (10 L+)', 'Su accordo']
       ]
     }
   },
@@ -65,6 +77,13 @@ const itemData = {
         ['Priprava mesa', 'Prašiči in priprava mesnin na Dolenjskem'],
         ['Zorenje', 'Sušenje in zorenje v domači kleti v Oševljeku'],
         ['Nakup', 'Po predhodnem dogovoru ali ob degustaciji v kleti']
+      ],
+      prices: [
+        ['Pršut (na kg / kos)', 'Po dogovoru'],
+        ['Šalam (na kos)', 'Po dogovoru'],
+        ['Panceta (na kg / kos)', 'Po dogovoru'],
+        ['Sladke klobase (na par)', 'Po dogovoru'],
+        ['Krodegine (na par)', 'Po dogovoru']
       ]
     },
     en: {
@@ -77,6 +96,13 @@ const itemData = {
         ['Preparation', 'Pigs sourced and meats prepared in Dolenjska'],
         ['Aging', 'Dried and aged in our cellar in Oševljek'],
         ['Availability', 'By prior inquiry or during cellar tastings']
+      ],
+      prices: [
+        ['Prosciutto (per kg / piece)', 'By arrangement'],
+        ['Šalam salami (per piece)', 'By arrangement'],
+        ['Pancetta (per kg / piece)', 'By arrangement'],
+        ['Sladke klobase (per pair)', 'By arrangement'],
+        ['Krodegine (per pair)', 'By arrangement']
       ]
     },
     it: {
@@ -89,6 +115,13 @@ const itemData = {
         ['Preparazione', 'Maiali e lavorazione delle carni nella Dolenjska'],
         ['Stagionatura', 'Asciugatura e stagionatura nella cantina a Oševljek'],
         ['Acquisto', 'Su prenotazione o durante le degustazioni in cantina']
+      ],
+      prices: [
+        ['Prosciutto crudo (al kg / pezzo)', 'Su accordo'],
+        ['Salame šalam (al pezzo)', 'Su accordo'],
+        ['Pancetta (al kg / pezzo)', 'Su accordo'],
+        ['Salsicce dolci (al paio)', 'Su accordo'],
+        ['Cotechini krodegine (al paio)', 'Su accordo']
       ]
     }
   },
@@ -108,6 +141,11 @@ const itemData = {
         ['Obloge', 'Klasične sestavine in naše domače mesnine'],
         ['Kdaj', 'Po predhodnem dogovoru za skupine v kleti'],
         ['K vinu', 'Postrežemo z našo belo zvrstjo']
+      ],
+      prices: [
+        ['Klasična napolitanska pica (na pico)', 'Po dogovoru'],
+        ['Pica z našimi mesninami (na pico)', 'Po dogovoru'],
+        ['Degustacija s picami (na osebo)', 'Po dogovoru']
       ]
     },
     en: {
@@ -120,6 +158,11 @@ const itemData = {
         ['Toppings', 'Classic toppings and our homemade cured meats'],
         ['Availability', 'By prior reservation for cellar groups'],
         ['Pairing', 'Served alongside our house white blend']
+      ],
+      prices: [
+        ['Classic Neapolitan pizza (per pizza)', 'By arrangement'],
+        ['Pizza with cured meats (per pizza)', 'By arrangement'],
+        ['Pizza tasting menu (per person)', 'By arrangement']
       ]
     },
     it: {
@@ -132,6 +175,11 @@ const itemData = {
         ['Farciture', 'Ingredienti classici e i nostri salumi fatti in casa'],
         ['Quando', 'Su prenotazione per gruppi in cantina'],
         ['Abbinamento', 'Servite con il nostro uvaggio bianco della casa']
+      ],
+      prices: [
+        ['Pizza napoletana classica (a pizza)', 'Su accordo'],
+        ['Pizza con i nostri salumi (a pizza)', 'Su accordo'],
+        ['Menu degustazione con pizza (a persona)', 'Su accordo']
       ]
     }
   }
@@ -300,10 +348,28 @@ function openItemModal(key) {
   document.getElementById('mTitle').textContent = info.title;
   document.getElementById('mDesc').textContent = info.desc;
 
+  const infoHeadingEl = document.getElementById('mInfoHeading');
+  const priceHeadingEl = document.getElementById('mPriceHeading');
+  const colHeadings = {
+    sl: { info: 'Informacije', price: 'Cenik' },
+    en: { info: 'Details', price: 'Pricing' },
+    it: { info: 'Informazioni', price: 'Prezzi' }
+  };
+  const h = colHeadings[currentLang] || colHeadings.sl;
+  if (infoHeadingEl) infoHeadingEl.textContent = h.info;
+  if (priceHeadingEl) priceHeadingEl.textContent = h.price;
+
   const specsEl = document.getElementById('mSpecs');
   specsEl.innerHTML = info.specs.map(([label, val]) =>
     `<div class="spec-row"><span>${label}</span><span>${val}</span></div>`
   ).join('');
+
+  const pricesEl = document.getElementById('mPrices');
+  if (pricesEl) {
+    pricesEl.innerHTML = (info.prices || []).map(([label, val]) =>
+      `<div class="spec-row"><span>${label}</span><span>${val}</span></div>`
+    ).join('');
+  }
 
   const qtyWrap = document.getElementById('mQtyWrap');
   if (qtyWrap) {
@@ -606,17 +672,17 @@ const mapLocations = {
     color: '#B84A27',
     zoom: 18,
     sl: {
-      short: 'Vinska klet (Oševljek 14)',
+      short: 'Vinska klet',
       title: 'Vinska klet Skomina — Oševljek 14',
       desc: 'Oševljek 14, 5292 Renče. Družinska vinska klet Vina Skomina, zorilnica suhomesnin in vrtljiva peč za napolitanske pice.'
     },
     en: {
-      short: 'Wine cellar (Oševljek 14)',
+      short: 'Wine cellar',
       title: 'Skomina Wine Cellar — Oševljek 14',
       desc: 'Oševljek 14, 5292 Renče. Vina Skomina family wine cellar, curing room, and rotating pizza oven.'
     },
     it: {
-      short: 'Cantina (Oševljek 14)',
+      short: 'Cantina',
       title: 'Cantina Skomina — Oševljek 14',
       desc: 'Oševljek 14, 5292 Renče. Cantina di famiglia Vina Skomina, locale di stagionatura dei salumi e forno rotante per pizze napoletane.'
     }

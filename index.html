@@ -62,7 +62,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
-  <link rel="stylesheet" href="styles.css?v=20261116q" />
+  <link rel="stylesheet" href="styles.css?v=20261116r" />
 </head>
 <body>
 
@@ -207,7 +207,7 @@
           <button type="button" class="map-pill active" data-loc="all" onclick="focusMapLocation('all')" data-sl="Vse lokacije" data-en="All locations" data-it="Tutte">Vse lokacije</button>
           <button type="button" class="map-pill" data-loc="house" onclick="focusMapLocation('house')">
             <span class="pin-dot pin-house"></span>
-            <span data-sl="Vinska klet (Oševljek 14)" data-en="Wine cellar (Oševljek 14)" data-it="Cantina (Oševljek 14)">Vinska klet (Oševljek 14)</span>
+            <span data-sl="Vinska klet" data-en="Wine cellar" data-it="Cantina">Vinska klet</span>
           </button>
           <button type="button" class="map-pill" data-loc="lower" onclick="focusMapLocation('lower')">
             <span class="pin-dot pin-lower"></span>
@@ -279,11 +279,8 @@
           </div>
 
           <div class="wine-footer">
-            <span class="wine-price" data-sl="Po dogovoru" data-en="On request" data-it="Su richiesta">Po dogovoru</span>
-            <div class="wine-actions">
-              <button type="button" class="btn btn-outline wine-btn" onclick="openItemModal('zvrst')" data-sl="Info" data-en="Details" data-it="Info">Info</button>
-              <button type="button" class="btn btn-primary wine-btn" onclick="orderWineWithQty()" data-sl="Nakup" data-en="Order" data-it="Ordina">Nakup</button>
-            </div>
+            <button type="button" class="btn btn-outline wine-btn" onclick="openItemModal('zvrst')" data-sl="Info" data-en="Details" data-it="Info">Info</button>
+            <button type="button" class="btn btn-primary wine-btn" onclick="orderWineWithQty()" data-sl="Nakup" data-en="Order" data-it="Ordina">Nakup</button>
           </div>
         </article>
 
@@ -300,11 +297,8 @@
             Pršut, šalam, panceta ter sladke klobase in krodegine. Prašiče kupimo in mesnine pripravimo na Dolenjskem, suhe mesnine pa zorimo v naši kleti v Oševljeku.
           </p>
           <div class="wine-footer">
-            <span class="wine-price" data-sl="Po dogovoru" data-en="On request" data-it="Su richiesta">Po dogovoru</span>
-            <div class="wine-actions">
-              <button type="button" class="btn btn-outline wine-btn" onclick="openItemModal('suhomesnine')" data-sl="Info" data-en="Details" data-it="Info">Info</button>
-              <button type="button" class="btn btn-primary wine-btn" onclick="preselectOrder('Domače suhomesnine')" data-sl="Nakup" data-en="Order" data-it="Ordina">Nakup</button>
-            </div>
+            <button type="button" class="btn btn-outline wine-btn" onclick="openItemModal('suhomesnine')" data-sl="Info" data-en="Details" data-it="Info">Info</button>
+            <button type="button" class="btn btn-primary wine-btn" onclick="preselectOrder('Domače suhomesnine')" data-sl="Nakup" data-en="Order" data-it="Ordina">Nakup</button>
           </div>
         </article>
 
@@ -321,11 +315,8 @@
             V naši vrtljivi električni peči pečemo sveže napolitanske pice, obložene tudi z našimi mesninami.
           </p>
           <div class="wine-footer">
-            <span class="wine-price" data-sl="Ob obisku" data-en="At visits" data-it="Durante la visita">Ob obisku</span>
-            <div class="wine-actions">
-              <button type="button" class="btn btn-outline wine-btn" onclick="openItemModal('pice')" data-sl="Info" data-en="Details" data-it="Info">Info</button>
-              <a href="#degustacije" onclick="selectPizzaVisit(event)" class="btn btn-primary wine-btn" data-sl="Rezerviraj" data-en="Book" data-it="Prenota">Rezerviraj</a>
-            </div>
+            <button type="button" class="btn btn-outline wine-btn" onclick="openItemModal('pice')" data-sl="Info" data-en="Details" data-it="Info">Info</button>
+            <a href="#degustacije" onclick="selectPizzaVisit(event)" class="btn btn-primary wine-btn" data-sl="Rezerviraj" data-en="Book" data-it="Prenota">Rezerviraj</a>
           </div>
         </article>
       </div>
@@ -340,14 +331,14 @@
       <div data-parallax="0.08">
         <span class="eyebrow" data-sl="Obisk kleti in nakup" data-en="Cellar visits and orders" data-it="Visite in cantina e acquisti">Obisk kleti in nakup</span>
         <h2 style="font-size: clamp(2rem, 4vw, 3rem); line-height: 1.12; margin-bottom: 1rem;"
-            data-sl="Degustacije v vinski kleti ali nakup za domov" data-en="Tastings in our wine cellar or home orders" data-it="Degustazioni in cantina o acquisti per casa">
-          Degustacije v vinski kleti ali nakup za domov
+            data-sl="Degustacije v vinski kleti ali nakup" data-en="Tastings in our wine cellar or orders" data-it="Degustazioni in cantina o acquisti">
+          Degustacije v vinski kleti ali nakup
         </h2>
         <p style="color: var(--muted); margin-bottom: 1.75rem;"
-           data-sl="V vinski kleti v Oševljeku 14 sprejemamo najavljene skupine in pare v slovenščini, angleščini ali italijanščini. Vino na liter in suhomesnine lahko prevzamete osebno v kleti."
-           data-en="At our wine cellar at Oševljek 14, we host scheduled visits in Slovenian, English, or Italian. Wine by the liter and cured pork products are available for pickup at the cellar."
-           data-it="Nella nostra cantina a Oševljek 14 accogliamo gruppi e coppie su prenotazione in sloveno, inglese o italiano. Il vino sfuso a litri e i salumi si possono ritirare di persona in cantina.">
-          V vinski kleti v Oševljeku 14 sprejemamo najavljene skupine in pare v slovenščini, angleščini ali italijanščini. Vino na liter in suhomesnine lahko prevzamete osebno v kleti.
+           data-sl="V vinski kleti v Oševljeku 14 sprejemamo pare in najavljene skupine v slovenščini, angleščini ali italijanščini. Vino na liter in suhomesnine lahko prevzamete osebno v kleti."
+           data-en="At our wine cellar at Oševljek 14, we host couples and scheduled groups in Slovenian, English, or Italian. Wine by the liter and cured pork products are available for pickup at the cellar."
+           data-it="Nella nostra cantina a Oševljek 14 accogliamo coppie e gruppi su prenotazione in sloveno, inglese o italiano. Il vino sfuso a litri e i salumi si possono ritirare di persona in cantina.">
+          V vinski kleti v Oševljeku 14 sprejemamo pare in najavljene skupine v slovenščini, angleščini ali italijanščini. Vino na liter in suhomesnine lahko prevzamete osebno v kleti.
         </p>
 
         <div class="tasting-tier">
@@ -534,7 +525,17 @@
       <span class="eyebrow" id="mCategory">Primorska</span>
       <h3 id="mTitle">Hišna bela zvrst</h3>
       <p id="mDesc" style="color: var(--muted);"></p>
-      <div class="modal-specs" id="mSpecs"></div>
+      <div class="modal-split">
+        <div class="modal-col">
+          <div class="modal-col-heading" id="mInfoHeading">Informacije</div>
+          <div class="modal-specs" id="mSpecs"></div>
+        </div>
+        <div class="modal-col-divider" aria-hidden="true"></div>
+        <div class="modal-col">
+          <div class="modal-col-heading" id="mPriceHeading">Cenik</div>
+          <div class="modal-specs" id="mPrices"></div>
+        </div>
+      </div>
       <div class="qty-row modal-qty-row" id="mQtyWrap" style="display: none;">
         <label for="modalWineQty" class="qty-label" data-sl="Količina:" data-en="Quantity:" data-it="Quantità:">Količina:</label>
         <div class="qty-stepper">
@@ -591,6 +592,6 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script src="script.js?v=20261116o"></script>
+  <script src="script.js?v=20261116r"></script>
 </body>
 </html>
