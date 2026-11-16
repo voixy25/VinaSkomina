@@ -1309,6 +1309,8 @@ nav a:hover {
   padding: 0.25rem 0;
   font-size: 0.84rem;
   font-weight: 600;
+  line-height: 1.45;
+  text-align: left;
   color: rgba(255, 255, 255, 0.9);
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -1935,9 +1937,9 @@ footer a:hover {
   }
 
   header.nav-transparent.menu-open {
-    background: linear-gradient(180deg, rgba(16, 22, 15, 0.78) 0%, rgba(16, 22, 15, 0.64) 100%);
-    backdrop-filter: blur(28px) saturate(185%);
-    -webkit-backdrop-filter: blur(28px) saturate(185%);
+    background: linear-gradient(180deg, rgba(14, 19, 13, 0.95) 0%, rgba(14, 19, 13, 0.90) 100%);
+    backdrop-filter: blur(32px) saturate(185%);
+    -webkit-backdrop-filter: blur(32px) saturate(185%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.24);
   }
 
@@ -1975,12 +1977,12 @@ footer a:hover {
     top: var(--header-h);
     left: 0;
     right: 0;
-    background: linear-gradient(155deg, rgba(20, 26, 19, 0.78) 0%, rgba(14, 18, 13, 0.66) 100%);
-    backdrop-filter: blur(32px) saturate(185%);
-    -webkit-backdrop-filter: blur(32px) saturate(185%);
+    background: linear-gradient(155deg, rgba(14, 19, 13, 0.97) 0%, rgba(12, 16, 11, 0.95) 100%);
+    backdrop-filter: blur(34px) saturate(185%);
+    -webkit-backdrop-filter: blur(34px) saturate(185%);
     border-bottom: 1px solid rgba(255, 255, 255, 0.34);
     padding: 1.25rem 5% 1.75rem;
-    box-shadow: 0 24px 54px rgba(0, 0, 0, 0.45), inset 0 1px 0 rgba(255, 255, 255, 0.30);
+    box-shadow: 0 24px 54px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.26);
   }
 
   nav.open {

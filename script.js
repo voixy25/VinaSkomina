@@ -384,11 +384,11 @@ function syncFormRequirements() {
   if (dateLabel) {
     if (isOrder) {
       if (currentLang === 'en') {
-        dateLabel.textContent = 'Cellar pickup date (optional)';
+        dateLabel.textContent = 'Cellar pickup date';
       } else if (currentLang === 'it') {
-        dateLabel.textContent = 'Data di ritiro in cantina (opzionale)';
+        dateLabel.textContent = 'Data di ritiro in cantina';
       } else {
-        dateLabel.textContent = 'Datum prevzema v kleti (neobvezno)';
+        dateLabel.textContent = 'Datum prevzema v kleti';
       }
     } else {
       if (currentLang === 'en') {
@@ -893,7 +893,7 @@ function scrollToSectionIndex(idx) {
 
   isSectionAnimating = true;
   updateActiveDots(targetEl.id);
-  animateScrollToY(targetEl.offsetTop, 760);
+  animateScrollToY(targetEl.offsetTop, 950);
 }
 
 function scrollToSection(e, id) {
@@ -908,7 +908,7 @@ function scrollToSection(e, id) {
     scrollToSectionIndex(idx);
   } else {
     const el = document.getElementById(id);
-    if (el) animateScrollToY(el.offsetTop, 760);
+    if (el) animateScrollToY(el.offsetTop, 950);
   }
 }
 
@@ -1107,12 +1107,12 @@ function updateParallax() {
   }
 
   let needsMoreFrames = false;
-  const lerpFactor = 0.075;
+  const lerpFactor = 0.045;
 
   // Hero background parallax (lerped)
   const heroImg = document.querySelector('[data-parallax-hero]');
   if (heroImg) {
-    const heroTarget = scrollY < window.innerHeight * 1.4 ? Math.min(90, scrollY * 0.20) : 90;
+    const heroTarget = scrollY < window.innerHeight * 1.4 ? Math.min(55, scrollY * 0.12) : 55;
     const diff = heroTarget - heroParallaxCurrent;
     if (Math.abs(diff) > 0.15) {
       heroParallaxCurrent += diff * lerpFactor;
@@ -1131,7 +1131,7 @@ function updateParallax() {
     if (!sec) return;
     const rect = sec.getBoundingClientRect();
     const secCenter = rect.top + rect.height / 2;
-    const target = Math.max(-36, Math.min(36, (secCenter - viewportCenter) * -0.075));
+    const target = Math.max(-22, Math.min(22, (secCenter - viewportCenter) * -0.045));
     const prev = parallaxCurrent.get(img) ?? target;
     const diff = target - prev;
     let next = target;
@@ -1145,11 +1145,11 @@ function updateParallax() {
 
   // Multi-element section parallax (lerped)
   document.querySelectorAll('[data-parallax]').forEach(el => {
-    const speed = (parseFloat(el.getAttribute('data-parallax')) || 0.1) * 0.65;
+    const speed = (parseFloat(el.getAttribute('data-parallax')) || 0.1) * 0.35;
     const rect = el.getBoundingClientRect();
     const elCenter = rect.top + rect.height / 2;
     const distFromCenter = elCenter - viewportCenter;
-    const target = Math.max(-38, Math.min(38, distFromCenter * speed));
+    const target = Math.max(-22, Math.min(22, distFromCenter * speed));
     const prev = parallaxCurrent.get(el) ?? target;
     const diff = target - prev;
     let next = target;
