@@ -1420,19 +1420,21 @@ function updateScrollProgress() {
   }
 
   const vinePath = document.getElementById('vineStemPath');
+  const docH = Math.max(1, document.documentElement.scrollHeight);
+  const tipRatio = Math.min(1, Math.max(0.03, (window.scrollY + window.innerHeight * 0.68) / docH));
   if (vinePath && typeof vinePath.getTotalLength === 'function') {
     if (!vineStemTotalLength) {
       vineStemTotalLength = vinePath.getTotalLength();
       vinePath.style.strokeDasharray = `${vineStemTotalLength}`;
     }
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const stemProgress = prefersReduced ? 1 : Math.min(1, 0.08 + progress * 0.92);
+    const stemProgress = prefersReduced ? 1 : tipRatio;
     vinePath.style.strokeDashoffset = `${(vineStemTotalLength * (1 - stemProgress)).toFixed(2)}`;
   }
 
   document.querySelectorAll('.vine-node[data-threshold]').forEach((node) => {
     const threshold = parseFloat(node.getAttribute('data-threshold') || '0');
-    node.classList.toggle('is-bloomed', progress >= threshold);
+    node.classList.toggle('is-bloomed', tipRatio >= threshold);
   });
 }
 

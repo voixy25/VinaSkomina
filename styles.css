@@ -267,23 +267,16 @@ body.modal-open {
   position: absolute;
   top: 0;
   left: 0;
-  width: 120px;
+  width: 160px;
   height: 100%;
-  opacity: 0.82;
-}
-
-.vine-stem-ghost {
-  fill: none;
-  stroke: rgba(180, 204, 169, 0.10);
-  stroke-width: 1.5;
-  stroke-linecap: round;
+  opacity: 0.86;
 }
 
 .vine-stem-path {
   fill: none;
   stroke-width: 2;
   stroke-linecap: round;
-  filter: drop-shadow(0 0 6px rgba(214, 178, 94, 0.25));
+  filter: drop-shadow(0 0 6px rgba(214, 178, 94, 0.28));
 }
 
 .vine-cluster {
@@ -314,20 +307,23 @@ body.modal-open {
 }
 
 .vine-node.is-bloomed {
-  opacity: 0.86;
+  opacity: 0.88;
   transform: scale(1) translateX(0);
 }
 
 .vine-node-1 {
   top: 23%;
+  left: -4px;
 }
 
 .vine-node-2 {
-  top: 49%;
+  top: 48%;
+  left: -6px;
 }
 
 .vine-node-3 {
-  top: 72%;
+  top: 71%;
+  left: -4px;
 }
 
 .vine-bottom-cluster {
@@ -358,8 +354,8 @@ body.modal-open {
     width: 150px;
   }
   .vine-stem-svg {
-    width: 88px;
-    opacity: 0.62;
+    width: 110px;
+    opacity: 0.65;
   }
 }
 
@@ -381,8 +377,8 @@ body.modal-open {
     width: 118px;
   }
   .vine-stem-svg {
-    width: 64px;
-    opacity: 0.45;
+    width: 76px;
+    opacity: 0.48;
   }
 }
 
