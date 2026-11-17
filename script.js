@@ -1795,6 +1795,7 @@ const VINE_STEM_TOP_UNITS = 110;
 const VINE_STEM_VIEWBOX_H = 4000;
 const VINE_HERO_BRANCH_BASE_Y = 114;
 const VINE_DESKTOP_MIN_WIDTH = 961;
+const VINE_HERO_EXTRA_DROP_PX = 20;
 
 function alignHeroVineCluster() {
   const hero = document.querySelector('.vine-hero-cluster');
@@ -1806,8 +1807,17 @@ function alignHeroVineCluster() {
   }
   const stemHeight = stemSvg.getBoundingClientRect().height;
   const stemTopPx = (VINE_STEM_TOP_UNITS * stemHeight) / VINE_STEM_VIEWBOX_H;
-  hero.style.top = `${Math.round(stemTopPx - VINE_HERO_BRANCH_BASE_Y)}px`;
+  hero.style.top = `${Math.round(stemTopPx - VINE_HERO_BRANCH_BASE_Y + VINE_HERO_EXTRA_DROP_PX)}px`;
 }
 
-window.addEventListener('load', alignHeroVineCluster);
+function observeHeroVineAlignment() {
+  const stemSvg = document.querySelector('#vineScrollOverlay .vine-stem-svg');
+  if (!stemSvg || !('ResizeObserver' in window)) return;
+  new ResizeObserver(alignHeroVineCluster).observe(stemSvg);
+}
+
+window.addEventListener('load', () => {
+  alignHeroVineCluster();
+  observeHeroVineAlignment();
+});
 window.addEventListener('resize', alignHeroVineCluster, { passive: true });
