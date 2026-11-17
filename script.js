@@ -1364,6 +1364,52 @@ function initBottomSheetSwipe(backdropId, closeFn) {
   modal.addEventListener('touchcancel', finishDrag, { passive: true });
 }
 
+function updateScrollProgress() {
+  const bar = document.getElementById('scrollProgress');
+  if (!bar) return;
+  const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
+  bar.style.transform = `scaleX(${progress.toFixed(4)})`;
+}
+
+function initScrollReveals() {
+  const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const targets = document.querySelectorAll(
+    '.about-grid > div, .terroir-text, .terroir-card, .wines-header, .wine-card, .tastings-grid > div, .tasting-tier'
+  );
+  if (!targets.length) return;
+
+  targets.forEach((el) => {
+    el.classList.add('reveal-item');
+    if (el.classList.contains('wine-card')) {
+      const idx = Array.from(el.parentElement.children).indexOf(el);
+      el.style.setProperty('--reveal-delay', `${Math.max(0, idx) * 70}ms`);
+    } else if (el.classList.contains('tasting-tier')) {
+      const tiers = Array.from(el.parentElement.querySelectorAll('.tasting-tier'));
+      const idx = tiers.indexOf(el);
+      el.style.setProperty('--reveal-delay', `${Math.max(0, idx) * 70}ms`);
+    }
+  });
+
+  if (prefersReduced || !('IntersectionObserver' in window)) {
+    targets.forEach((el) => el.classList.add('is-visible'));
+    return;
+  }
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -36px 0px' });
+
+  targets.forEach((el) => observer.observe(el));
+}
+
+window.addEventListener('scroll', updateScrollProgress, { passive: true });
+
 window.addEventListener('DOMContentLoaded', () => {
   currentSectionIndex = detectCurrentSectionIndex();
   const params = new URLSearchParams(window.location.search);
@@ -1375,6 +1421,8 @@ window.addEventListener('DOMContentLoaded', () => {
   syncFormRequirements();
   initBottomSheetSwipe('wineModal', closeWineModal);
   initBottomSheetSwipe('faqModal', closeFaqModal);
+  initScrollReveals();
+  updateScrollProgress();
 
   const terroirEl = document.getElementById('terroir');
   if (terroirEl && 'IntersectionObserver' in window) {
