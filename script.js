@@ -1019,7 +1019,8 @@ function scrollToFooter(e) {
     footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
     return;
   }
-  animateScrollToY(footer.getBoundingClientRect().top + window.scrollY, 950);
+  const targetY = Math.min(footer.getBoundingClientRect().top + window.scrollY, getMaxScroll());
+  animateScrollToY(targetY, 950);
 }
 
 function scrollToBooking(e) {
@@ -1421,8 +1422,16 @@ function initBottomSheetSwipe(backdropId, closeFn) {
   modal.addEventListener('touchcancel', finishDrag, { passive: true });
 }
 
+function getMaxScroll() {
+  const footer = document.getElementById('kontakt');
+  const pageBottom = footer
+    ? footer.getBoundingClientRect().bottom + window.scrollY
+    : document.documentElement.scrollHeight;
+  return Math.max(1, Math.round(pageBottom - window.innerHeight));
+}
+
 function updateScrollProgress() {
-  const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
+  const maxScroll = getMaxScroll();
   const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
 
   const bar = document.getElementById('scrollProgress');
@@ -1773,3 +1782,14 @@ window.addEventListener('DOMContentLoaded', () => {
 
   updateParallax();
 });
+function initFloatingMapCover() {
+  const floating = document.getElementById('floatingActions');
+  const mapLink = document.querySelector('[data-sl="Odpri v Apple Maps"]');
+  if (!floating || !mapLink || !('IntersectionObserver' in window)) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => floating.classList.toggle('floating-hidden', entry.isIntersecting));
+  });
+  observer.observe(mapLink);
+}
+
+window.addEventListener('DOMContentLoaded', initFloatingMapCover);
