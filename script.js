@@ -22,8 +22,8 @@ const itemData = {
         ['K hrani', 'Domače suhomesnine, napolitanske pice, bela riba']
       ],
       prices: [
-        ['Bela zvrst (na liter)', 'Po dogovoru'],
-        ['Večje količine (10 L+)', 'Po dogovoru']
+        ['Bela zvrst (na liter)', '6 €/L'],
+        ['Večje količine (10 L+)', '5,50 €/L']
       ]
     },
     en: {
@@ -39,8 +39,8 @@ const itemData = {
         ['Food pairing', 'Homemade cured meats, Neapolitan pizza, white fish']
       ],
       prices: [
-        ['House white blend (per liter)', 'By arrangement'],
-        ['Larger quantities (10 L+)', 'By arrangement']
+        ['House white blend (per liter)', '6 €/L'],
+        ['Larger quantities (10 L+)', '5,50 €/L']
       ]
     },
     it: {
@@ -56,8 +56,8 @@ const itemData = {
         ['Abbinamenti', 'Salumi fatti in casa, pizza napoletana, pesce bianco']
       ],
       prices: [
-        ['Uvaggio bianco (al litro)', 'Su accordo'],
-        ['Quantità maggiori (10 L+)', 'Su accordo']
+        ['Uvaggio bianco (al litro)', '6 €/L'],
+        ['Quantità maggiori (10 L+)', '5,50 €/L']
       ]
     }
   },
@@ -79,11 +79,11 @@ const itemData = {
         ['Nakup', 'Po predhodnem dogovoru ali ob degustaciji v kleti']
       ],
       prices: [
-        ['Pršut (na kg / kos)', 'Po dogovoru'],
-        ['Šalam (na kos)', 'Po dogovoru'],
-        ['Panceta (na kg / kos)', 'Po dogovoru'],
-        ['Sladke klobase (na par)', 'Po dogovoru'],
-        ['Krodegine (na par)', 'Po dogovoru']
+        ['Pršut (na kg / kos)', '45 €/kg'],
+        ['Šalam (na kos)', '12 €'],
+        ['Panceta (na kg / kos)', '28 €/kg'],
+        ['Sladke klobase (na par)', '6 €'],
+        ['Krodegine (na par)', '5 €']
       ]
     },
     en: {
@@ -98,11 +98,11 @@ const itemData = {
         ['Availability', 'By prior inquiry or during cellar tastings']
       ],
       prices: [
-        ['Prosciutto (per kg / piece)', 'By arrangement'],
-        ['Šalam salami (per piece)', 'By arrangement'],
-        ['Pancetta (per kg / piece)', 'By arrangement'],
-        ['Sladke klobase (per pair)', 'By arrangement'],
-        ['Krodegine (per pair)', 'By arrangement']
+        ['Prosciutto (per kg / piece)', '45 €/kg'],
+        ['Šalam salami (per piece)', '12 €'],
+        ['Pancetta (per kg / piece)', '28 €/kg'],
+        ['Sladke klobase (per pair)', '6 €'],
+        ['Krodegine (per pair)', '5 €']
       ]
     },
     it: {
@@ -117,11 +117,11 @@ const itemData = {
         ['Acquisto', 'Su prenotazione o durante le degustazioni in cantina']
       ],
       prices: [
-        ['Prosciutto crudo (al kg / pezzo)', 'Su accordo'],
-        ['Salame šalam (al pezzo)', 'Su accordo'],
-        ['Pancetta (al kg / pezzo)', 'Su accordo'],
-        ['Salsicce dolci (al paio)', 'Su accordo'],
-        ['Cotechini krodegine (al paio)', 'Su accordo']
+        ['Prosciutto crudo (al kg / pezzo)', '45 €/kg'],
+        ['Salame šalam (al pezzo)', '12 €'],
+        ['Pancetta (al kg / pezzo)', '28 €/kg'],
+        ['Salsicce dolci (al paio)', '6 €'],
+        ['Cotechini krodegine (al paio)', '5 €']
       ]
     }
   },
@@ -143,9 +143,9 @@ const itemData = {
         ['K vinu', 'Postrežemo z našo belo zvrstjo']
       ],
       prices: [
-        ['Klasična napolitanska pica (na pico)', 'Po dogovoru'],
-        ['Pica z našimi mesninami (na pico)', 'Po dogovoru'],
-        ['Degustacija s picami (na osebo)', 'Po dogovoru']
+        ['Klasična napolitanska pica (na pico)', '9 €'],
+        ['Pica z našimi mesninami (na pico)', '12 €'],
+        ['Degustacija s picami (na osebo)', '22 €']
       ]
     },
     en: {
@@ -160,9 +160,9 @@ const itemData = {
         ['Pairing', 'Served alongside our house white blend']
       ],
       prices: [
-        ['Classic Neapolitan pizza (per pizza)', 'By arrangement'],
-        ['Pizza with cured meats (per pizza)', 'By arrangement'],
-        ['Pizza tasting menu (per person)', 'By arrangement']
+        ['Classic Neapolitan pizza (per pizza)', '9 €'],
+        ['Pizza with cured meats (per pizza)', '12 €'],
+        ['Pizza tasting menu (per person)', '22 €']
       ]
     },
     it: {
@@ -177,9 +177,9 @@ const itemData = {
         ['Abbinamento', 'Servite con il nostro uvaggio bianco della casa']
       ],
       prices: [
-        ['Pizza napoletana classica (a pizza)', 'Su accordo'],
-        ['Pizza con i nostri salumi (a pizza)', 'Su accordo'],
-        ['Menu degustazione con pizza (a persona)', 'Su accordo']
+        ['Pizza napoletana classica (a pizza)', '9 €'],
+        ['Pizza con i nostri salumi (a pizza)', '12 €'],
+        ['Menu degustazione con pizza (a persona)', '22 €']
       ]
     }
   }
@@ -268,6 +268,13 @@ function setLang(lang) {
     if (ph !== null) {
       el.placeholder = ph;
     }
+  });
+
+  document.querySelectorAll('[data-alt-sl]').forEach(el => {
+    el.alt = el.getAttribute('data-alt-' + lang) || el.getAttribute('data-alt-sl');
+  });
+  document.querySelectorAll('[data-aria-sl]').forEach(el => {
+    el.setAttribute('aria-label', el.getAttribute('data-aria-' + lang) || el.getAttribute('data-aria-sl'));
   });
 
   const seoByLang = {

@@ -86,45 +86,45 @@
           <li><a href="#degustacije" onclick="navJump(event, 'degustacije')" data-sl="Degustacije" data-en="Tastings" data-it="Degustazioni">Degustacije</a></li>
         </ul>
         <div class="mobile-menu-cta">
-          <a href="#bookingBox" onclick="closeMenu(); scrollToBooking(event)" class="btn btn-primary" data-sl="Kontakt" data-en="Contact" data-it="Contatto">Kontakt</a>
+          <a href="#bookingBox" onclick="closeMenu(); scrollToBooking(event)" class="btn btn-primary" data-sl="Rezervacija" data-en="Book" data-it="Prenota">Rezervacija</a>
         </div>
       </nav>
 
       <div class="nav-actions">
-        <div class="lang-switch" aria-label="Language switcher">
+        <div class="lang-switch" aria-label="Language switcher" data-aria-sl="Izbira jezika" data-aria-en="Language switcher" data-aria-it="Selezione lingua">
           <button type="button" id="btnSl" class="active" onclick="setLang('sl')">SL</button>
           <button type="button" id="btnEn" onclick="setLang('en')">EN</button>
           <button type="button" id="btnIt" onclick="setLang('it')">IT</button>
         </div>
-        <a href="#degustacije" onclick="scrollToBooking(event)" class="btn btn-primary nav-cta" data-sl="Kontakt" data-en="Contact" data-it="Contatto">Kontakt</a>
-        <button type="button" id="menuToggleBtn" class="mobile-toggle" onclick="toggleMenu()" aria-label="Menu" aria-expanded="false">☰</button>
+        <a href="#degustacije" onclick="scrollToBooking(event)" class="btn btn-primary nav-cta" data-sl="Rezervacija" data-en="Book" data-it="Prenota">Rezervacija</a>
+        <button type="button" id="menuToggleBtn" class="mobile-toggle" onclick="toggleMenu()" aria-label="Menu" data-aria-sl="Meni" data-aria-en="Menu" data-aria-it="Menu" aria-expanded="false">☰</button>
       </div>
     </div>
   </header>
 
   <!-- Section Navigation Dots (Wine Flow) -->
-  <aside class="section-dots" id="sectionDots" aria-label="Section navigation">
+  <aside class="section-dots" id="sectionDots" aria-label="Section navigation" data-aria-sl="Navigacija po razdelkih" data-aria-en="Section navigation" data-aria-it="Navigazione per sezioni">
     <div class="wine-stream-track" aria-hidden="true">
       <div class="wine-stream-fill" id="wineStreamFill"></div>
       <span class="wine-stream-drop"></span>
     </div>
-    <button type="button" class="section-dot active" data-target="domov" onclick="scrollToSection(event, 'domov')" aria-label="Domov">
+    <button type="button" class="section-dot active" data-target="domov" onclick="scrollToSection(event, 'domov')" aria-label="Domov" data-aria-sl="Domov" data-aria-en="Home" data-aria-it="Home">
       <span class="wine-drop-icon" aria-hidden="true"></span>
       <span class="dot-label" data-sl="Domov" data-en="Home" data-it="Home">Domov</span>
     </button>
-    <button type="button" class="section-dot" data-target="zgodba" onclick="scrollToSection(event, 'zgodba')" aria-label="O nas">
+    <button type="button" class="section-dot" data-target="zgodba" onclick="scrollToSection(event, 'zgodba')" aria-label="O nas" data-aria-sl="O nas" data-aria-en="About" data-aria-it="Chi siamo">
       <span class="wine-drop-icon" aria-hidden="true"></span>
       <span class="dot-label" data-sl="O nas" data-en="Our Story" data-it="Chi siamo">O nas</span>
     </button>
-    <button type="button" class="section-dot" data-target="terroir" onclick="scrollToSection(event, 'terroir')" aria-label="Terroir">
+    <button type="button" class="section-dot" data-target="terroir" onclick="scrollToSection(event, 'terroir')" aria-label="Terroir" data-aria-sl="Terroir" data-aria-en="Terroir" data-aria-it="Terroir">
       <span class="wine-drop-icon" aria-hidden="true"></span>
       <span class="dot-label" data-sl="Terroir" data-en="Terroir" data-it="Terroir">Terroir</span>
     </button>
-    <button type="button" class="section-dot" data-target="vina" onclick="scrollToSection(event, 'vina')" aria-label="Vino in hrana">
+    <button type="button" class="section-dot" data-target="vina" onclick="scrollToSection(event, 'vina')" aria-label="Vino in hrana" data-aria-sl="Vino in hrana" data-aria-en="Wine &amp; food" data-aria-it="Vino e cibo">
       <span class="wine-drop-icon" aria-hidden="true"></span>
       <span class="dot-label" data-sl="Vino in hrana" data-en="Wine & Food" data-it="Vino e cibo">Vino in hrana</span>
     </button>
-    <button type="button" class="section-dot" data-target="degustacije" onclick="scrollToSection(event, 'degustacije')" aria-label="Degustacije">
+    <button type="button" class="section-dot" data-target="degustacije" onclick="scrollToSection(event, 'degustacije')" aria-label="Degustacije" data-aria-sl="Degustacije" data-aria-en="Tastings" data-aria-it="Degustazioni">
       <span class="wine-drop-icon" aria-hidden="true"></span>
       <span class="dot-label" data-sl="Degustacije" data-en="Tastings" data-it="Degustazioni">Degustacije</span>
     </button>
@@ -243,23 +243,25 @@
 
   <!-- Hero -->
   <section class="hero snap-section" id="domov" data-section="domov">
-    <img class="hero-bg-img" data-parallax-hero src="hero-vinograd.jpg" alt="Vinograd Vina Skomina v Oševljeku" fetchpriority="high" decoding="async" />
+    <img class="hero-bg-img" data-parallax-hero src="hero-vinograd.webp" alt="Vinograd Vina Skomina v Oševljeku" data-alt-sl="Vinograd Vina Skomina v Oševljeku" data-alt-en="Vina Skomina vineyard in Oševljek" data-alt-it="Vigneto di Vina Skomina a Oševljek" fetchpriority="high" decoding="async" />
     <div class="hero-overlay" aria-hidden="true"></div>
 
     <div class="container hero-content" data-parallax="0.18">
-      <span class="eyebrow" data-sl="Primorska, Oševljek" data-en="Primorska, Oševljek" data-it="Primorska, Oševljek">Primorska, Oševljek</span>
       <h1 data-sl="Degustacija vin v osrčju Vipavske doline" data-en="Wine tasting in the heart of the Vipava Valley" data-it="Degustazione di vini nel cuore della Valle del Vipacco">Degustacija vin v osrčju Vipavske doline</h1>
       <p data-sl="Odkrijte družinsko vinsko klet Skomina, poskusite domače vino in suhomesnine ter uživajte v sveže pečenih napolitanskih picah."
          data-en="Discover the Skomina family wine cellar, taste our homemade wine and cured meats, and enjoy freshly baked Neapolitan pizzas."
          data-it="Scoprite la cantina di famiglia Skomina, assaggiate il nostro vino e i salumi fatti in casa e gustate pizze napoletane appena sfornate.">
         Odkrijte družinsko vinsko klet Skomina, poskusite domače vino in suhomesnine ter uživajte v sveže pečenih napolitanskih picah.
       </p>
+      <div class="hero-buttons">
+        <a href="#degustacije" onclick="scrollToBooking(event)" class="btn btn-primary" data-sl="Rezerviraj degustacijo" data-en="Book a tasting" data-it="Prenota una degustazione">Rezerviraj degustacijo</a>
+      </div>
     </div>
   </section>
 
   <!-- Section 1: O nas -->
   <section class="about-section snap-section" id="zgodba" data-section="zgodba">
-    <img class="about-bg-img" src="klet.jpg" alt="Vinska klet Vina Skomina z inox sodi in kamnitim obokom" loading="lazy" />
+    <img class="about-bg-img" src="klet.webp" alt="Vinska klet Vina Skomina z inox sodi in kamnitim obokom" data-alt-sl="Vinska klet Vina Skomina z inox sodi in kamnitim obokom" data-alt-en="Vina Skomina wine cellar with stainless steel tanks and a stone vault" data-alt-it="Cantina Vina Skomina con botti in acciaio e volta in pietra" loading="lazy" />
     <div class="parallax-bg-accent" data-parallax="-0.12" aria-hidden="true"></div>
     <div class="container about-grid">
       <div data-parallax="0.08">
@@ -283,7 +285,7 @@
 
   <!-- Section 2: Terroir -->
   <section class="terroir-section snap-section" id="terroir" data-section="terroir">
-    <img class="section-bg-img" src="terroir-vinograd.jpg" alt="Vinograd Vina Skomina med flišem in Krasom" loading="lazy" />
+    <img class="section-bg-img" src="terroir-vinograd.webp" alt="Vinograd Vina Skomina med flišem in Krasom" data-alt-sl="Vinograd Vina Skomina med flišem in Krasom" data-alt-en="Vina Skomina vineyard between flysch and Karst" data-alt-it="Vigneto di Vina Skomina tra flysch e Carso" loading="lazy" />
     <div class="parallax-bg-accent parallax-bg-right" data-parallax="-0.14" aria-hidden="true"></div>
     <div class="container terroir-grid">
       <div class="terroir-text" data-parallax="0.08">
@@ -321,13 +323,13 @@
             <h3 style="font-size: 1.45rem;" data-sl="Zemljevid" data-en="Map" data-it="Mappa">Zemljevid</h3>
             <p class="map-subtitle" data-sl="Kliknite oznako na zemljevidu za podrobnosti o legi." data-en="Click a marker on the map for parcel details." data-it="Clicca su un segnaposto sulla mappa per i dettagli.">Kliknite oznako na zemljevidu za podrobnosti o legi.</p>
           </div>
-          <div class="map-layer-switch" role="group" aria-label="Map view mode">
+          <div class="map-layer-switch" role="group" aria-label="Map view mode" data-aria-sl="Način prikaza zemljevida" data-aria-en="Map view mode" data-aria-it="Modalità di visualizzazione della mappa">
             <button type="button" id="btnLayerSat" class="active" onclick="setMapLayer('sat')" data-sl="Satelit" data-en="Satellite" data-it="Satellite">Satelit</button>
             <button type="button" id="btnLayerMap" onclick="setMapLayer('map')" data-sl="Zemljevid" data-en="Map" data-it="Mappa">Zemljevid</button>
           </div>
         </div>
 
-        <div class="map-loc-pills" role="tablist" aria-label="Lokacije na zemljevidu">
+        <div class="map-loc-pills" role="tablist" aria-label="Lokacije na zemljevidu" data-aria-sl="Lokacije na zemljevidu" data-aria-en="Map locations" data-aria-it="Posizioni sulla mappa">
           <button type="button" class="map-pill active" data-loc="all" onclick="focusMapLocation('all')" data-sl="Vse lokacije" data-en="All locations" data-it="Tutte">Vse lokacije</button>
           <button type="button" class="map-pill" data-loc="house" onclick="focusMapLocation('house')">
             <span class="pin-dot pin-house"></span>
@@ -344,7 +346,7 @@
         </div>
 
         <div class="google-map-wrap">
-          <div id="terroirMap" class="terroir-map" aria-label="Google Maps pogled vinske kleti Oševljek 14 in obeh vinogradov"></div>
+          <div id="terroirMap" class="terroir-map" aria-label="Google Maps pogled vinske kleti Oševljek 14 in obeh vinogradov" data-aria-sl="Google Maps pogled vinske kleti Oševljek 14 in obeh vinogradov" data-aria-en="Google Maps view of the Oševljek 14 cellar and both vineyards" data-aria-it="Vista di Google Maps della cantina Oševljek 14 e dei due vigneti"></div>
         </div>
 
         <div class="map-card-footer">
@@ -365,7 +367,7 @@
 
   <!-- Section 3: Wine & Food -->
   <section class="wines-section snap-section" id="vina" data-section="vina">
-    <img class="section-bg-img" src="vino-hrana-klet.jpg" alt="Zorilnica suhomesnin s pršutom, šalamom in vrtljivo pečjo za pice" loading="lazy" />
+    <img class="section-bg-img" src="vino-hrana-klet.webp" alt="Zorilnica suhomesnin s pršutom, šalamom in vrtljivo pečjo za pice" data-alt-sl="Zorilnica suhomesnin s pršutom, šalamom in vrtljivo pečjo za pice" data-alt-en="Cured meats drying room with prosciutto, salami and the rotating pizza oven" data-alt-it="Stanza di stagionatura dei salumi con prosciutto, salame e forno rotante per pizze" loading="lazy" />
     <div class="container">
       <div class="section-header" data-parallax="0.06">
         <span class="eyebrow" data-sl="Vino in hrana" data-en="Wine and food" data-it="Vino e cibo">Vino in hrana</span>
@@ -381,7 +383,7 @@
         <!-- Bela zvrst -->
         <article class="wine-card" data-parallax="0.1">
           <div class="bottle-wrap">
-            <img class="card-media-img" src="vino-kozarec.jpg" alt="Kozarec belega vina Hišna bela zvrst" loading="lazy" />
+            <img class="card-media-img" src="vino-kozarec.webp" alt="Kozarec belega vina Hišna bela zvrst" data-alt-sl="Kozarec belega vina Hišna bela zvrst" data-alt-en="Glass of house white wine" data-alt-it="Calice di vino bianco della casa" loading="lazy" />
           </div>
           <div class="wine-meta" data-sl="Suho belo vino" data-en="Dry white blend" data-it="Vino bianco secco">Suho belo vino</div>
           <h3 data-sl="Hišna bela zvrst" data-en="House White Blend" data-it="Uvaggio Bianco della Casa">Hišna bela zvrst</h3>
@@ -393,10 +395,10 @@
 
           <div class="qty-row">
             <label for="cardWineQty" class="qty-label" data-sl="Količina:" data-en="Quantity:" data-it="Quantità:">Količina:</label>
-            <div class="qty-stepper" aria-label="Izberite število litrov">
-              <button type="button" class="qty-btn" onclick="stepWineQty(-1)" aria-label="Manj litrov">−</button>
-              <input type="number" id="cardWineQty" value="1" min="1" max="500" onchange="syncWineQty(this.value)" aria-label="Število litrov" />
-              <button type="button" class="qty-btn" onclick="stepWineQty(1)" aria-label="Več litrov">+</button>
+            <div class="qty-stepper" aria-label="Izberite število litrov" data-aria-sl="Izberite število litrov" data-aria-en="Choose number of liters" data-aria-it="Scegli il numero di litri">
+              <button type="button" class="qty-btn" onclick="stepWineQty(-1)" aria-label="Manj litrov" data-aria-sl="Manj litrov" data-aria-en="Fewer liters" data-aria-it="Meno litri">−</button>
+              <input type="number" id="cardWineQty" value="1" min="1" max="500" onchange="syncWineQty(this.value)" aria-label="Število litrov" data-aria-sl="Število litrov" data-aria-en="Number of liters" data-aria-it="Numero di litri" />
+              <button type="button" class="qty-btn" onclick="stepWineQty(1)" aria-label="Več litrov" data-aria-sl="Več litrov" data-aria-en="More liters" data-aria-it="Più litri">+</button>
             </div>
             <span class="qty-unit" id="cardWineQtyUnit" data-sl="liter" data-en="liter" data-it="litro">liter</span>
           </div>
@@ -410,7 +412,7 @@
         <!-- Suhomesnine -->
         <article class="wine-card" data-parallax="0.14">
           <div class="bottle-wrap">
-            <img class="card-media-img" src="suhomesnine-deska.jpg" alt="Domače suhomesnine na leseni deski" loading="lazy" />
+            <img class="card-media-img" src="suhomesnine-deska.webp" alt="Domače suhomesnine na leseni deski" data-alt-sl="Domače suhomesnine na leseni deski" data-alt-en="Homemade cured meats on a wooden board" data-alt-it="Salumi fatti in casa su tagliere di legno" loading="lazy" />
           </div>
           <div class="wine-meta" data-sl="Dolgoletna tradicionalna receptura" data-en="Longstanding traditional recipe" data-it="Ricetta tradizionale di lunga data">Dolgoletna tradicionalna receptura</div>
           <h3 data-sl="Domače suhomesnine" data-en="Homemade Cured Meats" data-it="Salumi Fatti in Casa">Domače suhomesnine</h3>
@@ -428,7 +430,7 @@
         <!-- Napolitanske pice -->
         <article class="wine-card" data-parallax="0.18">
           <div class="bottle-wrap">
-            <img class="card-media-img" src="napolitanska-pica.jpg" alt="Sveže pečena napolitanska pica" loading="lazy" />
+            <img class="card-media-img" src="napolitanska-pica.webp" alt="Sveže pečena napolitanska pica" data-alt-sl="Sveže pečena napolitanska pica" data-alt-en="Freshly baked Neapolitan pizza" data-alt-it="Pizza napoletana appena sfornata" loading="lazy" />
           </div>
           <div class="wine-meta" data-sl="Iz vrtljive električne peči" data-en="Rotating electric oven" data-it="Dal forno elettrico rotante">Iz vrtljive električne peči</div>
           <h3 data-sl="Napolitanske pice" data-en="Neapolitan Pizza" data-it="Pizze Napoletane">Napolitanske pice</h3>
@@ -448,7 +450,7 @@
 
   <!-- Section 4: Tastings & Orders -->
   <section class="tastings-section snap-section" id="degustacije" data-section="degustacije">
-    <img class="section-bg-img" src="degustacije-pot.jpg" alt="Pot med vinogradi v Oševljeku proti vinski kleti" loading="lazy" />
+    <img class="section-bg-img" src="degustacije-pot.webp" alt="Pot med vinogradi v Oševljeku proti vinski kleti" data-alt-sl="Pot med vinogradi v Oševljeku proti vinski kleti" data-alt-en="Path through the vineyards in Oševljek to the wine cellar" data-alt-it="Sentiero tra i vigneti di Oševljek verso la cantina" loading="lazy" />
     <div class="parallax-bg-accent" data-parallax="-0.1" aria-hidden="true"></div>
     <div class="container tastings-grid">
       <div data-parallax="0.08">
@@ -467,7 +469,7 @@
         <div class="tasting-tier">
           <div class="tier-head">
             <h3 data-sl="Degustacija vina in suhomesnin v kleti" data-en="Cellar wine and cured meats tasting" data-it="Degustazione di vino e salumi in cantina">Degustacija vina in suhomesnin v kleti</h3>
-            <span class="tier-price" data-sl="Po dogovoru" data-en="By arrangement" data-it="Su accordo">Po dogovoru</span>
+            <span class="tier-price" data-sl="15 €/oseba" data-en="€15 per person" data-it="15 € a persona">15 €/oseba</span>
           </div>
           <p data-sl="Pokušnja naše bele zvrsti (Malvazija, Rebula, Vitovska grganja) v vinski kleti z narezkom, pozimi po dogovoru tudi s kuhanimi klobasami."
              data-en="Cellar tasting of our white blend (Malvazija, Rebula, Vitovska Grganja) with a cold cuts platter, plus boiled sausages in winter by request."
@@ -494,7 +496,7 @@
         <div class="tasting-tier">
           <div class="tier-head">
             <h3 data-sl="Vino, suhomesnine in napolitanske pice" data-en="Wine, cured meats, and Neapolitan pizza" data-it="Vino, salumi e pizze napoletane">Vino, suhomesnine in napolitanske pice</h3>
-            <span class="tier-price" data-sl="Po dogovoru" data-en="By arrangement" data-it="Su accordo">Po dogovoru</span>
+            <span class="tier-price" data-sl="25 €/oseba" data-en="€25 per person" data-it="25 € a persona">25 €/oseba</span>
           </div>
           <p data-sl="Sprehod do vinogradov v Oševljeku, pokušnja vina in suhomesnin v kleti ter peka svežih napolitanskih pic v naši vrtljivi električni peči."
              data-en="Walk to our Oševljek vineyards, cellar wine and cured meats tasting, and fresh Neapolitan pizzas baked in our rotating electric oven."
@@ -569,7 +571,7 @@
                   </span>
                   <svg class="airbnb-chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="6 9 12 15 18 9"/></svg>
                 </button>
-                <div class="airbnb-popover airbnb-calendar" id="airbnbCalendar" role="dialog" aria-label="Calendar"></div>
+                <div class="airbnb-popover airbnb-calendar" id="airbnbCalendar" role="dialog" aria-label="Calendar" data-aria-sl="Koledar" data-aria-en="Calendar" data-aria-it="Calendario"></div>
               </div>
             </div>
             <div class="form-group" id="guestsGroup">
@@ -624,7 +626,7 @@
             <span class="booking-phone-eyebrow" data-sl="Hiter dogovor po telefonu" data-en="Quick arrangement by phone" data-it="Accordo rapido per telefono">Hiter dogovor po telefonu</span>
             <span data-sl="Raje pokličete in se zmenite neposredno?" data-en="Prefer to call and arrange directly?" data-it="Preferite chiamare e accordarvi direttamente?">Raje pokličete in se zmenite neposredno?</span>
           </div>
-          <a href="tel:+38631728563" class="booking-phone-btn" aria-label="Pokličite +386 31 728 563">
+          <a href="tel:+38631728563" class="booking-phone-btn" aria-label="Pokličite +386 31 728 563" data-aria-sl="Pokličite +386 31 728 563" data-aria-en="Call +386 31 728 563" data-aria-it="Chiama +386 31 728 563">
             <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z"/></svg>
             <span>+386 31 728 563</span>
           </a>
@@ -656,11 +658,9 @@
 
   <!-- Floating Sticky CTA & Back to Top -->
   <div class="floating-actions" id="floatingActions">
-    <a href="#vina" onclick="scrollToSection(event, 'vina')" class="floating-cta floating-cta-offer" id="floatingOfferCta"
-       data-sl="Naša ponudba" data-en="Wine &amp; Food" data-it="Vino e cibo">Naša ponudba</a>
     <a href="#degustacije" onclick="scrollToBooking(event)" class="floating-cta" id="floatingCta"
        data-sl="Rezerviraj obisk" data-en="Book a Visit" data-it="Prenota">Rezerviraj obisk</a>
-    <button type="button" class="back-to-top-btn" id="backToTopBtn" onclick="scrollToSection(event, 'domov')" aria-label="Na vrh">
+    <button type="button" class="back-to-top-btn" id="backToTopBtn" onclick="scrollToSection(event, 'domov')" aria-label="Na vrh" data-aria-sl="Na vrh" data-aria-en="Back to top" data-aria-it="Torna su">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="square" stroke-linejoin="miter" aria-hidden="true"><line x1="12" y1="19" x2="12" y2="5"/><polyline points="5 12 12 5 19 12"/></svg>
     </button>
   </div>
@@ -668,7 +668,7 @@
   <!-- Detail Modal -->
   <div class="modal-backdrop" id="wineModal" onclick="if(event.target===this) closeWineModal()">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="mTitle">
-      <button type="button" class="modal-close" onclick="closeWineModal()" aria-label="Close">&times;</button>
+      <button type="button" class="modal-close" onclick="closeWineModal()" aria-label="Close" data-aria-sl="Zapri" data-aria-en="Close" data-aria-it="Chiudi">&times;</button>
       <span class="eyebrow" id="mCategory">Primorska</span>
       <h3 id="mTitle">Hišna bela zvrst</h3>
       <p id="mDesc" style="color: var(--muted);"></p>
@@ -686,9 +686,9 @@
       <div class="qty-row modal-qty-row" id="mQtyWrap" style="display: none;">
         <label for="modalWineQty" class="qty-label" data-sl="Količina:" data-en="Quantity:" data-it="Quantità:">Količina:</label>
         <div class="qty-stepper">
-          <button type="button" class="qty-btn" onclick="stepWineQty(-1)" aria-label="Manj litrov">−</button>
-          <input type="number" id="modalWineQty" value="1" min="1" max="500" onchange="syncWineQty(this.value)" aria-label="Število litrov" />
-          <button type="button" class="qty-btn" onclick="stepWineQty(1)" aria-label="Več litrov">+</button>
+          <button type="button" class="qty-btn" onclick="stepWineQty(-1)" aria-label="Manj litrov" data-aria-sl="Manj litrov" data-aria-en="Fewer liters" data-aria-it="Meno litri">−</button>
+          <input type="number" id="modalWineQty" value="1" min="1" max="500" onchange="syncWineQty(this.value)" aria-label="Število litrov" data-aria-sl="Število litrov" data-aria-en="Number of liters" data-aria-it="Numero di litri" />
+          <button type="button" class="qty-btn" onclick="stepWineQty(1)" aria-label="Več litrov" data-aria-sl="Več litrov" data-aria-en="More liters" data-aria-it="Più litri">+</button>
         </div>
         <span class="qty-unit" id="modalWineQtyUnit">liter</span>
       </div>
@@ -702,7 +702,7 @@
   <!-- FAQ / Arrival Modal -->
   <div class="modal-backdrop" id="faqModal" onclick="if(event.target===this) closeFaqModal()">
     <div class="modal" role="dialog" aria-modal="true" aria-labelledby="faqTitle">
-      <button type="button" class="modal-close" onclick="closeFaqModal()" aria-label="Close">&times;</button>
+      <button type="button" class="modal-close" onclick="closeFaqModal()" aria-label="Close" data-aria-sl="Zapri" data-aria-en="Close" data-aria-it="Chiudi">&times;</button>
       <span class="eyebrow" data-sl="Informacije za obiskovalce" data-en="Visitor information" data-it="Informazioni per i visitatori">Informacije za obiskovalce</span>
       <h3 id="faqTitle" data-sl="Prihod, parkiranje in pogosta vprašanja" data-en="Arrival, parking & FAQ" data-it="Arrivo, parcheggio e domande frequenti">Prihod, parkiranje in pogosta vprašanja</h3>
       <div class="modal-specs" id="faqBody">

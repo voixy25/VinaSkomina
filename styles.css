@@ -493,19 +493,24 @@ h1, h2, h3, h4 {
 }
 
 .btn-primary {
-  background-color: rgba(123, 155, 116, 0.26);
-  background-image: linear-gradient(145deg, rgba(180, 204, 169, 0.26), rgba(79, 110, 74, 0.24));
-  backdrop-filter: blur(18px) saturate(180%);
-  -webkit-backdrop-filter: blur(18px) saturate(180%);
-  border-color: rgba(214, 178, 94, 0.48);
+  background-color: #4A6A45;
+  background-image: linear-gradient(145deg, #4A6A45, #3F5C3C);
+  border-color: rgba(214, 178, 94, 0.62);
   box-shadow: 0 10px 26px rgba(7, 10, 20, 0.34), inset 0 1px 0 rgba(229, 237, 226, 0.32);
   color: #FFFFFF;
 }
 
 .btn-primary:hover {
-  background-color: rgba(123, 155, 116, 0.42);
+  background-image: linear-gradient(145deg, #557A50, #4A6A45);
   border-color: var(--gold-400);
   color: #FFFFFF;
+}
+
+.btn:focus-visible,
+.map-pill:focus-visible,
+.lang-switch button:focus-visible {
+  outline: 2px solid var(--gold-400);
+  outline-offset: 3px;
 }
 
 .btn-outline {
@@ -1546,7 +1551,7 @@ nav a:hover {
   padding: calc(var(--header-h) + 1rem) 0 0;
   background: var(--indigo-950);
   color: #FFFFFF;
-  overflow: hidden;
+  overflow-x: clip;
 }
 
 .tastings-section::after {
@@ -1743,7 +1748,7 @@ nav a:hover {
 }
 
 .booking-phone-eyebrow {
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
@@ -1778,7 +1783,7 @@ nav a:hover {
 }
 
 .form-section-title {
-  font-size: 0.68rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
