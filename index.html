@@ -130,78 +130,114 @@
     </button>
   </aside>
 
-  <!-- Botanical Scroll-Drawn Grapevine Overlay -->
+  <!-- Botanical 3D Scroll-Drawn Grapevine Overlay -->
   <div class="vine-scroll-overlay" id="vineScrollOverlay" aria-hidden="true">
-    <svg class="vine-stem-svg" viewBox="0 0 160 4000" preserveAspectRatio="none">
+    <svg class="vine-stem-svg" viewBox="0 0 180 4000" preserveAspectRatio="none">
       <defs>
-        <linearGradient id="vineStemGrad" x1="0%" y1="0%" x2="0%" y2="100%">
-          <stop offset="0%" stop-color="#D6B25E" stop-opacity="0.82" />
-          <stop offset="35%" stop-color="#B4CCA9" stop-opacity="0.74" />
-          <stop offset="70%" stop-color="#7B9B74" stop-opacity="0.78" />
-          <stop offset="100%" stop-color="#D6B25E" stop-opacity="0.88" />
+        <linearGradient id="vineBarkDark" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%" stop-color="#1E1A16" />
+          <stop offset="50%" stop-color="#3B2F22" />
+          <stop offset="100%" stop-color="#1A221B" />
         </linearGradient>
+        <linearGradient id="vineBarkMid" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" stop-color="#A88432" />
+          <stop offset="40%" stop-color="#7B9B74" />
+          <stop offset="100%" stop-color="#6B5335" />
+        </linearGradient>
+        <linearGradient id="vineBarkSpec" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#F5E5B8" stop-opacity="0.92" />
+          <stop offset="45%" stop-color="#E5EDE2" stop-opacity="0.78" />
+          <stop offset="100%" stop-color="#D6B25E" stop-opacity="0.92" />
+        </linearGradient>
+        <clipPath id="vineRevealClip">
+          <rect id="vineClipRect" x="-20" y="0" width="220" height="420" />
+        </clipPath>
       </defs>
-      <path class="vine-stem-path" id="vineStemPath" d="M 48,120 C 110,360 110,640 28,960 C -4,1240 124,1540 28,1960 C -4,2260 122,2560 28,2880 C -4,3220 116,3560 54,3920" stroke="url(#vineStemGrad)" vector-effect="non-scaling-stroke" />
-    </svg>
-
-    <!-- Hero Top Cluster: Grape bunch + Vine Leaves + Tendril -->
-    <svg class="vine-cluster vine-hero-cluster is-bloomed" data-threshold="0" viewBox="0 0 190 230" fill="none">
-      <!-- Branch & tendril -->
-      <path d="M 32,8 C 44,44 68,54 96,44" stroke="#D6B25E" stroke-width="1.6" stroke-linecap="round" opacity="0.75" />
-      <path d="M 56,36 C 72,18 98,16 106,30 C 112,40 96,50 88,40 C 82,32 94,24 102,28" stroke="#B4CCA9" stroke-width="1.3" stroke-linecap="round" opacity="0.65" />
-      <!-- Vine Leaf 1 (upper) -->
-      <path d="M 96,44 C 118,22 146,24 156,42 C 142,48 148,66 132,74 C 118,80 104,70 96,44 Z" fill="rgba(123, 155, 116, 0.16)" stroke="#B4CCA9" stroke-width="1.4" stroke-linejoin="round" />
-      <path d="M 96,44 L 138,54 M 114,48 L 128,36 M 118,50 L 126,66" stroke="#B4CCA9" stroke-width="0.95" opacity="0.7" />
-      <!-- Vine Leaf 2 (left) -->
-      <path d="M 42,68 C 16,66 8,92 22,110 C 32,102 44,114 54,102 C 62,92 54,74 42,68 Z" fill="rgba(214, 178, 94, 0.12)" stroke="#D6B25E" stroke-width="1.35" stroke-linejoin="round" />
-      <path d="M 42,68 L 26,96 M 34,82 L 20,84" stroke="#D6B25E" stroke-width="0.9" opacity="0.65" />
-      <!-- Grape Cluster (Grozd) -->
-      <g class="vine-grapes">
-        <path d="M 62,48 L 62,64" stroke="#D6B25E" stroke-width="1.4" stroke-linecap="round" />
-        <circle cx="52" cy="72" r="8.5" fill="rgba(214, 178, 94, 0.18)" stroke="#D6B25E" stroke-width="1.35" />
-        <circle cx="66" cy="70" r="8.5" fill="rgba(180, 204, 169, 0.16)" stroke="#D6B25E" stroke-width="1.35" />
-        <circle cx="80" cy="74" r="8" fill="rgba(214, 178, 94, 0.14)" stroke="#D6B25E" stroke-width="1.3" />
-        <circle cx="58" cy="86" r="8.5" fill="rgba(214, 178, 94, 0.22)" stroke="#F5E5B8" stroke-width="1.35" />
-        <circle cx="73" cy="86" r="8.5" fill="rgba(123, 155, 116, 0.20)" stroke="#D6B25E" stroke-width="1.35" />
-        <circle cx="65" cy="100" r="8" fill="rgba(214, 178, 94, 0.24)" stroke="#F5E5B8" stroke-width="1.35" />
-        <circle cx="53" cy="99" r="7" fill="rgba(180, 204, 169, 0.14)" stroke="#D6B25E" stroke-width="1.25" />
-        <circle cx="62" cy="114" r="7" fill="rgba(214, 178, 94, 0.26)" stroke="#F5E5B8" stroke-width="1.3" />
+      <g clip-path="url(#vineRevealClip)">
+        <!-- 1. Ambient 3D shadow -->
+        <path class="vine-stem-shadow" d="M 54,110 C 122,380 122,680 38,960 C -8,1260 132,1580 38,1960 C -8,2280 132,2580 38,2880 C -8,3220 122,3560 56,3910" vector-effect="non-scaling-stroke" />
+        <!-- 2. Woody bark base cylinder -->
+        <path class="vine-stem-bark" d="M 54,110 C 122,380 122,680 38,960 C -8,1260 132,1580 38,1960 C -8,2280 132,2580 38,2880 C -8,3220 122,3560 56,3910" stroke="url(#vineBarkDark)" vector-effect="non-scaling-stroke" />
+        <!-- 3. 3D lit mid-tone ridge -->
+        <path class="vine-stem-mid" d="M 52,110 C 120,380 120,680 36,960 C -10,1260 130,1580 36,1960 C -10,2280 130,2580 36,2880 C -10,3220 120,3560 54,3910" stroke="url(#vineBarkMid)" vector-effect="non-scaling-stroke" />
+        <!-- 4. Specular highlight -->
+        <path class="vine-stem-spec" d="M 50.5,110 C 118.5,380 118.5,680 34.5,960 C -11.5,1260 128.5,1580 34.5,1960 C -11.5,2280 128.5,2580 34.5,2880 C -11.5,3220 118.5,3560 52.5,3910" stroke="url(#vineBarkSpec)" vector-effect="non-scaling-stroke" />
+        <!-- 5. Twisting secondary tendril around the trunk -->
+        <path class="vine-stem-coil" d="M 58,130 C 42,260 134,420 96,560 C 56,700 24,820 42,960 C 66,1140 138,1400 92,1620 C 44,1820 20,1880 40,1960 C 64,2140 136,2380 92,2600 C 46,2780 22,2820 40,2880 C 62,3080 132,3360 88,3620 C 62,3760 48,3840 58,3900" vector-effect="non-scaling-stroke" />
       </g>
     </svg>
 
-    <!-- Mid-stem Leaf & Tendril Nodes -->
-    <svg class="vine-cluster vine-node vine-node-1" data-threshold="0.20" viewBox="0 0 140 120" fill="none">
-      <path d="M 28,58 C 52,30 88,30 104,52 C 88,60 92,78 72,82 C 54,86 38,76 28,58 Z" fill="rgba(123, 155, 116, 0.16)" stroke="#B4CCA9" stroke-width="1.4" />
-      <path d="M 28,58 L 84,56 M 54,57 L 70,44" stroke="#B4CCA9" stroke-width="0.9" opacity="0.7" />
-      <path d="M 28,58 C 46,74 58,92 44,102 C 34,108 26,94 36,86" stroke="#D6B25E" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+    <!-- Hero Top Cluster: 3D Grape bunch + Vine Leaves + Tendril -->
+    <svg class="vine-cluster vine-hero-cluster is-bloomed" data-threshold="0" viewBox="0 0 190 230" fill="none">
+      <defs>
+        <radialGradient id="grapeGold3d" cx="35%" cy="30%" r="68%">
+          <stop offset="0%" stop-color="#FFF3D1" stop-opacity="0.95" />
+          <stop offset="45%" stop-color="#D6B25E" stop-opacity="0.72" />
+          <stop offset="100%" stop-color="#5C4418" stop-opacity="0.85" />
+        </radialGradient>
+        <radialGradient id="grapeCeladon3d" cx="35%" cy="30%" r="68%">
+          <stop offset="0%" stop-color="#EEF5EB" stop-opacity="0.9" />
+          <stop offset="50%" stop-color="#7B9B74" stop-opacity="0.7" />
+          <stop offset="100%" stop-color="#2D422B" stop-opacity="0.85" />
+        </radialGradient>
+      </defs>
+      <!-- 3D Branch & tendril -->
+      <path d="M 54,114 C 54,74 52,48 96,44" stroke="#3B2F22" stroke-width="5" stroke-linecap="round" />
+      <path d="M 53,114 C 53,74 51,48 96,44" stroke="#D6B25E" stroke-width="2" stroke-linecap="round" />
+      <path d="M 56,36 C 72,18 98,16 106,30 C 112,40 96,50 88,40 C 82,32 94,24 102,28" stroke="#B4CCA9" stroke-width="1.4" stroke-linecap="round" opacity="0.75" />
+      <!-- Vine Leaf 1 (upper) -->
+      <path d="M 96,44 C 118,22 146,24 156,42 C 142,48 148,66 132,74 C 118,80 104,70 96,44 Z" fill="rgba(123, 155, 116, 0.28)" stroke="#B4CCA9" stroke-width="1.45" stroke-linejoin="round" />
+      <path d="M 96,44 L 138,54 M 114,48 L 128,36 M 118,50 L 126,66" stroke="#E5EDE2" stroke-width="1" opacity="0.75" />
+      <!-- Vine Leaf 2 (left) -->
+      <path d="M 48,66 C 18,64 8,92 22,110 C 32,102 44,114 54,102 C 62,92 56,74 48,66 Z" fill="rgba(214, 178, 94, 0.22)" stroke="#D6B25E" stroke-width="1.4" stroke-linejoin="round" />
+      <path d="M 48,66 L 26,96 M 36,82 L 20,84" stroke="#F5E5B8" stroke-width="0.95" opacity="0.7" />
+      <!-- 3D Grape Cluster (Grozd) -->
+      <g class="vine-grapes">
+        <path d="M 62,48 L 62,64" stroke="#D6B25E" stroke-width="2" stroke-linecap="round" />
+        <circle cx="52" cy="72" r="8.5" fill="url(#grapeGold3d)" stroke="#F5E5B8" stroke-width="1" />
+        <circle cx="66" cy="70" r="8.5" fill="url(#grapeCeladon3d)" stroke="#E5EDE2" stroke-width="1" />
+        <circle cx="80" cy="74" r="8" fill="url(#grapeGold3d)" stroke="#D6B25E" stroke-width="1" />
+        <circle cx="58" cy="86" r="8.5" fill="url(#grapeGold3d)" stroke="#F5E5B8" stroke-width="1.1" />
+        <circle cx="73" cy="86" r="8.5" fill="url(#grapeCeladon3d)" stroke="#E5EDE2" stroke-width="1" />
+        <circle cx="65" cy="100" r="8" fill="url(#grapeGold3d)" stroke="#F5E5B8" stroke-width="1.1" />
+        <circle cx="53" cy="99" r="7" fill="url(#grapeCeladon3d)" stroke="#B4CCA9" stroke-width="1" />
+        <circle cx="62" cy="114" r="7" fill="url(#grapeGold3d)" stroke="#F5E5B8" stroke-width="1.1" />
+      </g>
     </svg>
 
-    <svg class="vine-cluster vine-node vine-node-2" data-threshold="0.46" viewBox="0 0 140 120" fill="none">
-      <path d="M 38,52 C 60,24 96,28 112,48 C 96,58 98,74 78,80 C 60,84 46,72 38,52 Z" fill="rgba(214, 178, 94, 0.14)" stroke="#D6B25E" stroke-width="1.4" />
-      <path d="M 38,52 L 94,52 M 64,52 L 80,40" stroke="#D6B25E" stroke-width="0.9" opacity="0.7" />
-      <path d="M 38,52 C 20,66 16,86 30,96 C 40,102 48,88 38,80" stroke="#B4CCA9" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+    <!-- Mid-stem Leaf & Tendril Nodes (petioles anchored at x=38 to meet the 3D stem) -->
+    <svg class="vine-cluster vine-node vine-node-1" data-threshold="0.24" viewBox="0 0 140 120" fill="none">
+      <path d="M 38,60 C 56,32 92,30 110,52 C 94,62 96,80 76,84 C 58,88 46,78 38,60 Z" fill="rgba(123, 155, 116, 0.28)" stroke="#B4CCA9" stroke-width="1.5" />
+      <path d="M 38,60 L 90,56 M 62,58 L 78,44" stroke="#E5EDE2" stroke-width="1" opacity="0.75" />
+      <path d="M 38,60 C 54,78 64,94 50,104 C 40,110 32,96 42,88" stroke="#D6B25E" stroke-width="1.4" stroke-linecap="round" opacity="0.82" />
     </svg>
 
-    <svg class="vine-cluster vine-node vine-node-3" data-threshold="0.70" viewBox="0 0 140 120" fill="none">
-      <path d="M 32,56 C 56,28 92,32 108,52 C 92,62 94,78 74,84 C 56,88 40,76 32,56 Z" fill="rgba(123, 155, 116, 0.18)" stroke="#B4CCA9" stroke-width="1.4" />
-      <path d="M 32,56 L 88,56 M 58,56 L 74,44" stroke="#B4CCA9" stroke-width="0.9" opacity="0.7" />
+    <svg class="vine-cluster vine-node vine-node-2" data-threshold="0.49" viewBox="0 0 140 120" fill="none">
+      <path d="M 38,56 C 60,26 98,28 114,50 C 98,60 100,76 80,82 C 62,86 46,74 38,56 Z" fill="rgba(214, 178, 94, 0.24)" stroke="#D6B25E" stroke-width="1.5" />
+      <path d="M 38,56 L 96,54 M 64,55 L 82,42" stroke="#F5E5B8" stroke-width="1" opacity="0.75" />
+      <path d="M 38,56 C 20,70 16,90 30,98 C 40,104 48,90 38,82" stroke="#B4CCA9" stroke-width="1.4" stroke-linecap="round" opacity="0.82" />
     </svg>
 
-    <!-- Bottom Vine Leaves & Cluster -->
-    <svg class="vine-cluster vine-node vine-bottom-cluster" data-threshold="0.86" viewBox="0 0 210 190" fill="none">
-      <path d="M 54,48 C 56,78 78,96 126,112" stroke="#D6B25E" stroke-width="1.8" stroke-linecap="round" opacity="0.82" />
-      <path d="M 56,72 C 48,90 46,102 52,112" stroke="#D6B25E" stroke-width="1.5" stroke-linecap="round" opacity="0.78" />
+    <svg class="vine-cluster vine-node vine-node-3" data-threshold="0.72" viewBox="0 0 140 120" fill="none">
+      <path d="M 38,56 C 62,28 96,32 112,52 C 96,62 98,78 78,84 C 60,88 46,76 38,56 Z" fill="rgba(123, 155, 116, 0.28)" stroke="#B4CCA9" stroke-width="1.5" />
+      <path d="M 38,56 L 92,56 M 62,56 L 78,44" stroke="#E5EDE2" stroke-width="1" opacity="0.75" />
+    </svg>
+
+    <!-- Bottom Vine Leaves & 3D Cluster (anchored at x=56 to meet stem end) -->
+    <svg class="vine-cluster vine-node vine-bottom-cluster" data-threshold="0.90" viewBox="0 0 210 190" fill="none">
+      <path d="M 56,16 C 58,64 80,94 128,112" stroke="#3B2F22" stroke-width="4.5" stroke-linecap="round" />
+      <path d="M 55,16 C 57,64 79,94 128,112" stroke="#D6B25E" stroke-width="1.8" stroke-linecap="round" opacity="0.9" />
       <!-- Bottom Left Leaf -->
-      <path d="M 56,74 C 24,70 12,96 26,118 C 38,112 52,124 66,112 C 74,102 68,82 56,74 Z" fill="rgba(123, 155, 116, 0.20)" stroke="#B4CCA9" stroke-width="1.45" />
-      <path d="M 56,74 L 34,104 M 44,90 L 28,92" stroke="#B4CCA9" stroke-width="0.95" opacity="0.7" />
+      <path d="M 58,74 C 24,70 12,96 26,118 C 38,112 52,124 66,112 C 74,102 68,82 58,74 Z" fill="rgba(123, 155, 116, 0.28)" stroke="#B4CCA9" stroke-width="1.5" />
+      <path d="M 58,74 L 34,104 M 44,90 L 28,92" stroke="#E5EDE2" stroke-width="1" opacity="0.75" />
       <!-- Bottom Right Leaf -->
-      <path d="M 96,98 C 122,72 158,74 174,98 C 156,106 160,126 138,132 C 118,138 104,122 96,98 Z" fill="rgba(214, 178, 94, 0.16)" stroke="#D6B25E" stroke-width="1.45" />
-      <path d="M 96,98 L 152,104 M 122,101 L 138,88" stroke="#D6B25E" stroke-width="0.95" opacity="0.7" />
-      <!-- Small Bottom Grape Bunch + Tendril -->
-      <circle cx="80" cy="122" r="7.5" fill="rgba(214, 178, 94, 0.20)" stroke="#D6B25E" stroke-width="1.3" />
-      <circle cx="94" cy="124" r="7.5" fill="rgba(180, 204, 169, 0.18)" stroke="#D6B25E" stroke-width="1.3" />
-      <circle cx="86" cy="136" r="7.5" fill="rgba(214, 178, 94, 0.24)" stroke="#F5E5B8" stroke-width="1.3" />
-      <path d="M 126,112 C 152,122 170,112 174,126 C 178,138 160,144 156,132" stroke="#B4CCA9" stroke-width="1.3" stroke-linecap="round" opacity="0.72" />
+      <path d="M 96,98 C 122,72 158,74 174,98 C 156,106 160,126 138,132 C 118,138 104,122 96,98 Z" fill="rgba(214, 178, 94, 0.24)" stroke="#D6B25E" stroke-width="1.5" />
+      <path d="M 96,98 L 152,104 M 122,101 L 138,88" stroke="#F5E5B8" stroke-width="1" opacity="0.75" />
+      <!-- Small 3D Bottom Grape Bunch + Tendril -->
+      <circle cx="80" cy="122" r="7.5" fill="url(#grapeGold3d)" stroke="#F5E5B8" stroke-width="1" />
+      <circle cx="94" cy="124" r="7.5" fill="url(#grapeCeladon3d)" stroke="#E5EDE2" stroke-width="1" />
+      <circle cx="86" cy="136" r="7.5" fill="url(#grapeGold3d)" stroke="#F5E5B8" stroke-width="1.1" />
+      <path d="M 128,112 C 152,122 170,112 174,126 C 178,138 160,144 156,132" stroke="#B4CCA9" stroke-width="1.4" stroke-linecap="round" opacity="0.8" />
     </svg>
   </div>
 
