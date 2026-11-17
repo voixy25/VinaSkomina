@@ -1418,11 +1418,11 @@ function updateScrollProgress() {
   }
 
   const docH = Math.max(1, document.documentElement.scrollHeight);
-  const tipRatio = Math.min(1, Math.max(0.11, (window.scrollY + window.innerHeight) / docH));
+  const tipRatio = Math.min(1, Math.max(0.18, (window.scrollY + window.innerHeight + 40) / docH));
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clipRect = document.getElementById('vineClipRect');
   if (clipRect) {
-    const clipHeight = prefersReduced ? 4000 : Math.round(tipRatio * 4000);
+    const clipHeight = prefersReduced ? 4010 : Math.round(tipRatio * 4010);
     clipRect.setAttribute('height', `${clipHeight}`);
   }
 
@@ -1469,6 +1469,8 @@ function initScrollReveals() {
 }
 
 window.addEventListener('scroll', updateScrollProgress, { passive: true });
+window.addEventListener('resize', updateScrollProgress, { passive: true });
+window.addEventListener('load', updateScrollProgress);
 
 /* Custom Airbnb-Style Select & Date Picker */
 let calViewYear = new Date().getFullYear();
