@@ -1499,6 +1499,20 @@ function syncAirbnbSelects() {
   });
 }
 
+function positionAirbnbPopover(btn, popover) {
+  if (!btn || !popover) return;
+  const btnRect = btn.getBoundingClientRect();
+  const popHeight = popover.offsetHeight || 320;
+  const footer = document.querySelector('.integrated-footer');
+  const bottomLimit = footer
+    ? Math.min(window.innerHeight - 12, footer.getBoundingClientRect().top - 8)
+    : (window.innerHeight - 12);
+  const spaceBelow = bottomLimit - btnRect.bottom;
+  const spaceAbove = btnRect.top - 72;
+  const shouldOpenUp = spaceBelow < popHeight && spaceAbove > spaceBelow;
+  popover.classList.toggle('open-up', shouldOpenUp);
+}
+
 function initAirbnbSelects() {
   document.querySelectorAll('.airbnb-select').forEach((wrap) => {
     const btn = wrap.querySelector('.airbnb-field-btn');
@@ -1509,6 +1523,9 @@ function initAirbnbSelects() {
       e.stopPropagation();
       const willOpen = !menu.classList.contains('open');
       closeAllAirbnbPopovers(willOpen ? menu : null);
+      if (willOpen) {
+        positionAirbnbPopover(btn, menu);
+      }
       menu.classList.toggle('open', willOpen);
       btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
     });
@@ -1656,6 +1673,7 @@ function openAirbnbCalendar() {
   if (!cal || !btn) return;
   closeAllAirbnbPopovers(cal);
   renderAirbnbCalendar();
+  positionAirbnbPopover(btn, cal);
   cal.classList.add('open');
   btn.setAttribute('aria-expanded', 'true');
 }
