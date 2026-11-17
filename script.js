@@ -1782,14 +1782,3 @@ window.addEventListener('DOMContentLoaded', () => {
 
   updateParallax();
 });
-function initFloatingMapCover() {
-  const floating = document.getElementById('floatingActions');
-  const mapLink = document.querySelector('[data-sl="Odpri v Apple Maps"]');
-  if (!floating || !mapLink || !('IntersectionObserver' in window)) return;
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach((entry) => floating.classList.toggle('floating-hidden', entry.isIntersecting));
-  });
-  observer.observe(mapLink);
-}
-
-window.addEventListener('DOMContentLoaded', initFloatingMapCover);

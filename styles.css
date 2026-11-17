@@ -3075,11 +3075,3 @@ header.nav-transparent:not(.menu-open) .nav-cta:hover {
   background-color: #557A50;
   background-image: linear-gradient(145deg, #557A50, #4A6A45);
 }
-
-/* Hidden while the map's external-link row is on screen, so the buttons do not cover it */
-.floating-actions.floating-hidden {
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(12px);
-  transition: opacity 0.22s ease, transform 0.22s ease;
-}
