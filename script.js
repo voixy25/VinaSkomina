@@ -1011,6 +1011,17 @@ function scrollToSection(e, id) {
   }
 }
 
+function scrollToFooter(e) {
+  if (e) e.preventDefault();
+  const footer = document.getElementById('kontakt');
+  if (!footer) return;
+  if (!isDesktopScrollMode()) {
+    footer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    return;
+  }
+  animateScrollToY(footer.getBoundingClientRect().top + window.scrollY, 950);
+}
+
 function scrollToBooking(e) {
   if (e) e.preventDefault();
   if (!isDesktopScrollMode()) {
