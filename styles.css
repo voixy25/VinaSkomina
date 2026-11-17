@@ -312,7 +312,7 @@ body.modal-open {
 }
 
 .vine-hero-cluster {
-  top: -10px;
+  top: 52px;
   width: 190px;
   height: auto;
   opacity: 0.94;
@@ -3091,23 +3091,33 @@ header.nav-transparent:not(.menu-open) .nav-cta:hover {
 
 .hero-branch-shadow {
   stroke: rgba(5, 8, 18, 0.58);
-  stroke-width: 7;
+  stroke-width: 10;
 }
 
 .hero-branch-bark {
-  stroke: #3B2F22;
-  stroke-width: 5;
+  stroke: url(#vineBarkDark);
+  stroke-width: 7;
 }
 
 .hero-branch-mid {
   stroke: url(#vineBarkMid);
-  stroke-width: 3.2;
+  stroke-width: 4.2;
 }
 
 .hero-branch-spec {
   stroke: url(#vineBarkSpec);
-  stroke-width: 1.1;
-  opacity: 0.85;
+  stroke-width: 1.4;
+  opacity: 0.9;
+}
+
+.hero-branch-coil-1 {
+  stroke: rgba(214, 178, 94, 0.68);
+  stroke-width: 1.35;
+}
+
+.hero-branch-coil-2 {
+  stroke: rgba(180, 204, 169, 0.58);
+  stroke-width: 1.2;
 }
 
 @keyframes heroBranchDraw {
