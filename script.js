@@ -1418,7 +1418,7 @@ function updateScrollProgress() {
   }
 
   const docH = Math.max(1, document.documentElement.scrollHeight);
-  const tipRatio = Math.min(1, Math.max(0.11, (window.scrollY + window.innerHeight * 0.92) / docH));
+  const tipRatio = Math.min(1, Math.max(0.11, (window.scrollY + window.innerHeight) / docH));
   const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const clipRect = document.getElementById('vineClipRect');
   if (clipRect) {
