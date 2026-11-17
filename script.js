@@ -339,6 +339,16 @@ function trapModalFocus(e) {
   }
 }
 
+function lockPageScroll() {
+  document.documentElement.classList.add('modal-open');
+  document.body.classList.add('modal-open');
+}
+
+function unlockPageScroll() {
+  document.documentElement.classList.remove('modal-open');
+  document.body.classList.remove('modal-open');
+}
+
 function openItemModal(key) {
   lastFocusedElement = document.activeElement;
   currentModalKey = key;
@@ -398,7 +408,7 @@ function openItemModal(key) {
 
   const modalBackdrop = document.getElementById('wineModal');
   modalBackdrop.classList.add('open');
-  document.body.classList.add('modal-open');
+  lockPageScroll();
   focusModalFirstElement(modalBackdrop);
 }
 
@@ -406,7 +416,7 @@ function closeWineModal() {
   const modalBackdrop = document.getElementById('wineModal');
   if (!modalBackdrop || !modalBackdrop.classList.contains('open')) return;
   modalBackdrop.classList.remove('open');
-  document.body.classList.remove('modal-open');
+  unlockPageScroll();
   if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
     lastFocusedElement.focus({ preventScroll: true });
     lastFocusedElement = null;
@@ -483,6 +493,11 @@ function syncFormRequirements() {
       guestsSelect.value = '4';
     }
   }
+  if (dateInput) {
+    dateInput.required = false;
+  }
+  if (typeof syncAirbnbSelects === 'function') syncAirbnbSelects();
+  if (typeof syncAirbnbDateDisplay === 'function') syncAirbnbDateDisplay();
 }
 
 function preselectOrder(itemLabel, isWineWithQty = false) {
@@ -536,7 +551,7 @@ function openFaqModal() {
   if (!modal) return;
   lastFocusedElement = document.activeElement;
   modal.classList.add('open');
-  document.body.classList.add('modal-open');
+  lockPageScroll();
   focusModalFirstElement(modal);
 }
 
@@ -544,7 +559,7 @@ function closeFaqModal() {
   const modal = document.getElementById('faqModal');
   if (!modal || !modal.classList.contains('open')) return;
   modal.classList.remove('open');
-  document.body.classList.remove('modal-open');
+  unlockPageScroll();
   if (lastFocusedElement && typeof lastFocusedElement.focus === 'function') {
     lastFocusedElement.focus({ preventScroll: true });
     lastFocusedElement = null;
@@ -568,6 +583,15 @@ async function handleBooking(e) {
   const honey = (document.getElementById('bHoney')?.value || '').trim();
   if (honey) return;
 
+  const pkgEl = document.getElementById('bPackage');
+  const pkgValue = pkgEl ? pkgEl.value : 'meats';
+  const rawDate = (document.getElementById('bDate')?.value || '').trim();
+  if (pkgValue !== 'order' && !rawDate) {
+    if (typeof openAirbnbCalendar === 'function') openAirbnbCalendar();
+    document.getElementById('bDateBtn')?.focus();
+    return;
+  }
+
   const submitBtn = document.getElementById('bookingSubmitBtn');
   const successEl = document.getElementById('bookingSuccess');
   const originalBtnText = submitBtn ? submitBtn.textContent : '';
@@ -575,10 +599,8 @@ async function handleBooking(e) {
   const name = (document.getElementById('bName')?.value || '').trim();
   const email = (document.getElementById('bEmail')?.value || '').trim();
   const phone = (document.getElementById('bPhone')?.value || '').trim();
-  const pkgEl = document.getElementById('bPackage');
-  const pkgValue = pkgEl ? pkgEl.value : 'meats';
   const pkgLabel = pkgEl && pkgEl.selectedOptions[0] ? pkgEl.selectedOptions[0].textContent : pkgValue;
-  const date = document.getElementById('bDate')?.value || '-';
+  const date = rawDate || '-';
   const guests = pkgValue === 'order' ? '-' : (document.getElementById('bGuests')?.value || '-');
   const orderQty = pkgValue === 'order' ? `${wineQty} L` : '-';
   const notes = (document.getElementById('bNotes')?.value || '').trim();
@@ -1031,7 +1053,19 @@ window.addEventListener('touchmove', (e) => {
 
 window.addEventListener('wheel', (e) => {
   if (document.body.classList.contains('modal-open')) {
-    if (!e.target.closest('.modal')) {
+    const modal = e.target.closest('.modal');
+    if (!modal) {
+      e.preventDefault();
+      return;
+    }
+    const canScroll = modal.scrollHeight > modal.clientHeight + 1;
+    if (!canScroll) {
+      e.preventDefault();
+      return;
+    }
+    const atTop = modal.scrollTop <= 0 && e.deltaY < 0;
+    const atBottom = modal.scrollTop + modal.clientHeight >= modal.scrollHeight - 1 && e.deltaY > 0;
+    if (atTop || atBottom) {
       e.preventDefault();
     }
     return;
@@ -1080,6 +1114,7 @@ document.addEventListener('keydown', (e) => {
     closeWineModal();
     closeFaqModal();
     closeMenu();
+    if (typeof closeAllAirbnbPopovers === 'function') closeAllAirbnbPopovers();
     return;
   }
 
@@ -1410,6 +1445,240 @@ function initScrollReveals() {
 
 window.addEventListener('scroll', updateScrollProgress, { passive: true });
 
+/* Custom Airbnb-Style Select & Date Picker */
+let calViewYear = new Date().getFullYear();
+let calViewMonth = new Date().getMonth();
+
+function closeAllAirbnbPopovers(exceptEl = null) {
+  document.querySelectorAll('.airbnb-popover.open').forEach((pop) => {
+    if (exceptEl && pop === exceptEl) return;
+    pop.classList.remove('open');
+    const btn = pop.parentElement?.querySelector('.airbnb-field-btn');
+    if (btn) btn.setAttribute('aria-expanded', 'false');
+  });
+}
+
+function syncAirbnbSelects() {
+  document.querySelectorAll('.airbnb-select').forEach((wrap) => {
+    const selectId = wrap.dataset.for;
+    const selectEl = document.getElementById(selectId);
+    const btn = wrap.querySelector('.airbnb-field-btn');
+    const valSpan = wrap.querySelector('.airbnb-field-value');
+    const menu = wrap.querySelector('.airbnb-select-menu');
+    if (!selectEl || !btn || !valSpan || !menu) return;
+
+    const options = Array.from(selectEl.options);
+    const selectedOpt = selectEl.selectedOptions[0] || options[0];
+    if (selectedOpt) {
+      valSpan.textContent = selectedOpt.getAttribute(`data-${currentLang}`) || selectedOpt.textContent;
+    }
+
+    menu.innerHTML = options
+      .filter((opt) => !opt.disabled)
+      .map((opt) => {
+        const label = opt.getAttribute(`data-${currentLang}`) || opt.textContent;
+        const isSel = opt.value === selectEl.value;
+        return `
+          <button type="button" class="airbnb-select-option${isSel ? ' selected' : ''}" role="option" aria-selected="${isSel}" data-value="${opt.value}">
+            <span>${label}</span>
+            <svg class="airbnb-select-check" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+          </button>
+        `;
+      })
+      .join('');
+
+    menu.querySelectorAll('.airbnb-select-option').forEach((item) => {
+      item.addEventListener('click', (e) => {
+        e.stopPropagation();
+        selectEl.value = item.dataset.value;
+        selectEl.dispatchEvent(new Event('change', { bubbles: true }));
+        syncAirbnbSelects();
+        closeAllAirbnbPopovers();
+      });
+    });
+  });
+}
+
+function initAirbnbSelects() {
+  document.querySelectorAll('.airbnb-select').forEach((wrap) => {
+    const btn = wrap.querySelector('.airbnb-field-btn');
+    const menu = wrap.querySelector('.airbnb-select-menu');
+    if (!btn || !menu) return;
+
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const willOpen = !menu.classList.contains('open');
+      closeAllAirbnbPopovers(willOpen ? menu : null);
+      menu.classList.toggle('open', willOpen);
+      btn.setAttribute('aria-expanded', willOpen ? 'true' : 'false');
+    });
+  });
+  syncAirbnbSelects();
+}
+
+function syncAirbnbDateDisplay() {
+  const input = document.getElementById('bDate');
+  const display = document.getElementById('bDateDisplay');
+  if (!input || !display) return;
+  const val = (input.value || '').trim();
+  if (!val) {
+    display.classList.add('is-placeholder');
+    const ph = display.getAttribute(`data-${currentLang}`) || 'Izberite datum';
+    display.textContent = ph;
+  } else {
+    display.classList.remove('is-placeholder');
+    const [y, m, d] = val.split('-').map(Number);
+    const dt = new Date(y, m - 1, d);
+    const locale = currentLang === 'en' ? 'en-US' : (currentLang === 'it' ? 'it-IT' : 'sl-SI');
+    display.textContent = dt.toLocaleDateString(locale, { day: 'numeric', month: 'short', year: 'numeric' });
+  }
+  if (document.getElementById('airbnbCalendar')?.classList.contains('open')) {
+    renderAirbnbCalendar();
+  }
+}
+
+function renderAirbnbCalendar() {
+  const cal = document.getElementById('airbnbCalendar');
+  const input = document.getElementById('bDate');
+  if (!cal || !input) return;
+
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const minYear = today.getFullYear();
+  const minMonth = today.getMonth();
+  if (calViewYear < minYear || (calViewYear === minYear && calViewMonth < minMonth)) {
+    calViewYear = minYear;
+    calViewMonth = minMonth;
+  }
+
+  const locale = currentLang === 'en' ? 'en-US' : (currentLang === 'it' ? 'it-IT' : 'sl-SI');
+  const monthTitle = new Date(calViewYear, calViewMonth, 1).toLocaleDateString(locale, { month: 'long', year: 'numeric' });
+  const weekdaysByLang = {
+    sl: ['Po', 'To', 'Sr', 'Če', 'Pe', 'So', 'Ne'],
+    en: ['Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa', 'Su'],
+    it: ['Lu', 'Ma', 'Me', 'Gi', 'Ve', 'Sa', 'Do']
+  };
+  const weekdays = weekdaysByLang[currentLang] || weekdaysByLang.sl;
+  const labelsByLang = {
+    sl: { clear: 'Počisti', close: 'Zapri' },
+    en: { clear: 'Clear', close: 'Close' },
+    it: { clear: 'Cancella', close: 'Chiudi' }
+  };
+  const labels = labelsByLang[currentLang] || labelsByLang.sl;
+
+  const firstDay = new Date(calViewYear, calViewMonth, 1);
+  const startOffset = (firstDay.getDay() + 6) % 7; // Monday = 0
+  const daysInMonth = new Date(calViewYear, calViewMonth + 1, 0).getDate();
+  const selectedVal = (input.value || '').trim();
+  const canGoPrev = !(calViewYear === minYear && calViewMonth === minMonth);
+
+  let daysHtml = '';
+  for (let i = 0; i < startOffset; i++) {
+    daysHtml += '<span></span>';
+  }
+  for (let day = 1; day <= daysInMonth; day++) {
+    const cellDate = new Date(calViewYear, calViewMonth, day);
+    const iso = `${calViewYear}-${String(calViewMonth + 1).padStart(2, '0')}-${String(day).padStart(2, '0')}`;
+    const isPast = cellDate < today;
+    const isToday = cellDate.getTime() === today.getTime();
+    const isSelected = iso === selectedVal;
+    const cls = [
+      'airbnb-cal-day',
+      isToday ? 'is-today' : '',
+      isSelected ? 'selected' : ''
+    ].filter(Boolean).join(' ');
+    daysHtml += `<button type="button" class="${cls}" data-iso="${iso}"${isPast ? ' disabled' : ''}>${day}</button>`;
+  }
+
+  cal.innerHTML = `
+    <div class="airbnb-cal-head">
+      <button type="button" class="airbnb-cal-nav" id="calPrevBtn" aria-label="Previous month"${canGoPrev ? '' : ' disabled'}>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"/></svg>
+      </button>
+      <div class="airbnb-cal-title">${monthTitle}</div>
+      <button type="button" class="airbnb-cal-nav" id="calNextBtn" aria-label="Next month">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
+      </button>
+    </div>
+    <div class="airbnb-cal-weekdays">${weekdays.map((w) => `<span>${w}</span>`).join('')}</div>
+    <div class="airbnb-cal-grid">${daysHtml}</div>
+    <div class="airbnb-cal-footer">
+      <button type="button" class="airbnb-cal-action" id="calClearBtn">${labels.clear}</button>
+      <button type="button" class="airbnb-cal-action" id="calCloseBtn">${labels.close}</button>
+    </div>
+  `;
+
+  cal.querySelector('#calPrevBtn')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (!canGoPrev) return;
+    calViewMonth -= 1;
+    if (calViewMonth < 0) {
+      calViewMonth = 11;
+      calViewYear -= 1;
+    }
+    renderAirbnbCalendar();
+  });
+
+  cal.querySelector('#calNextBtn')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    calViewMonth += 1;
+    if (calViewMonth > 11) {
+      calViewMonth = 0;
+      calViewYear += 1;
+    }
+    renderAirbnbCalendar();
+  });
+
+  cal.querySelectorAll('.airbnb-cal-day:not(:disabled)').forEach((dayBtn) => {
+    dayBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      input.value = dayBtn.dataset.iso;
+      syncAirbnbDateDisplay();
+      closeAllAirbnbPopovers();
+    });
+  });
+
+  cal.querySelector('#calClearBtn')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    input.value = '';
+    syncAirbnbDateDisplay();
+  });
+
+  cal.querySelector('#calCloseBtn')?.addEventListener('click', (e) => {
+    e.stopPropagation();
+    closeAllAirbnbPopovers();
+  });
+}
+
+function openAirbnbCalendar() {
+  const cal = document.getElementById('airbnbCalendar');
+  const btn = document.getElementById('bDateBtn');
+  if (!cal || !btn) return;
+  closeAllAirbnbPopovers(cal);
+  renderAirbnbCalendar();
+  cal.classList.add('open');
+  btn.setAttribute('aria-expanded', 'true');
+}
+
+function initAirbnbDatePicker() {
+  const btn = document.getElementById('bDateBtn');
+  const cal = document.getElementById('airbnbCalendar');
+  if (!btn || !cal) return;
+
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (cal.classList.contains('open')) {
+      closeAllAirbnbPopovers();
+    } else {
+      openAirbnbCalendar();
+    }
+  });
+  cal.addEventListener('click', (e) => e.stopPropagation());
+  syncAirbnbDateDisplay();
+}
+
+document.addEventListener('click', () => closeAllAirbnbPopovers());
+
 window.addEventListener('DOMContentLoaded', () => {
   currentSectionIndex = detectCurrentSectionIndex();
   const params = new URLSearchParams(window.location.search);
@@ -1418,6 +1687,8 @@ window.addEventListener('DOMContentLoaded', () => {
     setLang(urlLang);
   }
   updateQtyUI();
+  initAirbnbSelects();
+  initAirbnbDatePicker();
   syncFormRequirements();
   initBottomSheetSwipe('wineModal', closeWineModal);
   initBottomSheetSwipe('faqModal', closeFaqModal);
