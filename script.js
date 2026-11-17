@@ -911,7 +911,7 @@ function updateMapLanguage() {
 /* ==========================================
    Strict 1-Gesture = 1-Section Jump Scrolling & Parallax (Desktop Only)
    ========================================== */
-const snapSectionIds = ['domov', 'zgodba', 'terroir', 'vina', 'degustacije'];
+const snapSectionIds = ['domov', 'zgodba', 'terroir', 'vina', 'degustacije', 'kontakt'];
 let currentSectionIndex = 0;
 let isSectionAnimating = false;
 let wheelGestureLocked = false;
@@ -924,15 +924,24 @@ function isDesktopScrollMode() {
   return window.innerWidth > 960 && !window.matchMedia('(pointer: coarse)').matches;
 }
 
+function sectionTop(el) {
+  return el.getBoundingClientRect().top + window.scrollY;
+}
+
+function snapTargetY(el) {
+  return Math.min(sectionTop(el), getMaxScroll());
+}
+
 function getSnapSections() {
   return snapSectionIds.map(id => document.getElementById(id)).filter(Boolean);
 }
 
 function updateActiveDots(activeId) {
+  const dotTarget = activeId === 'kontakt' ? 'degustacije' : activeId;
   const dots = Array.from(document.querySelectorAll('.section-dot'));
-  const activeIdx = dots.findIndex(dot => dot.getAttribute('data-target') === activeId);
+  const activeIdx = dots.findIndex(dot => dot.getAttribute('data-target') === dotTarget);
   dots.forEach((dot, i) => {
-    const isActive = dot.getAttribute('data-target') === activeId;
+    const isActive = dot.getAttribute('data-target') === dotTarget;
     dot.classList.toggle('active', isActive);
     dot.classList.toggle('passed', activeIdx >= 0 && i < activeIdx);
   });
@@ -992,7 +1001,7 @@ function scrollToSectionIndex(idx) {
 
   isSectionAnimating = true;
   updateActiveDots(targetEl.id);
-  animateScrollToY(targetEl.offsetTop, 950);
+  animateScrollToY(snapTargetY(targetEl), 950);
 }
 
 function scrollToSection(e, id) {
@@ -1007,7 +1016,7 @@ function scrollToSection(e, id) {
     scrollToSectionIndex(idx);
   } else {
     const el = document.getElementById(id);
-    if (el) animateScrollToY(el.offsetTop, 950);
+    if (el) animateScrollToY(snapTargetY(el), 950);
   }
 }
 
@@ -1044,7 +1053,7 @@ function detectCurrentSectionIndex() {
 
   let bestIdx = 0;
   sections.forEach((sec, i) => {
-    if (probeY >= sec.offsetTop) {
+    if (probeY >= sectionTop(sec)) {
       bestIdx = i;
     }
   });
@@ -1309,8 +1318,8 @@ function settleDesktopSectionIfMidway() {
   // Check if legitimately inside a tall section that overflows the viewport
   for (const sec of sections) {
     if (sec.offsetHeight > viewH + 24) {
-      const minY = sec.offsetTop;
-      const maxY = sec.offsetTop + sec.offsetHeight - viewH;
+      const minY = sectionTop(sec);
+      const maxY = sectionTop(sec) + sec.offsetHeight - viewH;
       if (y >= minY - 4 && y <= maxY + 4) {
         return;
       }
@@ -1321,7 +1330,7 @@ function settleDesktopSectionIfMidway() {
   let nearestIdx = 0;
   let minDist = Infinity;
   sections.forEach((sec, i) => {
-    const dist = Math.abs(y - sec.offsetTop);
+    const dist = Math.abs(y - snapTargetY(sec));
     if (dist < minDist) {
       minDist = dist;
       nearestIdx = i;
@@ -1331,7 +1340,7 @@ function settleDesktopSectionIfMidway() {
   if (minDist > 6) {
     currentSectionIndex = nearestIdx;
     updateActiveDots(sections[nearestIdx].id);
-    animateScrollToY(sections[nearestIdx].offsetTop, 700);
+    animateScrollToY(snapTargetY(sections[nearestIdx]), 700);
   }
 }
 
