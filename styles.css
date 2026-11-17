@@ -390,25 +390,8 @@ body.modal-open {
 }
 
 @media (max-width: 768px) {
-  .vine-hero-cluster {
-    top: 66px;
-    width: 112px;
-    opacity: 0.62;
-  }
-  .vine-node {
-    width: 84px;
-    opacity: 0;
-  }
-  .vine-node.is-bloomed {
-    opacity: 0.58;
-  }
-  .vine-bottom-cluster {
-    bottom: 64px;
-    width: 126px;
-  }
-  .vine-stem-svg {
-    width: 96px;
-    opacity: 0.58;
+  .vine-scroll-overlay {
+    display: none;
   }
 }
 
