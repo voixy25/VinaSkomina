@@ -589,6 +589,15 @@ header.nav-transparent:not(.menu-open) {
   box-shadow: none;
 }
 
+@media (max-width: 960px), (pointer: coarse) {
+  header.nav-transparent.scrolled:not(.menu-open) {
+    background: linear-gradient(180deg, rgba(13, 17, 32, 0.78) 0%, rgba(13, 17, 32, 0.48) 100%);
+    backdrop-filter: blur(18px) saturate(150%);
+    -webkit-backdrop-filter: blur(18px) saturate(150%);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+  }
+}
+
 header.nav-transparent:not(.menu-open) .logo {
   color: #FFFFFF;
 }
