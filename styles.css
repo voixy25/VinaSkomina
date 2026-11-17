@@ -49,6 +49,7 @@ body::-webkit-scrollbar {
 }
 
 body {
+  position: relative;
   background-color: var(--bg);
   color: #F4F5F0;
   font-family: var(--sans);
@@ -100,45 +101,125 @@ body.modal-open {
   position: relative;
 }
 
-/* Section Navigation Dots */
+/* Section Navigation Sidebar — Flowing Wine & Droplets */
 .section-dots {
   position: fixed;
-  right: 1.35rem;
+  right: 1.25rem;
   top: 50%;
   transform: translateY(-50%);
   z-index: 45;
   display: flex;
   flex-direction: column;
-  gap: 0.72rem;
-  padding: 0.35rem 0;
+  align-items: center;
+  gap: 1.05rem;
+  padding: 0.4rem 0.25rem;
   background: transparent;
-  backdrop-filter: none;
-  -webkit-backdrop-filter: none;
-  border: none;
-  border-radius: 0;
-  box-shadow: none;
+}
+
+.wine-stream-track {
+  position: absolute;
+  top: 10px;
+  bottom: 10px;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background: rgba(229, 237, 226, 0.16);
+  border-radius: 999px;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.wine-stream-fill {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: var(--wine-progress, 0%);
+  background: linear-gradient(180deg, rgba(245, 229, 184, 0.85) 0%, #D6B25E 48%, #9E4747 100%);
+  border-radius: 999px;
+  box-shadow: 0 0 10px rgba(214, 178, 94, 0.55);
+  transition: height 0.28s var(--ease-apple);
+}
+
+.wine-stream-drop {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  width: 4px;
+  height: 10px;
+  transform: translateX(-50%);
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(245, 229, 184, 0), #F5E5B8 65%, #C96464 100%);
+  opacity: 0.85;
+  animation: wineTrickle 2.8s var(--ease-apple) infinite;
+}
+
+@keyframes wineTrickle {
+  0% {
+    top: -10%;
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.9;
+  }
+  80% {
+    opacity: 0.85;
+  }
+  100% {
+    top: 105%;
+    opacity: 0;
+  }
 }
 
 .section-dot {
   position: relative;
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  border: 1.5px solid rgba(229, 237, 226, 0.52);
+  width: 18px;
+  height: 18px;
+  border: none;
   background: transparent;
   padding: 0;
-  transition: transform 0.22s var(--ease-framer), background-color 0.22s ease, border-color 0.22s ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  -webkit-tap-highlight-color: transparent;
 }
 
-.section-dot:hover {
-  transform: scale(1.25);
-  border-color: var(--gold-200);
+.wine-drop-icon {
+  display: block;
+  width: 10px;
+  height: 10px;
+  border-radius: 0 55% 55% 55%;
+  transform: rotate(45deg);
+  border: 1.5px solid rgba(229, 237, 226, 0.56);
+  background: rgba(13, 17, 32, 0.72);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition:
+    transform 0.26s var(--ease-framer),
+    background 0.26s ease,
+    border-color 0.26s ease,
+    box-shadow 0.26s ease;
 }
 
-.section-dot.active {
-  background: var(--gold-400);
+.section-dot:hover .wine-drop-icon {
+  transform: rotate(45deg) scale(1.24);
   border-color: var(--gold-200);
-  transform: scale(1.32);
+  box-shadow: 0 0 10px rgba(214, 178, 94, 0.38);
+}
+
+.section-dot.passed .wine-drop-icon {
+  background: linear-gradient(145deg, rgba(214, 178, 94, 0.42), rgba(158, 71, 71, 0.55));
+  border-color: rgba(214, 178, 94, 0.75);
+}
+
+.section-dot.active .wine-drop-icon {
+  background: linear-gradient(155deg, #F5E5B8 0%, #D6B25E 52%, #A64646 100%);
+  border-color: #F5E5B8;
+  transform: rotate(45deg) scale(1.38);
+  box-shadow:
+    0 0 14px rgba(214, 178, 94, 0.65),
+    0 4px 10px rgba(158, 71, 71, 0.42);
 }
 
 .section-dot .dot-label {
@@ -171,6 +252,150 @@ body.modal-open {
   opacity: 1;
   visibility: visible;
   transform: translateY(-50%) translateX(0);
+}
+
+/* Botanical Scroll-Drawn Grapevine Overlay */
+.vine-scroll-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 42;
+  overflow: hidden;
+}
+
+.vine-stem-svg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 120px;
+  height: 100%;
+  opacity: 0.82;
+}
+
+.vine-stem-ghost {
+  fill: none;
+  stroke: rgba(180, 204, 169, 0.10);
+  stroke-width: 1.5;
+  stroke-linecap: round;
+}
+
+.vine-stem-path {
+  fill: none;
+  stroke-width: 2;
+  stroke-linecap: round;
+  filter: drop-shadow(0 0 6px rgba(214, 178, 94, 0.25));
+}
+
+.vine-cluster {
+  position: absolute;
+  left: 0;
+  pointer-events: none;
+  filter: drop-shadow(0 8px 18px rgba(5, 8, 18, 0.32));
+}
+
+.vine-hero-cluster {
+  top: 74px;
+  width: 176px;
+  height: auto;
+  opacity: 0.9;
+  transform-origin: top left;
+  animation: vineSway 7s ease-in-out infinite alternate;
+}
+
+.vine-node {
+  width: 124px;
+  height: auto;
+  opacity: 0;
+  transform: scale(0.76) translateX(-10px);
+  transform-origin: left center;
+  transition:
+    opacity 0.65s var(--ease-apple),
+    transform 0.75s var(--ease-framer);
+}
+
+.vine-node.is-bloomed {
+  opacity: 0.86;
+  transform: scale(1) translateX(0);
+}
+
+.vine-node-1 {
+  top: 23%;
+}
+
+.vine-node-2 {
+  top: 49%;
+}
+
+.vine-node-3 {
+  top: 72%;
+}
+
+.vine-bottom-cluster {
+  top: auto;
+  bottom: 42px;
+  width: 196px;
+  transform-origin: bottom left;
+}
+
+@keyframes vineSway {
+  0% {
+    transform: rotate(-0.8deg) translateY(0);
+  }
+  100% {
+    transform: rotate(1.1deg) translateY(3px);
+  }
+}
+
+@media (max-width: 1280px) {
+  .vine-hero-cluster {
+    width: 138px;
+    opacity: 0.72;
+  }
+  .vine-node {
+    width: 96px;
+  }
+  .vine-bottom-cluster {
+    width: 150px;
+  }
+  .vine-stem-svg {
+    width: 88px;
+    opacity: 0.62;
+  }
+}
+
+@media (max-width: 768px) {
+  .vine-hero-cluster {
+    top: 66px;
+    width: 106px;
+    opacity: 0.56;
+  }
+  .vine-node {
+    width: 78px;
+    opacity: 0;
+  }
+  .vine-node.is-bloomed {
+    opacity: 0.52;
+  }
+  .vine-bottom-cluster {
+    bottom: 64px;
+    width: 118px;
+  }
+  .vine-stem-svg {
+    width: 64px;
+    opacity: 0.45;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wine-stream-drop,
+  .vine-hero-cluster {
+    animation: none;
+  }
+  .vine-node {
+    opacity: 0.78;
+    transform: none;
+    transition: none;
+  }
 }
 
 /* Parallax Elements */

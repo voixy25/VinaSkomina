@@ -65,7 +65,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;0,6..72,700;1,6..72,400&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" crossorigin="" />
   <meta name="theme-color" content="#0D1120" />
-  <link rel="stylesheet" href="styles.css?v=20261117v2c" />
+  <link rel="stylesheet" href="styles.css?v=20261117v2d" />
 </head>
 <body>
   <div class="scroll-progress" id="scrollProgress" aria-hidden="true"></div>
@@ -102,24 +102,108 @@
     </div>
   </header>
 
-  <!-- Section Navigation Dots -->
+  <!-- Section Navigation Dots (Wine Flow) -->
   <aside class="section-dots" id="sectionDots" aria-label="Section navigation">
+    <div class="wine-stream-track" aria-hidden="true">
+      <div class="wine-stream-fill" id="wineStreamFill"></div>
+      <span class="wine-stream-drop"></span>
+    </div>
     <button type="button" class="section-dot active" data-target="domov" onclick="scrollToSection(event, 'domov')" aria-label="Domov">
+      <span class="wine-drop-icon" aria-hidden="true"></span>
       <span class="dot-label" data-sl="Domov" data-en="Home" data-it="Home">Domov</span>
     </button>
     <button type="button" class="section-dot" data-target="zgodba" onclick="scrollToSection(event, 'zgodba')" aria-label="O nas">
+      <span class="wine-drop-icon" aria-hidden="true"></span>
       <span class="dot-label" data-sl="O nas" data-en="Our Story" data-it="Chi siamo">O nas</span>
     </button>
     <button type="button" class="section-dot" data-target="terroir" onclick="scrollToSection(event, 'terroir')" aria-label="Terroir">
+      <span class="wine-drop-icon" aria-hidden="true"></span>
       <span class="dot-label" data-sl="Terroir" data-en="Terroir" data-it="Terroir">Terroir</span>
     </button>
     <button type="button" class="section-dot" data-target="vina" onclick="scrollToSection(event, 'vina')" aria-label="Vino in hrana">
+      <span class="wine-drop-icon" aria-hidden="true"></span>
       <span class="dot-label" data-sl="Vino in hrana" data-en="Wine & Food" data-it="Vino e cibo">Vino in hrana</span>
     </button>
     <button type="button" class="section-dot" data-target="degustacije" onclick="scrollToSection(event, 'degustacije')" aria-label="Degustacije">
+      <span class="wine-drop-icon" aria-hidden="true"></span>
       <span class="dot-label" data-sl="Degustacije" data-en="Tastings" data-it="Degustazioni">Degustacije</span>
     </button>
   </aside>
+
+  <!-- Botanical Scroll-Drawn Grapevine Overlay -->
+  <div class="vine-scroll-overlay" id="vineScrollOverlay" aria-hidden="true">
+    <svg class="vine-stem-svg" viewBox="0 0 120 4000" preserveAspectRatio="none">
+      <defs>
+        <linearGradient id="vineStemGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%" stop-color="#D6B25E" stop-opacity="0.72" />
+          <stop offset="35%" stop-color="#B4CCA9" stop-opacity="0.65" />
+          <stop offset="70%" stop-color="#7B9B74" stop-opacity="0.7" />
+          <stop offset="100%" stop-color="#D6B25E" stop-opacity="0.82" />
+        </linearGradient>
+      </defs>
+      <path class="vine-stem-ghost" d="M 32,40 C 78,360 12,720 44,1080 C 82,1460 16,1820 46,2200 C 80,2580 14,2960 44,3340 C 74,3640 32,3840 52,3975" vector-effect="non-scaling-stroke" />
+      <path class="vine-stem-path" id="vineStemPath" d="M 32,40 C 78,360 12,720 44,1080 C 82,1460 16,1820 46,2200 C 80,2580 14,2960 44,3340 C 74,3640 32,3840 52,3975" stroke="url(#vineStemGrad)" vector-effect="non-scaling-stroke" />
+    </svg>
+
+    <!-- Hero Top Cluster: Grape bunch + Vine Leaves + Tendril -->
+    <svg class="vine-cluster vine-hero-cluster is-bloomed" data-threshold="0" viewBox="0 0 190 230" fill="none">
+      <!-- Branch & tendril -->
+      <path d="M 32,8 C 44,44 68,54 96,44" stroke="#D6B25E" stroke-width="1.6" stroke-linecap="round" opacity="0.75" />
+      <path d="M 56,36 C 72,18 98,16 106,30 C 112,40 96,50 88,40 C 82,32 94,24 102,28" stroke="#B4CCA9" stroke-width="1.3" stroke-linecap="round" opacity="0.65" />
+      <!-- Vine Leaf 1 (upper) -->
+      <path d="M 96,44 C 118,22 146,24 156,42 C 142,48 148,66 132,74 C 118,80 104,70 96,44 Z" fill="rgba(123, 155, 116, 0.16)" stroke="#B4CCA9" stroke-width="1.4" stroke-linejoin="round" />
+      <path d="M 96,44 L 138,54 M 114,48 L 128,36 M 118,50 L 126,66" stroke="#B4CCA9" stroke-width="0.95" opacity="0.7" />
+      <!-- Vine Leaf 2 (left) -->
+      <path d="M 42,68 C 16,66 8,92 22,110 C 32,102 44,114 54,102 C 62,92 54,74 42,68 Z" fill="rgba(214, 178, 94, 0.12)" stroke="#D6B25E" stroke-width="1.35" stroke-linejoin="round" />
+      <path d="M 42,68 L 26,96 M 34,82 L 20,84" stroke="#D6B25E" stroke-width="0.9" opacity="0.65" />
+      <!-- Grape Cluster (Grozd) -->
+      <g class="vine-grapes">
+        <path d="M 62,48 L 62,64" stroke="#D6B25E" stroke-width="1.4" stroke-linecap="round" />
+        <circle cx="52" cy="72" r="8.5" fill="rgba(214, 178, 94, 0.18)" stroke="#D6B25E" stroke-width="1.35" />
+        <circle cx="66" cy="70" r="8.5" fill="rgba(180, 204, 169, 0.16)" stroke="#D6B25E" stroke-width="1.35" />
+        <circle cx="80" cy="74" r="8" fill="rgba(214, 178, 94, 0.14)" stroke="#D6B25E" stroke-width="1.3" />
+        <circle cx="58" cy="86" r="8.5" fill="rgba(214, 178, 94, 0.22)" stroke="#F5E5B8" stroke-width="1.35" />
+        <circle cx="73" cy="86" r="8.5" fill="rgba(123, 155, 116, 0.20)" stroke="#D6B25E" stroke-width="1.35" />
+        <circle cx="65" cy="100" r="8" fill="rgba(214, 178, 94, 0.24)" stroke="#F5E5B8" stroke-width="1.35" />
+        <circle cx="53" cy="99" r="7" fill="rgba(180, 204, 169, 0.14)" stroke="#D6B25E" stroke-width="1.25" />
+        <circle cx="62" cy="114" r="7" fill="rgba(214, 178, 94, 0.26)" stroke="#F5E5B8" stroke-width="1.3" />
+      </g>
+    </svg>
+
+    <!-- Mid-stem Leaf & Tendril Nodes -->
+    <svg class="vine-cluster vine-node vine-node-1" data-threshold="0.20" viewBox="0 0 140 120" fill="none">
+      <path d="M 28,58 C 52,30 88,30 104,52 C 88,60 92,78 72,82 C 54,86 38,76 28,58 Z" fill="rgba(123, 155, 116, 0.16)" stroke="#B4CCA9" stroke-width="1.4" />
+      <path d="M 28,58 L 84,56 M 54,57 L 70,44" stroke="#B4CCA9" stroke-width="0.9" opacity="0.7" />
+      <path d="M 28,58 C 46,74 58,92 44,102 C 34,108 26,94 36,86" stroke="#D6B25E" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+    </svg>
+
+    <svg class="vine-cluster vine-node vine-node-2" data-threshold="0.46" viewBox="0 0 140 120" fill="none">
+      <path d="M 38,52 C 60,24 96,28 112,48 C 96,58 98,74 78,80 C 60,84 46,72 38,52 Z" fill="rgba(214, 178, 94, 0.14)" stroke="#D6B25E" stroke-width="1.4" />
+      <path d="M 38,52 L 94,52 M 64,52 L 80,40" stroke="#D6B25E" stroke-width="0.9" opacity="0.7" />
+      <path d="M 38,52 C 20,66 16,86 30,96 C 40,102 48,88 38,80" stroke="#B4CCA9" stroke-width="1.2" stroke-linecap="round" opacity="0.7" />
+    </svg>
+
+    <svg class="vine-cluster vine-node vine-node-3" data-threshold="0.70" viewBox="0 0 140 120" fill="none">
+      <path d="M 32,56 C 56,28 92,32 108,52 C 92,62 94,78 74,84 C 56,88 40,76 32,56 Z" fill="rgba(123, 155, 116, 0.18)" stroke="#B4CCA9" stroke-width="1.4" />
+      <path d="M 32,56 L 88,56 M 58,56 L 74,44" stroke="#B4CCA9" stroke-width="0.9" opacity="0.7" />
+    </svg>
+
+    <!-- Bottom Vine Leaves & Cluster -->
+    <svg class="vine-cluster vine-node vine-bottom-cluster" data-threshold="0.86" viewBox="0 0 210 190" fill="none">
+      <path d="M 46,16 C 56,64 82,92 126,112" stroke="#D6B25E" stroke-width="1.6" stroke-linecap="round" opacity="0.78" />
+      <!-- Bottom Left Leaf -->
+      <path d="M 56,74 C 24,70 12,96 26,118 C 38,112 52,124 66,112 C 74,102 68,82 56,74 Z" fill="rgba(123, 155, 116, 0.20)" stroke="#B4CCA9" stroke-width="1.45" />
+      <path d="M 56,74 L 34,104 M 44,90 L 28,92" stroke="#B4CCA9" stroke-width="0.95" opacity="0.7" />
+      <!-- Bottom Right Leaf -->
+      <path d="M 96,98 C 122,72 158,74 174,98 C 156,106 160,126 138,132 C 118,138 104,122 96,98 Z" fill="rgba(214, 178, 94, 0.16)" stroke="#D6B25E" stroke-width="1.45" />
+      <path d="M 96,98 L 152,104 M 122,101 L 138,88" stroke="#D6B25E" stroke-width="0.95" opacity="0.7" />
+      <!-- Small Bottom Grape Bunch + Tendril -->
+      <circle cx="80" cy="122" r="7.5" fill="rgba(214, 178, 94, 0.20)" stroke="#D6B25E" stroke-width="1.3" />
+      <circle cx="94" cy="124" r="7.5" fill="rgba(180, 204, 169, 0.18)" stroke="#D6B25E" stroke-width="1.3" />
+      <circle cx="86" cy="136" r="7.5" fill="rgba(214, 178, 94, 0.24)" stroke="#F5E5B8" stroke-width="1.3" />
+      <path d="M 126,112 C 152,122 170,112 174,126 C 178,138 160,144 156,132" stroke="#B4CCA9" stroke-width="1.3" stroke-linecap="round" opacity="0.72" />
+    </svg>
+  </div>
 
   <!-- Hero -->
   <section class="hero snap-section" id="domov" data-section="domov">
@@ -619,6 +703,6 @@
   </div>
 
   <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" crossorigin=""></script>
-  <script src="script.js?v=20261117v2c"></script>
+  <script src="script.js?v=20261117v2d"></script>
 </body>
 </html>

@@ -922,8 +922,12 @@ function getSnapSections() {
 }
 
 function updateActiveDots(activeId) {
-  document.querySelectorAll('.section-dot').forEach(dot => {
-    dot.classList.toggle('active', dot.getAttribute('data-target') === activeId);
+  const dots = Array.from(document.querySelectorAll('.section-dot'));
+  const activeIdx = dots.findIndex(dot => dot.getAttribute('data-target') === activeId);
+  dots.forEach((dot, i) => {
+    const isActive = dot.getAttribute('data-target') === activeId;
+    dot.classList.toggle('active', isActive);
+    dot.classList.toggle('passed', activeIdx >= 0 && i < activeIdx);
   });
   document.querySelectorAll('#mainNav ul a').forEach(link => {
     link.classList.toggle('active', link.getAttribute('href') === `#${activeId}`);
@@ -1399,12 +1403,37 @@ function initBottomSheetSwipe(backdropId, closeFn) {
   modal.addEventListener('touchcancel', finishDrag, { passive: true });
 }
 
+let vineStemTotalLength = 0;
+
 function updateScrollProgress() {
-  const bar = document.getElementById('scrollProgress');
-  if (!bar) return;
   const maxScroll = Math.max(1, document.documentElement.scrollHeight - window.innerHeight);
   const progress = Math.min(1, Math.max(0, window.scrollY / maxScroll));
-  bar.style.transform = `scaleX(${progress.toFixed(4)})`;
+
+  const bar = document.getElementById('scrollProgress');
+  if (bar) {
+    bar.style.transform = `scaleX(${progress.toFixed(4)})`;
+  }
+
+  const wineFill = document.getElementById('wineStreamFill');
+  if (wineFill) {
+    wineFill.style.setProperty('--wine-progress', `${(progress * 100).toFixed(2)}%`);
+  }
+
+  const vinePath = document.getElementById('vineStemPath');
+  if (vinePath && typeof vinePath.getTotalLength === 'function') {
+    if (!vineStemTotalLength) {
+      vineStemTotalLength = vinePath.getTotalLength();
+      vinePath.style.strokeDasharray = `${vineStemTotalLength}`;
+    }
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const stemProgress = prefersReduced ? 1 : Math.min(1, 0.08 + progress * 0.92);
+    vinePath.style.strokeDashoffset = `${(vineStemTotalLength * (1 - stemProgress)).toFixed(2)}`;
+  }
+
+  document.querySelectorAll('.vine-node[data-threshold]').forEach((node) => {
+    const threshold = parseFloat(node.getAttribute('data-threshold') || '0');
+    node.classList.toggle('is-bloomed', progress >= threshold);
+  });
 }
 
 function initScrollReveals() {
