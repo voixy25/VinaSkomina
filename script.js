@@ -1791,3 +1791,23 @@ window.addEventListener('DOMContentLoaded', () => {
 
   updateParallax();
 });
+const VINE_STEM_TOP_UNITS = 110;
+const VINE_STEM_VIEWBOX_H = 4000;
+const VINE_HERO_BRANCH_BASE_Y = 114;
+const VINE_DESKTOP_MIN_WIDTH = 961;
+
+function alignHeroVineCluster() {
+  const hero = document.querySelector('.vine-hero-cluster');
+  const stemSvg = document.querySelector('#vineScrollOverlay .vine-stem-svg');
+  if (!hero || !stemSvg) return;
+  if (window.innerWidth < VINE_DESKTOP_MIN_WIDTH) {
+    hero.style.top = '';
+    return;
+  }
+  const stemHeight = stemSvg.getBoundingClientRect().height;
+  const stemTopPx = (VINE_STEM_TOP_UNITS * stemHeight) / VINE_STEM_VIEWBOX_H;
+  hero.style.top = `${Math.round(stemTopPx - VINE_HERO_BRANCH_BASE_Y)}px`;
+}
+
+window.addEventListener('load', alignHeroVineCluster);
+window.addEventListener('resize', alignHeroVineCluster, { passive: true });
