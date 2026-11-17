@@ -3077,26 +3077,45 @@ header.nav-transparent:not(.menu-open) .nav-cta:hover {
   background-image: linear-gradient(145deg, #557A50, #4A6A45);
 }
 
-/* Hero: vine branch running under the top nav (first section only) */
+/* Hero: 3D vine branch growing out of the stem top, running under the top nav (first section only) */
 .hero-branch {
   position: absolute;
   left: 0;
-  top: calc(var(--header-h) - 20px);
+  top: 60px;
   width: 100%;
-  height: 40px;
+  height: 70px;
   pointer-events: none;
   z-index: 3;
+  overflow: visible;
 }
 
-.hero-branch-line {
+.hero-branch path {
   fill: none;
-  stroke: #D6B25E;
-  stroke-width: 1.6;
   stroke-linecap: round;
   stroke-dasharray: 1;
   stroke-dashoffset: 1;
-  opacity: 0.85;
   animation: heroBranchDraw 1.6s ease-out 0.3s forwards;
+}
+
+.hero-branch-shadow {
+  stroke: rgba(5, 8, 18, 0.58);
+  stroke-width: 7;
+}
+
+.hero-branch-bark {
+  stroke: #3B2F22;
+  stroke-width: 5;
+}
+
+.hero-branch-mid {
+  stroke: url(#vineBarkMid);
+  stroke-width: 3.2;
+}
+
+.hero-branch-spec {
+  stroke: url(#vineBarkSpec);
+  stroke-width: 1.1;
+  opacity: 0.85;
 }
 
 @keyframes heroBranchDraw {
@@ -3106,7 +3125,7 @@ header.nav-transparent:not(.menu-open) .nav-cta:hover {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .hero-branch-line {
+  .hero-branch path {
     stroke-dashoffset: 0;
     animation: none;
   }
