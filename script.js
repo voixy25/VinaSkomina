@@ -2,6 +2,85 @@ let currentLang = 'sl';
 let wineQty = 1;
 let currentModalKey = null;
 
+const CONTACT_EMAIL = 'vina@skomina.si';
+const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/' + CONTACT_EMAIL;
+const MIN_SUBMIT_MS = 2000;
+const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const formLoadedAt = Date.now();
+let isSubmittingBooking = false;
+let turnstileWidgetId = null;
+let turnstileToken = '';
+let turnstileLoadFailed = false;
+
+const FORM_I18N = {
+  sl: {
+    nameTooShort: 'Prosimo, vnesite vaše ime in priimek.',
+    invalidEmail: 'Prosimo, vnesite veljaven e-poštni naslov.',
+    missingDate: 'Prosimo, izberite želeni datum obiska ali prevzema.',
+    tooFast: 'Počakajte trenutek in poskusite ponovno.',
+    turnstilePending: 'Prosimo, dokončajte varnostno potrditev pred pošiljanjem.',
+    honeypotSuccess: 'Hvala! Vaše povpraševanje je bilo sprejeto.',
+    submitting: 'Pošiljanje ...',
+    fallbackPrefix: 'Pošiljanje prek obrazca trenutno ni uspelo. Povpraševanje lahko takoj pošljete na ',
+    fallbackSuffix: ' ali nas pokličete na +386 31 728 563.',
+    mailtoSubject: 'Povpraševanje',
+    mailtoLabels: {
+      name: 'Ime in priimek',
+      email: 'E-pošta',
+      phone: 'Telefon',
+      pkg: 'Vrsta povpraševanja',
+      date: 'Datum',
+      guests: 'Število oseb',
+      qty: 'Količina vina',
+      notes: 'Opombe'
+    }
+  },
+  en: {
+    nameTooShort: 'Please enter your full name.',
+    invalidEmail: 'Please enter a valid email address.',
+    missingDate: 'Please select your preferred visit or pickup date.',
+    tooFast: 'Please wait a moment and try again.',
+    turnstilePending: 'Please complete the security verification before sending.',
+    honeypotSuccess: 'Thank you! Your inquiry has been received.',
+    submitting: 'Sending ...',
+    fallbackPrefix: 'Sending via the form failed at the moment. You can send your inquiry directly to ',
+    fallbackSuffix: ' or call us at +386 31 728 563.',
+    mailtoSubject: 'Inquiry',
+    mailtoLabels: {
+      name: 'Full Name',
+      email: 'Email',
+      phone: 'Phone',
+      pkg: 'Request Type',
+      date: 'Date',
+      guests: 'Guests',
+      qty: 'Wine quantity',
+      notes: 'Notes'
+    }
+  },
+  it: {
+    nameTooShort: 'Inserite il vostro nome e cognome.',
+    invalidEmail: 'Inserite un indirizzo email valido.',
+    missingDate: 'Selezionate la data desiderata per la visita o il ritiro.',
+    tooFast: 'Attendete un momento e riprovate.',
+    turnstilePending: 'Completate la verifica di sicurezza prima di inviare.',
+    honeypotSuccess: 'Grazie! La vostra richiesta è stata ricevuta.',
+    submitting: 'Invio in corso ...',
+    fallbackPrefix: 'L\'invio tramite il modulo non è riuscito al momento. Potete inviare subito la richiesta via email a ',
+    fallbackSuffix: ' oppure chiamarci al +386 31 728 563.',
+    mailtoSubject: 'Richiesta',
+    mailtoLabels: {
+      name: 'Nome e cognome',
+      email: 'Email',
+      phone: 'Telefono',
+      pkg: 'Tipo di richiesta',
+      date: 'Data',
+      guests: 'Numero di persone',
+      qty: 'Quantità di vino',
+      notes: 'Note'
+    }
+  }
+};
+
 const itemData = {
   zvrst: {
     orderLabel: {
@@ -257,6 +336,7 @@ function setLang(lang) {
   if (btnIt) btnIt.classList.toggle('active', lang === 'it');
 
   document.querySelectorAll('[data-sl]').forEach(el => {
+    if (el.id === 'bookingSubmitBtn' && isSubmittingBooking) return;
     const translated = el.getAttribute('data-' + lang) || el.getAttribute('data-sl');
     if (translated !== null) {
       el.textContent = translated;
@@ -299,6 +379,10 @@ function setLang(lang) {
   updateQtyUI();
   syncFormRequirements();
   updateMapLanguage();
+  if (isSubmittingBooking) {
+    const submitBtn = document.getElementById('bookingSubmitBtn');
+    if (submitBtn) submitBtn.textContent = getFormMessages().submitting;
+  }
 }
 
 function toggleMenu() {
@@ -500,14 +584,16 @@ function syncFormRequirements() {
       guestsSelect.value = '4';
     }
   }
-  if (dateInput) {
-    dateInput.required = false;
+  if (isOrder) {
+    setFieldError(document.getElementById('bDateBtn'), document.getElementById('bDateError'), '');
   }
   if (typeof syncAirbnbSelects === 'function') syncAirbnbSelects();
   if (typeof syncAirbnbDateDisplay === 'function') syncAirbnbDateDisplay();
 }
 
 function preselectOrder(itemLabel, isWineWithQty = false) {
+  clearBookingStatus();
+
   let finalLabel = itemLabel;
   if (itemLabel === 'Domače suhomesnine' && itemData.suhomesnine.orderLabel[currentLang]) {
     finalLabel = itemData.suhomesnine.orderLabel[currentLang];
@@ -518,20 +604,31 @@ function preselectOrder(itemLabel, isWineWithQty = false) {
   syncFormRequirements();
 
   const notes = document.getElementById('bNotes');
-  const winePattern = /(Bela zvrst|Hišna bela zvrst|House White Blend|Uvaggio Bianco della Casa)(?:,\s*\d+\s*L|\s*\(\d+\s*[^)]+\))/i;
+  if (notes) {
+    const existingNotes = notes.value.trim();
+    const winePattern = /(Bela zvrst|Hišna bela zvrst|House White Blend|Uvaggio Bianco della Casa)(?:,\s*\d+\s*L|\s*\(\d+\s*[^)]+\))/i;
+    const suhomesnineLabels = Object.values(itemData.suhomesnine.orderLabel || {});
+    const isSuhomesnine = itemLabel === 'Domače suhomesnine';
+    const alreadyPresent = isSuhomesnine
+      ? suhomesnineLabels.some(lbl => existingNotes.toLowerCase().includes(lbl.toLowerCase()))
+      : existingNotes.toLowerCase().includes(finalLabel.toLowerCase());
 
-  if (isWineWithQty && winePattern.test(notes.value)) {
-    notes.value = notes.value.replace(winePattern, finalLabel);
-  } else {
-    notes.value = notes.value ? `${notes.value}, ${finalLabel}` : finalLabel;
+    if (isWineWithQty && winePattern.test(existingNotes)) {
+      notes.value = existingNotes.replace(winePattern, finalLabel);
+    } else if (!alreadyPresent) {
+      notes.value = existingNotes ? `${existingNotes}, ${finalLabel}` : finalLabel;
+    }
   }
 
   scrollToBooking();
-  setTimeout(() => notes.focus({ preventScroll: true }), 550);
+  if (notes) {
+    setTimeout(() => notes.focus({ preventScroll: true }), 550);
+  }
 }
 
 function selectPizzaVisit(e) {
   if (e) e.preventDefault();
+  clearBookingStatus();
   const pkgSelect = document.getElementById('bPackage');
   pkgSelect.value = 'pizza';
   syncFormRequirements();
@@ -539,6 +636,7 @@ function selectPizzaVisit(e) {
 }
 
 function selectTastingPackage(pkg) {
+  clearBookingStatus();
   const pkgSelect = document.getElementById('bPackage');
   if (pkgSelect) {
     pkgSelect.value = pkg;
@@ -584,38 +682,248 @@ function getPersonalizedSuccessText(name, email) {
   return `Hvala, ${safeName}! Povpraševanje smo prejeli. Odgovorimo v 24 urah na ${email}. Za nujne zadeve pokličite +386 31 728 563.`;
 }
 
-async function handleBooking(e) {
-  e.preventDefault();
-  const form = e.target;
-  const honey = (document.getElementById('bHoney')?.value || '').trim();
-  if (honey) return;
+function getFormMessages() {
+  return FORM_I18N[currentLang] || FORM_I18N.sl;
+}
 
-  const pkgEl = document.getElementById('bPackage');
-  const pkgValue = pkgEl ? pkgEl.value : 'meats';
-  const rawDate = (document.getElementById('bDate')?.value || '').trim();
-  if (pkgValue !== 'order' && !rawDate) {
-    if (typeof openAirbnbCalendar === 'function') openAirbnbCalendar();
-    document.getElementById('bDateBtn')?.focus();
+function setFieldError(el, errorEl, msg) {
+  if (errorEl) errorEl.textContent = msg || '';
+  if (el) {
+    if (msg) el.setAttribute('aria-invalid', 'true');
+    else el.removeAttribute('aria-invalid');
+  }
+}
+
+function clearAllFieldErrors() {
+  setFieldError(document.getElementById('bName'), document.getElementById('bNameError'), '');
+  setFieldError(document.getElementById('bEmail'), document.getElementById('bEmailError'), '');
+  setFieldError(document.getElementById('bDateBtn'), document.getElementById('bDateError'), '');
+}
+
+function clearBookingStatus() {
+  const statusEl = document.getElementById('bookingSuccess');
+  if (!statusEl) return;
+  statusEl.className = 'form-status';
+  statusEl.textContent = '';
+}
+
+function showBookingSuccess(text) {
+  const statusEl = document.getElementById('bookingSuccess');
+  if (!statusEl) return;
+  statusEl.className = 'form-status is-success';
+  statusEl.textContent = text;
+}
+
+function showBookingError(text) {
+  const statusEl = document.getElementById('bookingSuccess');
+  if (!statusEl) return;
+  statusEl.className = 'form-status is-error';
+  statusEl.textContent = text;
+}
+
+function showBookingFallbackError(details) {
+  const statusEl = document.getElementById('bookingSuccess');
+  if (!statusEl) return;
+  const t = getFormMessages();
+  const labels = t.mailtoLabels;
+  const bodyLines = [
+    `${labels.name}: ${details.name}`,
+    `${labels.email}: ${details.email}`,
+    `${labels.phone}: ${details.phone || '-'}`,
+    `${labels.pkg}: ${details.pkgLabel}`,
+    `${labels.date}: ${details.date}`,
+    details.pkgValue === 'order'
+      ? `${labels.qty}: ${details.orderQty}`
+      : `${labels.guests}: ${details.guests}`,
+    `${labels.notes}: ${details.notes || '-'}`
+  ].join('\n');
+
+  const subject = `Vina Skomina — ${t.mailtoSubject}: ${details.pkgLabel} (${details.name})`;
+  const mailtoHref =
+    `mailto:${CONTACT_EMAIL}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(bodyLines)}`;
+
+  statusEl.className = 'form-status is-error';
+  statusEl.textContent = '';
+  statusEl.appendChild(document.createTextNode(t.fallbackPrefix));
+
+  const link = document.createElement('a');
+  link.href = mailtoHref;
+  link.textContent = CONTACT_EMAIL;
+  statusEl.appendChild(link);
+
+  statusEl.appendChild(document.createTextNode(t.fallbackSuffix));
+}
+
+function resetTurnstile() {
+  turnstileToken = '';
+  if (!window.turnstile || typeof window.turnstile.reset !== 'function') return;
+  try {
+    if (turnstileWidgetId != null) {
+      window.turnstile.reset(turnstileWidgetId);
+    } else {
+      window.turnstile.reset();
+    }
+  } catch (err) {
+    // Ignore Turnstile reset errors
+  }
+}
+
+function initTurnstileIfConfigured() {
+  const slot = document.getElementById('turnstile-widget');
+  if (!slot) return;
+  const sitekey = (slot.getAttribute('data-turnstile-sitekey') || '').trim();
+  if (!sitekey) return;
+
+  const action = (slot.getAttribute('data-turnstile-action') || 'booking').trim();
+
+  function renderWidget() {
+    if (turnstileWidgetId != null) return;
+    if (!window.turnstile || typeof window.turnstile.render !== 'function') return;
+    const renderedId = window.turnstile.render(slot, {
+      sitekey: sitekey,
+      action: action,
+      theme: 'dark',
+      callback: function (token) {
+        turnstileToken = token || '';
+      },
+      'expired-callback': function () {
+        turnstileToken = '';
+      },
+      'error-callback': function () {
+        turnstileToken = '';
+      }
+    });
+    if (renderedId != null) {
+      turnstileWidgetId = renderedId;
+    }
+  }
+
+  if (window.turnstile && typeof window.turnstile.render === 'function') {
+    renderWidget();
     return;
   }
 
-  const submitBtn = document.getElementById('bookingSubmitBtn');
-  const successEl = document.getElementById('bookingSuccess');
-  const originalBtnText = submitBtn ? submitBtn.textContent : '';
+  const existingScript = document.querySelector('script[src*="challenges.cloudflare.com/turnstile/v0/api.js"]');
+  if (existingScript) {
+    existingScript.addEventListener('load', renderWidget);
+    existingScript.addEventListener('error', function () {
+      turnstileLoadFailed = true;
+    });
+    return;
+  }
 
-  const name = (document.getElementById('bName')?.value || '').trim();
-  const email = (document.getElementById('bEmail')?.value || '').trim();
+  const script = document.createElement('script');
+  script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
+  script.async = true;
+  script.defer = true;
+  script.addEventListener('load', renderWidget);
+  script.addEventListener('error', function () {
+    turnstileLoadFailed = true;
+  });
+  document.head.appendChild(script);
+}
+
+function initBookingForm() {
+  const form = document.getElementById('bookingForm');
+  if (!form) return;
+
+  form.addEventListener('submit', handleBooking);
+
+  const fieldPairs = [
+    [document.getElementById('bName'), document.getElementById('bNameError')],
+    [document.getElementById('bEmail'), document.getElementById('bEmailError')]
+  ];
+
+  fieldPairs.forEach(([inputEl, errorEl]) => {
+    if (!inputEl) return;
+    inputEl.addEventListener('input', () => {
+      setFieldError(inputEl, errorEl, '');
+    });
+  });
+}
+
+async function handleBooking(e) {
+  if (e && typeof e.preventDefault === 'function') e.preventDefault();
+  if (isSubmittingBooking) return;
+
+  const form = (e && e.target && e.target.tagName === 'FORM')
+    ? e.target
+    : document.getElementById('bookingForm');
+  if (!form) return;
+
+  clearBookingStatus();
+  const t = getFormMessages();
+
+  const honey = (document.getElementById('bHoney')?.value || '').trim();
+  if (honey) {
+    form.reset();
+    clearAllFieldErrors();
+    wineQty = 1;
+    updateQtyUI();
+    syncFormRequirements();
+    showBookingSuccess(t.honeypotSuccess);
+    return;
+  }
+
+  const nameInput = document.getElementById('bName');
+  const emailInput = document.getElementById('bEmail');
+  const dateInput = document.getElementById('bDate');
+  const dateBtn = document.getElementById('bDateBtn');
+  const nameErrEl = document.getElementById('bNameError');
+  const emailErrEl = document.getElementById('bEmailError');
+  const dateErrEl = document.getElementById('bDateError');
+
+  const name = (nameInput?.value || '').trim();
+  const email = (emailInput?.value || '').trim();
+  const pkgEl = document.getElementById('bPackage');
+  const pkgValue = pkgEl ? pkgEl.value : 'meats';
+  const rawDate = (dateInput?.value || '').trim();
+
+  let firstInvalid = null;
+
+  if (name.length < 2) {
+    setFieldError(nameInput, nameErrEl, t.nameTooShort);
+    if (!firstInvalid) firstInvalid = nameInput;
+  } else {
+    setFieldError(nameInput, nameErrEl, '');
+  }
+
+  if (!EMAIL_RE.test(email)) {
+    setFieldError(emailInput, emailErrEl, t.invalidEmail);
+    if (!firstInvalid) firstInvalid = emailInput;
+  } else {
+    setFieldError(emailInput, emailErrEl, '');
+  }
+
+  if (pkgValue !== 'order' && !rawDate) {
+    setFieldError(dateBtn, dateErrEl, t.missingDate);
+    if (!firstInvalid) firstInvalid = dateBtn;
+  } else {
+    setFieldError(dateBtn, dateErrEl, '');
+  }
+
+  if (firstInvalid) {
+    if (firstInvalid === dateBtn && typeof openAirbnbCalendar === 'function') {
+      openAirbnbCalendar();
+    }
+    firstInvalid.focus();
+    return;
+  }
+
+  if (Date.now() - formLoadedAt < MIN_SUBMIT_MS) {
+    showBookingError(t.tooFast);
+    return;
+  }
+
+  const selectedPkgOpt = pkgEl && pkgEl.selectedOptions[0];
+  const pkgLabel = selectedPkgOpt
+    ? (selectedPkgOpt.getAttribute(`data-${currentLang}`) || selectedPkgOpt.textContent)
+    : pkgValue;
   const phone = (document.getElementById('bPhone')?.value || '').trim();
-  const pkgLabel = pkgEl && pkgEl.selectedOptions[0] ? pkgEl.selectedOptions[0].textContent : pkgValue;
   const date = rawDate || '-';
   const guests = pkgValue === 'order' ? '-' : (document.getElementById('bGuests')?.value || '-');
   const orderQty = pkgValue === 'order' ? `${wineQty} L` : '-';
   const notes = (document.getElementById('bNotes')?.value || '').trim();
-
-  if (submitBtn) {
-    submitBtn.disabled = true;
-    submitBtn.textContent = currentLang === 'en' ? 'Sending...' : (currentLang === 'it' ? 'Invio in corso...' : 'Pošiljanje...');
-  }
 
   const payload = {
     _subject: `Vina Skomina — ${pkgLabel} (${name})`,
@@ -632,8 +940,47 @@ async function handleBooking(e) {
     Jezik: currentLang.toUpperCase()
   };
 
+  const fallbackDetails = {
+    name,
+    email,
+    phone,
+    pkgValue,
+    pkgLabel,
+    date,
+    guests,
+    orderQty,
+    notes
+  };
+
+  const turnstileSlot = document.getElementById('turnstile-widget');
+  const turnstileKey = turnstileSlot
+    ? (turnstileSlot.getAttribute('data-turnstile-sitekey') || '').trim()
+    : '';
+  if (turnstileKey) {
+    if (turnstileLoadFailed) {
+      showBookingFallbackError(fallbackDetails);
+      return;
+    }
+    const tokenField = form.querySelector('[name="cf-turnstile-response"]');
+    const token = turnstileWidgetId != null
+      ? turnstileToken
+      : (turnstileToken || (tokenField ? tokenField.value : ''));
+    if (!token) {
+      showBookingError(t.turnstilePending);
+      return;
+    }
+    payload['cf-turnstile-response'] = token;
+  }
+
+  const submitBtn = document.getElementById('bookingSubmitBtn');
+  isSubmittingBooking = true;
+  if (submitBtn) {
+    submitBtn.disabled = true;
+    submitBtn.textContent = t.submitting;
+  }
+
   try {
-    const res = await fetch('https://formsubmit.co/ajax/vina@skomina.si', {
+    const res = await fetch(FORMSUBMIT_ENDPOINT, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -643,35 +990,31 @@ async function handleBooking(e) {
     });
 
     if (!res.ok) throw new Error('HTTP ' + res.status);
-
-    if (successEl) {
-      successEl.textContent = getPersonalizedSuccessText(name, email);
-      successEl.style.display = 'block';
+    const data = await res.json();
+    if (!data || data.success === false || data.success === 'false') {
+      throw new Error('FormSubmit rejected submission');
     }
+
     form.reset();
+    clearAllFieldErrors();
     wineQty = 1;
     updateQtyUI();
     syncFormRequirements();
+    showBookingSuccess(getPersonalizedSuccessText(name, email));
   } catch (err) {
-    // Fallback: open pre-filled email client so no inquiry is ever lost
-    const bodyLines = [
-      `Ime in priimek: ${name}`,
-      `E-pošta: ${email}`,
-      `Telefon: ${phone || '-'}`,
-      `Vrsta: ${pkgLabel}`,
-      `Datum: ${date}`,
-      pkgValue === 'order' ? `Količina: ${orderQty}` : `Število oseb: ${guests}`,
-      `Opombe: ${notes || '-'}`
-    ].join('\n');
-    window.location.href = `mailto:vina@skomina.si?subject=${encodeURIComponent(payload._subject)}&body=${encodeURIComponent(bodyLines)}`;
-    if (successEl) {
-      successEl.textContent = getPersonalizedSuccessText(name, email);
-      successEl.style.display = 'block';
-    }
+    showBookingFallbackError(fallbackDetails);
   } finally {
+    if (turnstileKey) {
+      resetTurnstile();
+    }
+    isSubmittingBooking = false;
     if (submitBtn) {
       submitBtn.disabled = false;
-      submitBtn.textContent = originalBtnText;
+      const restoredLabel =
+        submitBtn.getAttribute('data-' + currentLang) ||
+        submitBtn.getAttribute('data-sl') ||
+        submitBtn.textContent;
+      submitBtn.textContent = restoredLabel;
     }
   }
 }
@@ -1712,9 +2055,7 @@ function renderAirbnbCalendar() {
   cal.querySelectorAll('.airbnb-cal-day:not(:disabled)').forEach((dayBtn) => {
     dayBtn.addEventListener('click', (e) => {
       e.stopPropagation();
-      input.value = dayBtn.dataset.iso;
-      syncAirbnbDateDisplay();
-      closeAllAirbnbPopovers();
+      selectAirbnbDate(dayBtn.dataset.iso);
     });
   });
 
@@ -1728,6 +2069,15 @@ function renderAirbnbCalendar() {
     e.stopPropagation();
     closeAllAirbnbPopovers();
   });
+}
+
+function selectAirbnbDate(iso) {
+  const input = document.getElementById('bDate');
+  if (!input) return;
+  input.value = iso || '';
+  setFieldError(document.getElementById('bDateBtn'), document.getElementById('bDateError'), '');
+  syncAirbnbDateDisplay();
+  closeAllAirbnbPopovers();
 }
 
 function openAirbnbCalendar() {
@@ -1771,6 +2121,8 @@ window.addEventListener('DOMContentLoaded', () => {
   initAirbnbSelects();
   initAirbnbDatePicker();
   syncFormRequirements();
+  initTurnstileIfConfigured();
+  initBookingForm();
   initBottomSheetSwipe('wineModal', closeWineModal);
   initBottomSheetSwipe('faqModal', closeFaqModal);
   initScrollReveals();
