@@ -2,7 +2,7 @@ let currentLang = 'sl';
 let wineQty = 1;
 let currentModalKey = null;
 
-const CONTACT_EMAIL = 'vina@skomina.si';
+const CONTACT_EMAIL = 'info@skomina.si';
 const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/' + CONTACT_EMAIL;
 const MIN_SUBMIT_MS = 2000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
