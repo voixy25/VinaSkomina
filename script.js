@@ -926,18 +926,17 @@ async function handleBooking(e) {
   const notes = (document.getElementById('bNotes')?.value || '').trim();
 
   const payload = {
-    _subject: `Vina Skomina — ${pkgLabel} (${name})`,
-    _replyto: email,
-    _template: 'table',
-    Ime_in_priimek: name,
-    E_posta: email,
+    name,
+    email,
     Telefon: phone || '-',
     Vrsta_povprasevanja: pkgLabel,
     Datum: date,
     Stevilo_oseb: guests,
     Kolicina_vina: orderQty,
     Opombe: notes || '-',
-    Jezik: currentLang.toUpperCase()
+    Jezik: currentLang.toUpperCase(),
+    _subject: `Vina Skomina — ${pkgLabel} (${name})`,
+    _template: 'table'
   };
 
   const fallbackDetails = {
@@ -992,7 +991,8 @@ async function handleBooking(e) {
     if (!res.ok) throw new Error('HTTP ' + res.status);
     const data = await res.json();
     if (!data || data.success === false || data.success === 'false') {
-      throw new Error('FormSubmit rejected submission');
+      const msg = (data && data.message) ? String(data.message) : 'FormSubmit rejected submission';
+      throw new Error(msg);
     }
 
     form.reset();
@@ -1002,6 +1002,9 @@ async function handleBooking(e) {
     syncFormRequirements();
     showBookingSuccess(getPersonalizedSuccessText(name, email));
   } catch (err) {
+    if (typeof console !== 'undefined' && console.warn) {
+      console.warn('[VinaSkomina] FormSubmit:', err && err.message ? err.message : err);
+    }
     showBookingFallbackError(fallbackDetails);
   } finally {
     if (turnstileKey) {
