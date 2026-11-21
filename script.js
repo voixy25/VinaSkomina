@@ -3,7 +3,7 @@ let wineQty = 1;
 let currentModalKey = null;
 
 const CONTACT_EMAIL = 'info@skomina.si';
-const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/' + CONTACT_EMAIL;
+const FORMSUBMIT_ENDPOINT = 'https://formsubmit.co/ajax/42d51ea038188ae0320032b465d14834';
 const MIN_SUBMIT_MS = 2000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
 const formLoadedAt = Date.now();
