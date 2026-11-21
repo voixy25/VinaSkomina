@@ -43,7 +43,7 @@ const FORM_I18N = {
     turnstilePending: 'Please complete the security verification before sending.',
     honeypotSuccess: 'Thank you! Your inquiry has been received.',
     submitting: 'Sending ...',
-    fallbackPrefix: 'Sending via the form failed at the moment. You can send your inquiry directly to ',
+    fallbackPrefix: 'The form could not send your inquiry. You can email it directly to ',
     fallbackSuffix: ' or call us at +386 31 728 563.',
     mailtoSubject: 'Inquiry',
     mailtoLabels: {
@@ -360,15 +360,15 @@ function setLang(lang) {
   const seoByLang = {
     sl: {
       title: 'Degustacija vin v Vipavski dolini | Vina Skomina',
-      desc: 'Doživite degustacijo domačega vina, suhomesnin in sveže pečenih napolitanskih pic v družinski vinski kleti Skomina v Vipavski dolini. Rezervirajte obisk.'
+      desc: 'Degustacija domačega vina, suhomesnin in sveže pečenih napolitanskih pic v družinski vinski kleti Skomina v Vipavski dolini. Rezervirajte obisk.'
     },
     en: {
       title: 'Wine Tasting in Vipava Valley | Vina Skomina',
-      desc: 'Experience homemade white wine, cellar-aged cured meats, and freshly baked Neapolitan pizza at the Skomina family wine cellar in the Vipava Valley. Book your visit.'
+      desc: 'Taste homemade white wine, cellar-aged cured meats, and freshly baked Neapolitan pizza at the Skomina family wine cellar in the Vipava Valley. Book your visit.'
     },
     it: {
       title: 'Degustazione di vini nella Valle del Vipacco | Vina Skomina',
-      desc: 'Vivete una degustazione di vino della casa, salumi artigianali e pizze napoletane appena sfornate nella cantina di famiglia Skomina nella Valle del Vipacco. Prenotate una visita.'
+      desc: 'Degustazione di vino della casa, salumi artigianali e pizze napoletane appena sfornate nella cantina di famiglia Skomina nella Valle del Vipacco. Prenotate una visita.'
     }
   };
   const seo = seoByLang[lang] || seoByLang.sl;
@@ -1048,17 +1048,17 @@ const mapLocations = {
     zoom: 18,
     sl: {
       short: 'Vinska klet',
-      title: 'Vinska klet Skomina — Oševljek 14',
+      title: 'Vinska klet Skomina, Oševljek 14',
       desc: 'Oševljek 14, 5292 Renče. Družinska vinska klet Vina Skomina, zorilnica suhomesnin in vrtljiva peč za napolitanske pice.'
     },
     en: {
       short: 'Wine cellar',
-      title: 'Skomina Wine Cellar — Oševljek 14',
+      title: 'Skomina Wine Cellar, Oševljek 14',
       desc: 'Oševljek 14, 5292 Renče. Vina Skomina family wine cellar, curing room, and rotating pizza oven.'
     },
     it: {
       short: 'Cantina',
-      title: 'Cantina Skomina — Oševljek 14',
+      title: 'Cantina Skomina, Oševljek 14',
       desc: 'Oševljek 14, 5292 Renče. Cantina di famiglia Vina Skomina, locale di stagionatura dei salumi e forno rotante per pizze napoletane.'
     }
   },
