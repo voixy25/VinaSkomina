@@ -26,7 +26,7 @@ Slovenian (default), English and Italian. The language switch updates the whole 
 
 Oševljek 14, 5292 Renče, Slovenia
 Phone: +386 31 728 563
-Email: vina@skomina.si
+Email: info@skomina.si
 
 Visits are by prior arrangement. Please book before coming.
 
